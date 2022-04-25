@@ -1,0 +1,96 @@
+body {
+  background: #333;
+  color: #ddd;
+  margin: 0;
+}
+
+h1 {
+  color: white;
+  font-size: 2.25em;
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 2em;
+  text-shadow: 0px 2px 0px #000000;
+}
+
+#titulo {
+  padding-top: 110px;
+  padding-bottom: 110px;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.multi-item-carousel .carousel-inner > .item {
+  transition: 500ms ease-in-out left;
+}
+.multi-item-carousel .carousel-inner .active.left {
+  left: -33%;
+}
+.multi-item-carousel .carousel-inner .active.right {
+  left: 33%;
+}
+.multi-item-carousel .carousel-inner .next {
+  left: 33%;
+}
+.multi-item-carousel .carousel-inner .prev {
+  left: -33%;
+}
+@media all and (transform-3d), (-webkit-transform-3d) {
+  .multi-item-carousel .multi-item-carousel .carousel-inner > .item {
+    transition: 500ms ease-in-out left;
+    transition: 500ms ease-in-out all;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+    transform: none !important;
+  }
+}
+
+.multi-item-carousel .carouse-control.left,
+.multi-item-carousel .carouse-control.right {
+  background-image: none;
+}
+
+.filtros {
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 20;
+  padding-bottom: 20px;
+}
+.filtros button {
+  background-color: transparent;
+  border-radius: 25px;
+  padding: 10px 25px;
+  color: #7C7C7C;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.filtros button:focus {
+  outline: none;
+}
+
+.filtros button:hover, .filtros button.mixitup-control-active {
+  border: 1px solid #656565;
+  border-radius: 25px;
+  color: #656565;
+}
+
+#galeria {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  gap: 20px;
+  background: teal;
+  padding: 15px;
+}
+#galeria img {
+  width: 100%;
+  display: block;
+  -webkit-filter: grayscale(1);
+  filter: grayscale(1);
+  transition: all 100ms ease-out;
+}
+#galeria img:hover {
+  transform: scale(1.04);
+  -webkit-filter: grayscale(0);
+  filter: grayscale(0);
+}
+/*# sourceMappingURL=index.2c146b50.css.map */
