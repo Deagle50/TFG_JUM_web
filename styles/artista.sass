@@ -1,28 +1,64 @@
 html, body
-    height: 100%
+    height: 100%    
 
-#divImgArtista
+#artistaTitulo
+    width: 100%
+    display: flex
+    align-items: center
     max-width: 100%
 
     img
         position: absolute
         top:0px
         left:0px
+        z-index: -1
+        background: linear-gradient(to right, rgba(200,180,255,0), rgba(255,255,255,1))
         width: 100%
-        filter: blur(2px)
         -webkit-filter: blur(2px)
-
-    #fade
+        filter: blur(2px)
+    
+    h1 
         position: absolute
-        top:0px
-        left:0px
-        width:100%
-        height:100%
-        background:transparent
-        background: linear-gradient(top, rgba( 255, 255, 255, 255 ) 0%, rgba( 255, 255, 255, 1 ) 100% )
-        background: -moz-linear-gradient(top, rgba( 255, 255, 255, 0) 0%, rgba( 255, 255, 255, 1 ) 100% )
-        background: -ms-linear-gradient(top, rgba( 255, 255, 255, 0 ) 0%, rgba( 255, 255, 255, 1 ) 100% )
-        background: -o-linear-gradient( top, rgba( 255, 255, 255, 0 ) 0%, rgba( 255, 255, 255, 1 ) 100% )
-        background: -webkit-linear-gradient( top, rgba( 255, 255, 255, 0 ) 0%, rgba( 255, 255, 255, 1 ) 100% )
-        -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#550000FF, endColorstr=#550000FF)
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00ffffff, endColorstr=#ffffffff)
+        text-align: center
+        width: 100%
+        margin-top: 20%
+        left: 50%
+        transform: translate(-50%, -50%)
+    p
+        position: absolute
+        width: 100%
+        text-align: center
+        margin-top: 35%
+
+// Contador concierto
+#countdown1
+    padding: 0.5rem
+    width: 100%
+
+    .row
+        width: 100%
+        display: flex
+        justify-content: center
+
+    .countdown-container 
+        padding: 10px
+        background-color: red
+        // margin-bottom: 20px
+        border-radius: 6px
+        border: black solid 1px
+        width: 100%
+        height: 100%
+
+ 
+    .countdown-container .number 
+        font-size: 28px
+        text-align: center
+        padding-top: 20px
+        color: black
+        height: 90px
+        background-color: white
+    
+    .countdown-container .concept 
+        font-size: 28px
+        text-align: center
+        color: #000000

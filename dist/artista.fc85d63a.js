@@ -1,2 +1,0 @@
-function cargarArtista(){artistaSeleccionado=localStorage.getItem("artistaSeleccionado"),console.log("ID: "+artistaSeleccionado),settings.url=url+"artistas/"+artistaSeleccionado,$.ajax(settings).done((function(a){console.log(a),$("#divImgArtista").append(`<img id="img${artistaSeleccionado}" src="${url}images/${artistaSeleccionado}.jpg"/>`)})),$("#fade").css("height",$($("#divImgArtista").children(0)).height())}console.log("PRELOAD"),$(document).load((()=>{console.log("LOAD")}));
-//# sourceMappingURL=artista.fc85d63a.js.map
