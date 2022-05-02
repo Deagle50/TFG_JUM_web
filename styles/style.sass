@@ -1,45 +1,23 @@
+@import "vars"
+
 body 
-	background: #333 
-	color: #ddd 
+	background-color: $bg-primary
+	color: $font-primary
 	margin: 0
+	font-size: 1.5em
 h1 
-	color: white 
+	color: $font-primary 
 	font-size: 2.25em 
 	text-align: center 
 	margin-top: 1em 
 	margin-bottom: 2em 
-	text-shadow: 0px 2px 0px #000000
+	// text-shadow: 0px 2px 0px #000000
 
 #titulo
 	padding-top: 110px
 	padding-bottom: 110px
 	text-align: center
 	margin-bottom: 0
-
-.multi-item-carousel 
-	.carousel-inner 
-		& > .item 
-			transition: 500ms ease-in-out left 
-		.active 
-			&.left 
-				left: -33% 
-			&.right 
-				left: 33% 
-		.next 
-			left: 33% 
-		.prev 
-			left: -33% 
-	@media all and (transform-3d), (-webkit-transform-3d)
-		.multi-item-carousel .carousel-inner > .item
-			transition: 500ms ease-in-out left
-			transition: 500ms ease-in-out all
-			-webkit-backface-visibility: visible
-			backface-visibility: visible
-			transform: none !important
-
-.multi-item-carousel .carouse-control.left,
-.multi-item-carousel .carouse-control.right 
-	background-image: none 
 
 .filtros 
 	text-align: center 
@@ -50,11 +28,15 @@ h1
 		background-color: transparent 
 		border-radius: 25px 
 		padding: 10px 25px 
-		color: #7C7C7C 
+		color: $font-secondary 
 		cursor: pointer 
 		border: 1px solid transparent 
 		&:focus 
-			outline: none 
+			outline: none
+	
+	.control-active
+		background-color: $color-primary
+		color: $font-primary
 
 .filtros button:hover, .filtros button.mixitup-control-active 
 	border: 1px solid #656565 
@@ -65,7 +47,7 @@ h1
 	display: grid 
 	grid-template-columns: auto auto auto auto auto
 	gap: 20px 
-	background: teal 
+	background-color: $bg-secondary
 	padding: 15px 
 	img 
 		width: 100% 
