@@ -1,7 +1,7 @@
 import L from "leaflet";
 import { marker } from "leaflet";
 
-var zoom = 8;
+var zoom = 22;
 var map = "";
 
 function crearMapa (datosConcierto, datosUbicacion){
@@ -15,7 +15,7 @@ function crearMapa (datosConcierto, datosUbicacion){
 function MostrarMarcadores(datosUbicacion) {
 
         const marker = new L.marker([datosUbicacion.lat,datosUbicacion.long])
-        .bindPopup(datosUbicacion.nombre)
+        .bindPopup(datosUbicacion.direccion)
         .addTo(map)
         .on("click", function() {
 	
