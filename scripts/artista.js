@@ -37,10 +37,13 @@ function cargarArtista() {
         mostrarConciertos(concierto, sala);
       });
     });
-
     let fecha = conciertos[0].fecha || null;
     document.getElementById("contador").innerHTML = fecha;
     countdown(fecha, "contador");
+  }).fail(function (conciertos) {
+    $("#conciertos").append(
+      `<h3> No hay conciertos disponibles </h3>`
+    )
   });
 }
 
@@ -121,6 +124,7 @@ const countdown = (dateTo, element) => {
 };
 
 function mostrarConciertos(datosConcierto, datosUbicacion) {
+
   $("#conciertos").append(
     `<div id="d${datosConcierto.id}" class="item concierto col-md-8 col-s-10 col-xs-12">
       <h3>${datosUbicacion.nombre}, ${datosUbicacion.municipio} </h3>
@@ -134,12 +138,8 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
     `
   );
   crearMapa(datosConcierto, datosUbicacion);
-
   $(`#${datosConcierto.id}`).click(() => {
-    console.log("ola" + `#map${datosConcierto.id}`);
-
+  
     $(`#map${datosConcierto.id}`).toggle();
-
-    // $(`#map${datosConcierto.id}`).toggle("fade", 100);
   });
 }

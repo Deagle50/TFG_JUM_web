@@ -9,19 +9,19 @@ function cargarArtista() {
   settings.url = url + "artistas/" + artistaSeleccionado;
   $.ajax(settings).done(function (response) {
     console.log(response);
-    $("#artistaTitulo").append(
-      `<img id="img${artistaSeleccionado}" src="${url}images/${artistaSeleccionado}.jpg" title="${response.nombre}"/>`
+    $(".bg-image").css(
+      "background-image",
+      `linear-gradient(transparent, #000 70%), url(${url}images/${artistaSeleccionado}.jpg)`
     );
 
     $("#artistaTitulo").append(
       `<div id="${response.id}" class="item">
-        <img src="${url}images/${response.id}.jpg" alt="" class="img-responsive"/>
         <h1>${response.nombre}</h1>
         <p>${response.descripcion || "description placeholder"}</p>
       </div>`
     );
 
-    document.getElementById("artista").innerHTML = "Próximos conciertos de " + response.nombre;
+    $("#artista").text("Próximos conciertos de " + response.nombre);
   });
 
   settings.url = url + "conciertosArtista/" + artistaSeleccionado;
@@ -134,9 +134,12 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
     `
   );
   crearMapa(datosConcierto, datosUbicacion);
+
   $(`#${datosConcierto.id}`).click(() => {
-    $(`#map${datosConcierto.id}`).toggle("fade", 100);
+    console.log("ola" + `#map${datosConcierto.id}`);
 
+    $(`#map${datosConcierto.id}`).toggle();
+
+    // $(`#map${datosConcierto.id}`).toggle("fade", 100);
   });
-
 }

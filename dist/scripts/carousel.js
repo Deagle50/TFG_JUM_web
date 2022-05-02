@@ -73,6 +73,8 @@ function cargarFiltroGaleria() {
   });
 
   $(".control").on("click", (event) => {
+    $(".control").removeClass("control-active");
+    $(event.target).addClass("control-active");
     let artistas = filtrarArtistas($(event.target).attr("data-filter"));
     cargarGaleria(artistas);
   });
