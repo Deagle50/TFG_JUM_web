@@ -1,10 +1,7 @@
-var url = "http://192.168.0.200:6745/";
+var url = "http://148.3.87.123:6745/";
+var url_interna = "http://192.168.0.200:6745/";
+// url = url_interna;
 
-$.getJSON("https://ipinfo.io/json?token=9853e4ad6cf8ae", function (data) {
-  url = data.ip == "148.3.87.123" ? "http://192.168.0.200:6745/" : "http://148.3.87.123:6745/";
-});
-
-// const url = "http://10.10.17.164:3000/";
 let token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjUxNTEwNDY1LCJleHAiOjE2NTE1OTcxMjV9.uGTGjegExKYaiFyf8swuotRmKiM0y0pIIa4fsULjqxE";
 
