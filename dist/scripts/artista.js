@@ -130,6 +130,13 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
       <div class="min">Desde ${datosConcierto.precio_min}€</div>
       </div>
     </div>
+    <div id="map${datosConcierto.id}" class="map"></div>
     `
   );
+  crearMapa(datosConcierto, datosUbicacion);
+  $(`#${datosConcierto.id}`).click(() => {
+    $(`#map${datosConcierto.id}`).toggle("fade", 100);
+
+  });
+
 }

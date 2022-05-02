@@ -35,12 +35,15 @@ function cargarArtista() {
       settings.url = url + "salas/" + concierto.salaId;
       $.ajax(settings).done(function (sala) {
         mostrarConciertos(concierto, sala);
+
       });
     });
 
     let fecha = conciertos[0].fecha || null;
     document.getElementById("contador").innerHTML = fecha;
     countdown(fecha, "contador");
+
+
   });
 }
 
@@ -130,6 +133,17 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
       <div class="min">Desde ${datosConcierto.precio_min}€</div>
       </div>
     </div>
+    <div id="map${datosConcierto.id}" class="map"></div>
     `
   );
+  crearMapa(datosConcierto, datosUbicacion);
+  
+  $(`#${datosConcierto.id}`).click(() => {
+    console.log("ola" + `#map${datosConcierto.id}`)
+
+      $(`#map${datosConcierto.id}`).toggle();
+
+   // $(`#map${datosConcierto.id}`).toggle("fade", 100);
+  
+  });
 }
