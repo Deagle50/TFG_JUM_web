@@ -13,7 +13,13 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
-
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css"
+    integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
     <link rel="stylesheet" href="styles/style.sass" />
     <link rel="stylesheet" href="styles/carousel.sass" />
     <link rel="stylesheet" href="styles/artista.sass" />
@@ -24,8 +30,16 @@
   <body>
     <div id="artistaTitulo"></div>
     <div class="container-fluid d-flex flex-column align-items-center" id="conciertos">
-      <div id="countdown1"></div>
+      <div id="contador"></div>
       <h2 id="artista"></h2>
+      <div id="map"></div>
     </div>
   </body>
+  <script src="scripts/map.js" type="module"></script>
+  <script
+  src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js"
+  integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
 </html>

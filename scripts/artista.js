@@ -39,8 +39,8 @@ function cargarArtista() {
     });
 
     let fecha = conciertos[0].fecha || null;
-    document.getElementById("countdown1").innerHTML = fecha;
-    countdown(fecha, "countdown1");
+    document.getElementById("contador").innerHTML = fecha;
+    countdown(fecha, "contador");
   });
 }
 
@@ -122,9 +122,9 @@ const countdown = (dateTo, element) => {
 
 function mostrarConciertos(datosConcierto, datosUbicacion) {
   $("#conciertos").append(
-    `<div id="${datosConcierto.id}" class="item concierto col-md-8 col-s-10 col-xs-12">
+    `<div id="d${datosConcierto.id}" class="item concierto col-md-8 col-s-10 col-xs-12">
       <h3>${datosUbicacion.nombre}, ${datosUbicacion.municipio} </h3>
-      <button type="button" class="btn" style='background-color:red'>Mapa</button>
+      <button id="${datosConcierto.id}" type="button" class="btn" style='background-color:red'>Mapa</button>
       <div class="info">
       <div class="fecha">${datosConcierto.fecha}</div>
       <div class="min">Desde ${datosConcierto.precio_min}€</div>
