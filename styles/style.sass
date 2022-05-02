@@ -44,11 +44,15 @@ h1
 	color: #656565 
 
 #galeria
-	display: grid 
-	grid-template-columns: auto auto auto auto auto
+	display: flex 
+	flex-wrap: wrap
 	gap: 20px 
 	background-color: $bg-secondary
 	padding: 15px 
+
+	a
+		flex: 1 1 300px
+
 	img 
 		width: 100% 
 		display: block 
