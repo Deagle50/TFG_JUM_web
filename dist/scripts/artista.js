@@ -1,5 +1,4 @@
 $(document).ready(() => {
-  console.log("LOAD");
   cargarArtista();
 });
 
@@ -8,7 +7,6 @@ function cargarArtista() {
   console.log("ID: " + artistaSeleccionado);
   settings.url = url + "artistas/" + artistaSeleccionado;
   $.ajax(settings).done(function (response) {
-    console.log(response);
     $(".bg-image").css(
       "background-image",
       `linear-gradient(transparent, #000 70%), url(${url}images/${artistaSeleccionado}.jpg)`
@@ -20,12 +18,13 @@ function cargarArtista() {
         <p>${response.descripcion || "description placeholder"}</p>
       </div>`
     );
-
     $("#artista").text("Próximos conciertos de " + response.nombre);
   });
 
   settings.url = url + "conciertosArtista/" + artistaSeleccionado;
   $.ajax(settings).done(function (conciertos) {
+    $("#count").text("Cantidad de conciertos " + conciertos.length);
+
     conciertos.sort(function (a, b) {
       // Turn your strings into dates, and then subtract them
       // to get a value that is either negative, positive, or zero.
@@ -37,10 +36,15 @@ function cargarArtista() {
         mostrarConciertos(concierto, sala);
       });
     });
-
     let fecha = conciertos[0].fecha || null;
     document.getElementById("contador").innerHTML = fecha;
     countdown(fecha, "contador");
+
+    // Si no hay conciertos
+  }).fail(function (conciertos) {
+    $("#conciertos").append(
+      `<h3> No hay conciertos disponibles </h3>`
+    )
   });
 }
 
@@ -70,8 +74,8 @@ const countdown = (dateTo, element) => {
   const timerUpdate = setInterval(() => {
     let currenTime = getTime(dateTo);
     item.innerHTML = `
-          <div class="row d-flex justify-content-center col-md-8 col-s-10 col-xs-12">
-              <div class="col-lg-2">
+          <div class="row-cols-4 d-flex justify-content-center">
+              <div class="col-lg-2 col-md-2 col-sm-4">
                   <div class="countdown-container">
                       <div class="number">
                           ${currenTime.days}
@@ -81,7 +85,7 @@ const countdown = (dateTo, element) => {
                       </div>
                   </div>
               </div>
-              <div class="col-lg-2">
+              <div class="col-lg-2 col-md-2 col-sm-4">
                   <div class="countdown-container">
                       <div class="number">
                           ${currenTime.hours}
@@ -91,7 +95,7 @@ const countdown = (dateTo, element) => {
                       </div>
                   </div>
               </div>
-              <div class="col-lg-2">
+              <div class="col-lg-2 col-md-2 col-sm-4">
                   <div class="countdown-container">
                       <div class="number">
                           ${currenTime.minutes}
@@ -101,7 +105,7 @@ const countdown = (dateTo, element) => {
                       </div>
                   </div>
               </div>
-              <div class="col-lg-2">
+              <div class="col-lg-2 col-md-2 col-sm-4">
                   <div class="countdown-container">
                       <div class="number">
                           ${currenTime.seconds}
@@ -121,25 +125,40 @@ const countdown = (dateTo, element) => {
 };
 
 function mostrarConciertos(datosConcierto, datosUbicacion) {
+
   $("#conciertos").append(
-    `<div id="d${datosConcierto.id}" class="item concierto col-md-8 col-s-10 col-xs-12">
-      <h3>${datosUbicacion.nombre}, ${datosUbicacion.municipio} </h3>
-      <button id="${datosConcierto.id}" type="button" class="btn" style='background-color:red'>Mapa</button>
-      <div class="info">
-      <div class="fecha">${datosConcierto.fecha}</div>
-      <div class="min">Desde ${datosConcierto.precio_min}€</div>
+    `<div id="d${datosConcierto.id}"  class="event_container">
+      <div class="event_info">
+        <div class="event_title">
+          <h4>${datosUbicacion.nombre}, ${datosUbicacion.municipio}</h4>
+        </div>
+        <div class="event_desc">
+        <ul>
+        <li>${datosUbicacion.direccion}<li>
+        <li>Desde ${datosConcierto.precio_min}€</li>
+        </ul>
+        </div>
+        <div class="event_footer">
+          <div class="event_date">
+            <p>${datosConcierto.fecha}</</p>
+          </div>
+          <div class="event_more">
+              <button id="${datosConcierto.id}" type="button" class="btn _more">
+                Mapa
+              </button>
+          </div>
+        </div>
       </div>
-    </div>
-    <div id="map${datosConcierto.id}" class="map"></div>
+      <div id="map${datosConcierto.id}" class="map"></div>
+  </div>
     `
   );
   crearMapa(datosConcierto, datosUbicacion);
 
   $(`#${datosConcierto.id}`).click(() => {
-    console.log("ola" + `#map${datosConcierto.id}`);
-
+  
     $(`#map${datosConcierto.id}`).toggle();
-
-    // $(`#map${datosConcierto.id}`).toggle("fade", 100);
   });
 }
+
+//https://codepen.io/DominicFrancois/pen/naqQja

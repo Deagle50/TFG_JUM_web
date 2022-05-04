@@ -72,14 +72,21 @@ function cargarFiltroGaleria() {
     );
   });
 
+  // Filtros género
   $(".control").on("click", (event) => {
     $(".control").removeClass("control-active");
     $(event.target).addClass("control-active");
     let artistas = filtrarArtistas($(event.target).attr("data-filter"));
     cargarGaleria(artistas);
   });
+  // Filtro por boton search
+  $("#btnSearch").on("click", () => {
+    var introducido = document.getElementsByName("nombre")[0].value;  
+    let artista = buscarArtista(introducido);
+    cargarGaleria(artista);
+    });
 }
-
+// Filtrar por botones de genero
 function filtrarArtistas(genero) {
   if (genero == "all") return todosArtistas;
   var artistasFiltrados = [];
@@ -90,4 +97,22 @@ function filtrarArtistas(genero) {
     }
   });
   return artistasFiltrados;
+}
+
+// Filtrar por nombre del input search
+function buscarArtista(artista) {
+  var artistaFiltrado = [];
+  todosArtistas.forEach((element) => {
+    //Elimino espacios y combierto todo a mayuscula
+    if (element.nombre.toUpperCase().split(" ").join("")==artista.toUpperCase().split(" ").join("")) {
+      artistaFiltrado.push(element);
+    }
+  });
+  // Si no hay ninguno devolverá todos de nuevo
+  if (artistaFiltrado=="") {
+    return todosArtistas;
+  } 
+  else {
+    return artistaFiltrado;
+  }
 }
