@@ -59,10 +59,23 @@ h1
 		-webkit-filter: grayscale(1) 
 		filter: grayscale(1) 
 		transition: all 100ms ease-out 
-		position:relative
+		// position:relative
 		z-index: 5
 		
 		&:hover 
 			transform: scale(1.04) 
 			-webkit-filter: grayscale(0) 
 			filter: grayscale(0) 
+
+.busqueda
+	border-radius: 25px
+
+	#txtSearch
+		border-radius: 25px 0px 0px 25px
+		background-color: $bg-secondary
+		border: 1px solid $color-primary
+		color: $font-primary
+
+	#btnSearch
+		background-color: $color-primary
+		border-radius: 0px 25px 25px 0px

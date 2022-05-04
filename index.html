@@ -15,6 +15,7 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+    <script src="https://kit.fontawesome.com/dc044d1721.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="styles/style.sass" />
     <link rel="stylesheet" href="styles/carousel.sass" />
@@ -46,11 +47,19 @@
           <div class="filtros"></div>
         </div>
         <div class="row d-flex justify-content-center align-items-center pb-5">
-          <div class="col-md-6">
+          <div class="col-md-4 col-s-8 col-xs-12 busqueda">
             <div class="input-group">
-              <input type="text"  name="nombre" class="form-control form-control-lg" placeholder="Buscar por nombre">
-              <button id="btnSearch" type="submit" class="input-group-text btn-secondary btn-lg"><i class="glyphicon glyphicon-search"></i></button>
-          </div>
+              <input
+                type="text"
+                id="txtSearch"
+                name="nombre"
+                class="form-control form-control-lg"
+                placeholder="Buscar artista por nombre"
+              />
+              <button id="btnSearch" type="submit" class="input-group-text btn-secondary btn-lg">
+                <i class="glyphicon glyphicon-search"></i>
+              </button>
+            </div>
           </div>
         </div>
         <div class="row">

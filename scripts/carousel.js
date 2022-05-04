@@ -56,8 +56,45 @@ function cargarGaleria(artistas) {
   $("#galeria").empty();
   artistas.forEach((element) => {
     $("#galeria").append(
-      `<a href="artista.html"><img src="${url}images/${element.id}.jpg" class="img-responsive img-galeria" id="galeria-${element.id}" url="${element.id}" title="${element.nombre}" alt="${element.nombre}"/></a>`
+      `<a href="artista.html" style="position:relative">
+      
+      <img src="${url}images/${element.id}.jpg" class="img-responsive img-galeria" id="galeria-${element.id}" url="${element.id}" title="${element.nombre}" alt="${element.nombre}"/>
+      <div style="position:absolute;top:10px;right:10px;">
+      <i id="heart${element.id}" artista="${element.id}" class="fa-regular fa-heart fa-xl" style="color:#4b7cab"></i>
+      </div>
+      </a>`
     );
+  });
+  settings.url = url + "preferencias/" + usuario;
+  $.ajax(settings).then((preferencias) => {
+    preferencias.forEach((element) => {
+      $(`#heart${element.artistaId}`).removeClass("fa-regular");
+      $(`#heart${element.artistaId}`).addClass("fa-solid");
+    });
+  });
+
+  $(".fa-heart").on("click", (event) => {
+    event.preventDefault();
+    // Añadir preferencia
+    if ($(event.target).hasClass("fa-regular")) {
+      $(event.target).removeClass("fa-regular");
+      $(event.target).addClass("fa-solid");
+
+      settings.url = url + "preferencias/";
+      settings.method = "POST";
+      settings.body = {
+        usuario: usuario,
+        artistaId: $(event.target).attr("artista"),
+      };
+      console.log(settings);
+      $.ajax(settings).then(() => {
+        console.log("Prefererncia subida");
+      });
+    } else {
+      // Quitar preferencia
+      $(event.target).addClass("fa-regular");
+      $(event.target).removeClass("fa-solid");
+    }
   });
 
   $(".img-galeria").on("click", (event) => {
@@ -81,10 +118,10 @@ function cargarFiltroGaleria() {
   });
   // Filtro por boton search
   $("#btnSearch").on("click", () => {
-    var introducido = document.getElementsByName("nombre")[0].value;  
+    var introducido = document.getElementsByName("nombre")[0].value;
     let artista = buscarArtista(introducido);
     cargarGaleria(artista);
-    });
+  });
 }
 // Filtrar por botones de genero
 function filtrarArtistas(genero) {
@@ -104,15 +141,14 @@ function buscarArtista(artista) {
   var artistaFiltrado = [];
   todosArtistas.forEach((element) => {
     //Elimino espacios y combierto todo a mayuscula
-    if (element.nombre.toUpperCase().split(" ").join("")==artista.toUpperCase().split(" ").join("")) {
+    if (element.nombre.toUpperCase().split(" ").join("") == artista.toUpperCase().split(" ").join("")) {
       artistaFiltrado.push(element);
     }
   });
   // Si no hay ninguno devolverá todos de nuevo
-  if (artistaFiltrado=="") {
+  if (artistaFiltrado == "") {
     return todosArtistas;
-  } 
-  else {
+  } else {
     return artistaFiltrado;
   }
 }
