@@ -22,30 +22,30 @@ function cargarArtista() {
   });
 
   settings.url = url + "conciertosArtista/" + artistaSeleccionado;
-  $.ajax(settings).done(function (conciertos) {
-    $("#count").text("Cantidad de conciertos " + conciertos.length);
+  $.ajax(settings)
+    .done(function (conciertos) {
+      $("#count").text("Cantidad de conciertos " + conciertos.length);
 
-    conciertos.sort(function (a, b) {
-      // Turn your strings into dates, and then subtract them
-      // to get a value that is either negative, positive, or zero.
-      return new Date(b.fecha) - new Date(a.fecha);
-    });
-    conciertos.forEach((concierto) => {
-      settings.url = url + "salas/" + concierto.salaId;
-      $.ajax(settings).done(function (sala) {
-        mostrarConciertos(concierto, sala);
+      conciertos.sort(function (a, b) {
+        // Turn your strings into dates, and then subtract them
+        // to get a value that is either negative, positive, or zero.
+        return new Date(b.fecha) - new Date(a.fecha);
       });
-    });
-    let fecha = conciertos[0].fecha || null;
-    document.getElementById("contador").innerHTML = fecha;
-    countdown(fecha, "contador");
+      conciertos.forEach((concierto) => {
+        settings.url = url + "salas/" + concierto.salaId;
+        $.ajax(settings).done(function (sala) {
+          mostrarConciertos(concierto, sala);
+        });
+      });
+      let fecha = conciertos[0].fecha || null;
+      document.getElementById("contador").innerHTML = fecha;
+      countdown(fecha, "contador");
 
-    // Si no hay conciertos
-  }).fail(function (conciertos) {
-    $("#conciertos").append(
-      `<h3> No hay conciertos disponibles </h3>`
-    )
-  });
+      // Si no hay conciertos
+    })
+    .fail(function (conciertos) {
+      $("#conciertos").append(`<h3> No hay conciertos disponibles </h3>`);
+    });
 }
 
 const getTime = (dateTo) => {
@@ -125,7 +125,6 @@ const countdown = (dateTo, element) => {
 };
 
 function mostrarConciertos(datosConcierto, datosUbicacion) {
-
   $("#conciertos").append(
     `<div id="d${datosConcierto.id}"  class="event_container">
       <div class="event_info">
@@ -143,20 +142,22 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
             <p>${datosConcierto.fecha}</</p>
           </div>
           <div class="event_more">
-              <button id="${datosConcierto.id}" type="button" class="btn _more">
-                Mapa
-              </button>
+              
           </div>
         </div>
       </div>
       <div id="map${datosConcierto.id}" class="map"></div>
   </div>
     `
+    /*
+    <button id="${datosConcierto.id}" type="button" class="btn _more">
+                Mapa
+              </button>
+    */
   );
   crearMapa(datosConcierto, datosUbicacion);
 
   $(`#${datosConcierto.id}`).click(() => {
-  
     $(`#map${datosConcierto.id}`).toggle();
   });
 }
