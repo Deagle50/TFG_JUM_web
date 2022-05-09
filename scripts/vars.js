@@ -1,7 +1,6 @@
 var url = "http://148.3.87.123:6745/";
 var url_interna = "http://192.168.0.200:6745/";
-var url_local ="http://10.10.17.164:6745/"
-//url = url_interna;
+var url_local = "http://10.10.17.164:6745/";
 url = url_local;
 
 let token =

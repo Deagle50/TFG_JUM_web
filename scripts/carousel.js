@@ -80,20 +80,12 @@ function cargarGaleria(artistas) {
       $(event.target).removeClass("fa-regular");
       $(event.target).addClass("fa-solid");
 
-      settings.url = url + "preferencias/";
-      settings.method = "POST";
-      settings.body = {
-        usuario: usuario,
-        artistaId: $(event.target).attr("artista"),
-      };
-      console.log(settings);
-      $.ajax(settings).then(() => {
-        console.log("Prefererncia subida");
-      });
+      postPreferencia(usuario, $(event.target).attr("artista"));
     } else {
       // Quitar preferencia
       $(event.target).addClass("fa-regular");
       $(event.target).removeClass("fa-solid");
+      deletePreferencia(usuario, $(event.target).attr("artista"));
     }
   });
 
