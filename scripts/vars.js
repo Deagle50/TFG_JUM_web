@@ -1,9 +1,11 @@
 var url = "http://148.3.87.123:6745/";
 var url_interna = "http://192.168.0.200:6745/";
-url = url_interna;
+var url_local ="http://10.10.17.164:6745/"
+//url = url_interna;
+url = url_local;
 
 let token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjUxNjk4MDExLCJleHAiOjE2NTE3ODQ2NzF9.jY7H48hO8yjzQ4uoaXwQBFIIylHtWGYkOKb6MHJ_iZs";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjUyMDc2NjE3LCJleHAiOjE2NTIxNjMyNzd9.aEkJc4-RyzDv1RKllO8ASApbdQ8VxCrOlLc03onUKL0";
 
 let usuario = "Deagle50";
 

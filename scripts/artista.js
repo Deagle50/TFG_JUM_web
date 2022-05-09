@@ -162,4 +162,3 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
   });
 }
 
-//https://codepen.io/DominicFrancois/pen/naqQja
