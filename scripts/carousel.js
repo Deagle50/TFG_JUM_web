@@ -60,7 +60,7 @@ function cargarGaleria(artistas) {
       
       <img src="${url}images/${element.id}.jpg" class="img-responsive img-galeria" id="galeria-${element.id}" url="${element.id}" title="${element.nombre}" alt="${element.nombre}"/>
       <div style="position:absolute;top:10px;right:10px;">
-      <i id="heart${element.id}" artista="${element.id}" class="fa-regular fa-heart fa-xl" style="color:#4b7cab"></i>
+      <i id="heart${element.id}" artista="${element.id}" class="fa-regular fa-heart fa-xl"></i>
       </div>
       </a>`
     );
@@ -104,9 +104,7 @@ function cargarGaleria(artistas) {
 
 function cargarFiltroGaleria() {
   generosPrincipales.forEach((element) => {
-    $(".filtros").append(
-      `<button type="button" class="control" data-filter="${element.key}">${element.value}</button>`
-    );
+    $(".filtros").append(`<button type="button" class="control" data-filter="${element.key}">${element.value}</button>`);
   });
 
   // Filtros género
@@ -118,9 +116,15 @@ function cargarFiltroGaleria() {
   });
   // Filtro por boton search
   $("#btnSearch").on("click", () => {
-    var introducido = document.getElementsByName("nombre")[0].value;
-    let artista = buscarArtista(introducido);
-    cargarGaleria(artista);
+    var texto = $("#txtSearch").val();
+    let artistas = buscarArtista(texto);
+    cargarGaleria(artistas);
+  });
+
+  $("#txtSearch").on("change", () => {
+    var texto = $("#txtSearch").val();
+    let artistas = buscarArtista(texto);
+    cargarGaleria(artistas);
   });
 }
 // Filtrar por botones de genero
@@ -137,18 +141,26 @@ function filtrarArtistas(genero) {
 }
 
 // Filtrar por nombre del input search
-function buscarArtista(artista) {
-  var artistaFiltrado = [];
+function buscarArtista(texto) {
+  var artistasFiltrados = [];
   todosArtistas.forEach((element) => {
     //Elimino espacios y combierto todo a mayuscula
-    if (element.nombre.toUpperCase().split(" ").join("") == artista.toUpperCase().split(" ").join("")) {
-      artistaFiltrado.push(element);
+    // if (element.nombre.toUpperCase().split(" ").join("") == artista.toUpperCase().split(" ").join("")) {
+    //   artistaFiltrado.push(element);
+    // }
+
+    // a = li[i].getElementsByTagName("a")[0];
+    // txtValue = a.textContent || a.innerText;
+    // filter = input.value.toUpperCase();
+    if (element.nombre.toUpperCase().indexOf(texto.toUpperCase()) > -1) {
+      artistasFiltrados.push(element);
     }
   });
-  // Si no hay ninguno devolverá todos de nuevo
-  if (artistaFiltrado == "") {
-    return todosArtistas;
-  } else {
-    return artistaFiltrado;
-  }
+  return artistasFiltrados;
+  // // Si no hay ninguno devolverá todos de nuevo
+  // if (artistasFiltrados == "") {
+  //   return todosArtistas;
+  // } else {
+  //   return artistasFiltrados;
+  // }
 }
