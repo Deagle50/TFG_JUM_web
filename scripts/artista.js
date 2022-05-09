@@ -157,8 +157,8 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
   );
   crearMapa(datosConcierto, datosUbicacion);
 
-  $(`#${datosConcierto.id}`).click(() => {
-    $(`#map${datosConcierto.id}`).toggle();
-  });
+  // $(`#${datosConcierto.id}`).click(() => {
+  //   $(`#map${datosConcierto.id}`).toggle();
+  // });
 }
 

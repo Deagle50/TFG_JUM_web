@@ -91,9 +91,14 @@
       </div>
     </section>
     <section>
-      <div class="login-box">
-        <h2 role="button">Login</h2><h2 role="button">Registrarse</h2>
-        <form style="display: none">
+      <div class="login-box d-none" >
+        <div class="nav">
+          <ul class="links">
+            <li><a id="btnLogin" class="btn active">Sign in</a></li>
+            <li><a id="btnRegistrarse" class="btn inactive">Sign up </a></li>
+          </ul>
+        </div>
+        <form class="d-none" id="fLogin">
           <div class="user-box">
             <input type="text" name="" required="">
             <label>Usuario</label>
@@ -110,7 +115,7 @@
             Entrar
           </a>
         </form>
-        <form>
+        <form class="d-none" id="fRegistrarse">
           <div class="user-box">
             <input type="text" name="" required="">
             <label>Nombre</label>
@@ -120,7 +125,7 @@
             <label>Apellido</label>
           </div>
           <div class="user-box">
-            <input type="text" id="datepicker">
+            <input type="text" id="datepicker" ame="" required="">
             <label>Fecha de nacimiento</label>
           </div>
           <div class="user-box">
