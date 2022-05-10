@@ -6,7 +6,7 @@ $(document).on("ready", () => {
     cargarCarouselYGaleria(response);
   
   });
-  $( function() {
+  $(function() {
     $( "#datepicker" ).datepicker({
       changeMonth: true,
       changeYear: true

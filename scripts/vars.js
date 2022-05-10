@@ -1,10 +1,10 @@
 var url = "http://148.3.87.123:6745/";
 var url_interna = "http://192.168.0.200:6745/";
 var url_local = "http://10.10.17.164:6745/";
-url = url_local;
+//url = url_local;
 
 let token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjUyMDc2NjE3LCJleHAiOjE2NTIxNjMyNzd9.aEkJc4-RyzDv1RKllO8ASApbdQ8VxCrOlLc03onUKL0";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjUyMTk4MDg5LCJleHAiOjE2NTIyODQ3NDl9.Gju2K1TwdqMhqnVVNybfv9mTqiHX_f0GnDv2asl9Xv0";
 
 let usuario = "Deagle50";
 

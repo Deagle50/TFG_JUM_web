@@ -75,15 +75,15 @@ function deletePreferencias(usuario = "Deagle50") {
  * @param {*} usuario
  * @param {*} artistaId
  */
-function postRegistro(
-  usuario = {
-    usuario: "Deagle52",
-    contrasena: "Deagle50",
-    nombre: "Nombre",
-    apellido: "APellido",
-    fnac: "1999-05-01",
-    email: "asdlkaj@ajsdl.com",
-  }
+function postRegistro(usuario
+  // usuario = {
+  //   usuario: "Deagle52",
+  //   contrasena: "Deagle50",
+  //   nombre: "Nombre",
+  //   apellido: "APellido",
+  //   fnac: "1999-05-01",
+  //   email: "asdlkaj@ajsdl.com",
+  // }
 ) {
   (async () => {
     const rawResponse = await fetch(url + "registro", {

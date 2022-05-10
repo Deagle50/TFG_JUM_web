@@ -1,8 +1,7 @@
 function cargarLogin() {
-    $("#iconLogin").click(function () {
+    $("#iconLogin").on("click", () =>  {
         if ($(".login-box").is(":visible")) {
             $('.login-box').addClass('d-none');
-
         }
         else {
             $('.login-box').removeClass('d-none');
@@ -10,20 +9,48 @@ function cargarLogin() {
         }
     });
 
-    $("#btnLogin").click(function () {
+    $("#aLogin").on("click", () =>  {
         if ($("#fRegistrarse").is(":visible")) {
             $('#fRegistrarse').addClass('d-none');
-            $("#btnRegistrarse").removeClass('active').addClass('inactive');
-            $("#btnLogin").removeClass('inactive').addClass('active');        }
+            $("#aRegistrarse").removeClass('active').addClass('inactive');
+            $("#aLogin").removeClass('inactive').addClass('active');        }
         $('#fLogin').removeClass('d-none');
     });
 
-    $("#btnRegistrarse").click(function () {
+    $("#aRegistrarse").on("click", () =>  {
         if ($("#fLogin").is(":visible")) {
             $('#fLogin').addClass('d-none');
-            $("#btnLogin").removeClass('active').addClass('inactive');
-            $("#btnRegistrarse").removeClass('inactive').addClass('active');
+            $("#aLogin").removeClass('active').addClass('inactive');
+            $("#aRegistrarse").removeClass('inactive').addClass('active');
         }
         $('#fRegistrarse').removeClass('d-none');
     });
+
+    $("#btnLogin").on("click", () => {
+        var user = $("#textUser").val();
+        var password = $("#textPassword").val();
+    });
+    $("#btnRegistrarse").on("click", () => {
+        var usu = $("#textUsuario").val();
+        var contrasena = $("#textContrasena").val();
+        var nombre = $("#textNombre").val();
+        var apellido= $("#textApellido").val();
+        var fnac= $("#datepicker").val();
+        var email = $("#textEmail").val();
+        // console.log(usu + " " + contrasena + " " + fnac);
+
+        var usuario = {
+            usuario: usu,
+            contrasena: contrasena,
+            nombre: nombre,
+            apellido: apellido,
+            fnac: fnac,
+            email: email
+        };
+        // console.log(usuario);
+
+       // postRegistro(usuario);
+    });
+
+
 }
