@@ -1,4 +1,290 @@
 /**
+ * Login
+ * @param {*} usuario
+ * @param {*} contrasena
+ */
+function login(usuario = "Deagle50", contrasena = "Deagle50") {
+  (async () => {
+    const rawResponse = await fetch(url + "login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "",
+      },
+      body: JSON.stringify({
+        usuario: usuario,
+        contrasena: contrasena,
+      }),
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+  })();
+}
+
+/**
+ * Subir preferencia
+ *
+ * @param {*} usuario
+ * @param {*} artistaId
+ */
+function postRegistro(
+  usuario = {
+    usuario: "Deagle52",
+    contrasena: "Deagle50",
+    nombre: "Nombre",
+    apellido: "APellido",
+    fnac: "1999-05-01",
+    email: "asdlkaj@ajsdl.com",
+  }
+) {
+  (async () => {
+    const rawResponse = await fetch(url + "registro", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "",
+      },
+      body: JSON.stringify({
+        usuario: usuario.usuario,
+        contrasena: usuario.contrasena,
+        nombre: usuario.nombre,
+        apellido: usuario.apellido,
+        fnac: usuario.fnac,
+        email: usuario.email,
+      }),
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+  })();
+}
+
+function getToken(usuario = "Deagle50") {
+  (async () => {
+    const rawResponse = await fetch(url + "tokens/" + usuario, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "",
+      },
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+  })();
+}
+
+/**
+ * Enviar token
+ *
+ * @param {*} usuario
+ * @param {*} token
+ */
+function postToken(
+  usuario = "Deagle50",
+  token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjUyMjY2Mzg1LCJleHAiOjE2NTIzNTMwNDV9.FLIE5uH3XjvYaucpCRMId44gUxzjPIT-q0LI7o6D0sA"
+) {
+  (async () => {
+    const rawResponse = await fetch(url + "tokens", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "access-token": token,
+        "Access-Control-Allow-Origin": "",
+      },
+      body: JSON.stringify({ usuario: usuario, token: token }),
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+  })();
+}
+
+function deleteToken(usuario = "Deagle50") {
+  (async () => {
+    const rawResponse = await fetch(url + "tokens/" + usuario, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "access-token": token,
+        "Access-Control-Allow-Origin": "",
+      },
+    });
+    const content = await rawResponse;
+
+    console.log(content);
+  })();
+}
+
+/**
+ * Obtener las compras del usuario
+ * @param {*} usuario
+ */
+function getCompras(usuario = "Deagle50") {
+  (async () => {
+    const rawResponse = await fetch(url + "compras/" + usuario, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "",
+        "access-token": token,
+      },
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+  })();
+}
+
+/**
+ * Subir compra
+ *
+ * @param {*} usuario
+ * @param {*} artistaId
+ */
+function postCompra(
+  compra = {
+    compraId: "asdadasdas",
+    usuario: "Deagle50",
+    conciertoId: "062BCE60-3E15-48A1-8B97-5700C70BE69A",
+    fecha: "1999-05-01",
+    cantidad: 3,
+    precio: 34.5,
+  }
+) {
+  (async () => {
+    const rawResponse = await fetch(url + "compras", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "access-token": token,
+        "Access-Control-Allow-Origin": "",
+      },
+      body: JSON.stringify({
+        compraId: compra.compraId,
+        usuario: compra.usuario,
+        conciertoId: compra.conciertoId,
+        fecha: compra.fecha,
+        cantidad: compra.cantidad,
+        precio: compra.precio,
+      }),
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+  })();
+}
+
+function getArtistas() {
+  (async () => {
+    const rawResponse = await fetch(url + "artistas/", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "",
+      },
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+  })();
+}
+
+function getArtista(artistaId = "UC1fab2nJ6Gk6G1drkzagxYg") {
+  (async () => {
+    const rawResponse = await fetch(url + "artistas/" + artistaId, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "",
+      },
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+  })();
+}
+
+function getConciertos() {
+  (async () => {
+    const rawResponse = await fetch(url + "conciertos/", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "",
+      },
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+  })();
+}
+
+function getConcierto(conciertoId = "062BCE60-3E15-48A1-8B97-5700C70BE69A") {
+  (async () => {
+    const rawResponse = await fetch(url + "conciertos/" + conciertoId, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "",
+      },
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+  })();
+}
+
+function getConciertosArtista(artistaId = "UC1fab2nJ6Gk6G1drkzagxYg") {
+  (async () => {
+    const rawResponse = await fetch(url + "conciertosArtista/" + artistaId, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "",
+      },
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+  })();
+}
+
+/**
+ * Obtener las preferencias del usuario
+ * @param {*} usuario
+ */
+function getPreferencias(usuario = "Deagle50") {
+  (async () => {
+    const rawResponse = await fetch(url + "preferencias/" + usuario, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "",
+        "access-token": token,
+      },
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+  })();
+}
+
+/**
  * Subir preferencia
  *
  * @param {*} usuario
@@ -47,7 +333,7 @@ function deletePreferencia(usuario = "Deagle50", artistaId = "UC4JNeITH4P7G51C1h
 }
 
 /**
- * Elimina la preferencia
+ * Elimina todas las preferencias
  *
  * @param {*} usuario
  */
@@ -69,39 +355,47 @@ function deletePreferencias(usuario = "Deagle50") {
   })();
 }
 
-/**
- * Subir preferencia
- *
- * @param {*} usuario
- * @param {*} artistaId
- */
-function postRegistro(usuario
-  // usuario = {
-  //   usuario: "Deagle52",
-  //   contrasena: "Deagle50",
-  //   nombre: "Nombre",
-  //   apellido: "APellido",
-  //   fnac: "1999-05-01",
-  //   email: "asdlkaj@ajsdl.com",
-  // }
-) {
+function getTeloneros() {
   (async () => {
-    const rawResponse = await fetch(url + "registro", {
-      method: "POST",
+    const rawResponse = await fetch(url + "teloneros/", {
+      method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "access-token": token,
         "Access-Control-Allow-Origin": "",
       },
-      body: JSON.stringify({
-        usuario: usuario.usuario,
-        contrasena: usuario.contrasena,
-        nombre: usuario.nombre,
-        apellido: usuario.apellido,
-        fnac: usuario.fnac,
-        email: usuario.email,
-      }),
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+  })();
+}
+
+function getConciertosTelonero(artistaId = "UCu6ct4LWh-sMXxQpreWDY_g") {
+  (async () => {
+    const rawResponse = await fetch(url + "teloneros/" + artistaId, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "",
+      },
+    });
+    const content = await rawResponse.json();
+
+    console.log(content);
+  })();
+}
+
+function getTelonerosconcierto(conciertoId = "062BCE60-3E15-48A1-8B97-5700C70BE69A") {
+  (async () => {
+    const rawResponse = await fetch(url + "telonerosConcierto/" + conciertoId, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "",
+      },
     });
     const content = await rawResponse.json();
 

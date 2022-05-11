@@ -1,10 +1,9 @@
 var url = "http://148.3.87.123:6745/";
 var url_interna = "http://192.168.0.200:6745/";
-var url_local = "http://10.10.17.164:6745/";
-//url = url_local;
+var url_local = "http://localhost:6745/";
+url = url_local;
 
-let token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjUyMTk4MDg5LCJleHAiOjE2NTIyODQ3NDl9.Gju2K1TwdqMhqnVVNybfv9mTqiHX_f0GnDv2asl9Xv0";
+// let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjUyMjY2Mzg1LCJleHAiOjE2NTIzNTMwNDV9.FLIE5uH3XjvYaucpCRMId44gUxzjPIT-q0LI7o6D0sA";
 
 let usuario = "Deagle50";
 
@@ -17,7 +16,7 @@ let settings = {
     "Content-Type": "application/x-www-form-urlencoded",
     Accept: "application/json",
     crossDomain: true,
-    "access-token": token,
+    // "access-token": token,
   },
   body: {
     usuario: usuario,

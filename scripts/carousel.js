@@ -126,7 +126,6 @@ function filtrarArtistas(genero) {
   todosArtistas.forEach((element) => {
     if (element.generos.split(",").includes(genero)) {
       artistasFiltrados.push(element);
-    } else {
     }
   });
   return artistasFiltrados;
@@ -136,23 +135,9 @@ function filtrarArtistas(genero) {
 function buscarArtista(texto) {
   var artistasFiltrados = [];
   todosArtistas.forEach((element) => {
-    //Elimino espacios y combierto todo a mayuscula
-    // if (element.nombre.toUpperCase().split(" ").join("") == artista.toUpperCase().split(" ").join("")) {
-    //   artistaFiltrado.push(element);
-    // }
-
-    // a = li[i].getElementsByTagName("a")[0];
-    // txtValue = a.textContent || a.innerText;
-    // filter = input.value.toUpperCase();
     if (element.nombre.toUpperCase().indexOf(texto.toUpperCase()) > -1) {
       artistasFiltrados.push(element);
     }
   });
   return artistasFiltrados;
-  // // Si no hay ninguno devolverá todos de nuevo
-  // if (artistasFiltrados == "") {
-  //   return todosArtistas;
-  // } else {
-  //   return artistasFiltrados;
-  // }
 }
