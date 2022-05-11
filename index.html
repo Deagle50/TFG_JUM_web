@@ -26,13 +26,16 @@
     <script src="scripts/carousel.js"></script>
     <script src="scripts/api.js"></script>
     <script src="scripts/login.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
   </head>
   <body>
     <div id="loginButton" class="p-3" role="button" style="position: fixed; top: 10; right: 10; padding: 5px; border-radius: 25px; z-index: 1">
       <div class="d-flex justify-content-end" style="background-color: #1f1f1f">
         <i id="iconLogin" class="fa-regular fa-circle-user fa-xl" style="color: #ad67d6"></i>
       </div>
-      <div id="profileDiv" class="d-flex flex-column mt-4" style="background-color: #1f1f1f; border-radius: 5px; border: 1px solid #ad67d6">
+      <div id="profileDiv" class="d-flex flex-column mt-4 d-none" style="background-color: #1f1f1f; border-radius: 5px; border: 1px solid #ad67d6">
         <div class="p-3 pb-0 d-flex justify-content-between align-items-center">
           Profile
           <i class="fa-solid fa-user ms-3"></i>
@@ -75,8 +78,8 @@
         </div>
       </div>
     </section>
-    <section>
-      <div class="login-box d-none">
+    <section id="sLoginRegistro" class="d-none">
+      <div class="login-box">
         <div class="nav w-100 d-flex justify-content-around">
           <ul class="links">
             <li><a id="aLogin" class="btn active">Sign in</a></li>
@@ -85,11 +88,11 @@
         </div>
         <form class="d-none" id="fLogin">
           <div class="user-box">
-            <input type="text" id="textUser" name="textUser" required="" />
+            <input type="text" id="textUser" name="textUser" required/>
             <label>Usuario</label>
           </div>
           <div class="user-box">
-            <input type="password" id="textPassword" name="textPassword" required="" />
+            <input type="password" id="textPassword" name="textPassword" required/>
             <label>Contraseña</label>
           </div>
           <a href="#" id="btnLogin">
@@ -102,27 +105,27 @@
         </form>
         <form class="d-none" id="fRegistrarse">
           <div class="user-box">
-            <input type="text" id="textNombre" name="textNombre" required="" />
+            <input type="text" id="textNombre" name="textNombre" required/>
             <label>Nombre</label>
           </div>
           <div class="user-box">
-            <input type="text" id="textApellido" name="textApellido" required="" />
+            <input type="text" id="textApellido" name="textApellido" required/>
             <label>Apellido</label>
           </div>
           <div class="user-box">
-            <input type="text" id="datepicker" name="textFnac" required="" />
+            <input type="text" id="datepicker" name="textFnac" required/>
             <label>Fecha de nacimiento</label>
           </div>
           <div class="user-box">
-            <input type="text" id="textEmail" name="textEmail" required="" />
+            <input type="email" id="textEmail" name="textEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/>
             <label>Email</label>
           </div>
           <div class="user-box">
-            <input type="text" id="textUsuario" name="textUsuario" required="" />
+            <input type="text" id="textUsuario" name="textUsuario"  size="15" pattern="([A-Za-z]{1,})" maxlength="20" autofocus required/>
             <label>Usuario</label>
           </div>
           <div class="user-box">
-            <input type="text" id="textContrasena" name="textContrasena" required="" />
+            <input type="password" id="textContrasena" name="textContrasena" required/>
             <label>Contraseña</label>
           </div>
           <a href="#" id="btnRegistrarse">
@@ -131,6 +134,30 @@
             <span></span>
             <span></span>
             Registrarse
+          </a>
+        </form>
+      </div>
+    </section>
+    <section id="sPerfil" class="d-none">
+      <div class="login-box">
+        <div class="nav w-100 d-flex justify-content-around">
+          <h2>Perfil</h2>
+        </div>
+        <form>
+          <div class="user-box">
+            <input type="text" id="textUser" name="textUser" required/>
+            <label>Usuario</label>
+          </div>
+          <div class="user-box">
+            <input type="password" id="textPassword" name="textPassword" required/>
+            <label>Contraseña</label>
+          </div>
+          <a href="#" id="btnLogin">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Entrar
           </a>
         </form>
       </div>

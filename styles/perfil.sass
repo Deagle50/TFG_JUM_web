@@ -13,29 +13,11 @@
   border-radius: 10px
   border: solid 1px $color-primary
   
-  .nav
+  h2
     margin: 0 0 30px
     padding: 0
-
-  li
-    display: inline
-    padding-right: 10px
-
-    a
-      font-size: 20px
-      text-decoration: none
-      cursor: pointer
-
-    .active
-      padding-bottom: 10px
-      color: #fff
-      border-bottom: solid 2px $color-primary
-      transition: all 0.25s ease
-
-    .inactive
-      padding-bottom: 0
-      color: rgba(255, 255, 255, 0.3)
-      border-bottom: none
+    color: #fff
+    text-align: center
 
   .user-box
     position: relative
@@ -60,25 +42,7 @@
       color: #fff
       pointer-events: none
       transition: 0.5s
-
-    label.error 
-      color: red
-      font-size: 1rem
-      display: block
-      margin-top: 5px
-
-    input
-      &:focus ~ label, &:valid ~ label
-        top: -20px
-        left: 0
-        color: $color-primary
-        font-size: 12px
-
-    input.error
-      border: 1px dashed red
-      font-weight: 300
-      color: red
-
+      
   form a
     position: relative
     display: flex
