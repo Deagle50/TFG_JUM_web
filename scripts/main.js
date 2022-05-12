@@ -1,17 +1,29 @@
-
 $(document).on("ready", () => {
-  cargarLogin();
-  settings.url = url + "artistas";
+    settings.url = url + "artistas";
   $.ajax(settings).done(function (response) {
     todosArtistas = response;
     cargarCarouselYGaleria(response);
   
   });
   $(function() {
-    $( "#datepicker" ).datepicker({
+    $( ".datepicker" ).datepicker({
       changeMonth: true,
       changeYear: true
     });
+  });
+
+  $("#iconLogin").on("click", () =>  {
+
+        //Si la sesion esta sin iniciar
+    // if () {
+      cargarLogin();
+
+    // } 
+    //Si esta iniciada se muestra el menu del usuario
+    // else { 
+      cargarMenu();
+    //}
+ 
   });
 
   // https://code.tutsplus.com/es/tutorials/easy-form-validation-with-jquery--cms-33096

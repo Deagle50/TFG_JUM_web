@@ -21,11 +21,13 @@
     <link rel="stylesheet" href="styles/style.sass" />
     <link rel="stylesheet" href="styles/carousel.sass" />
     <link rel="stylesheet" href="styles/login.sass" />
+    <link rel="stylesheet" href="styles/perfil.sass" />
     <script src="scripts/vars.js"></script>
     <script src="scripts/main.js"></script>
     <script src="scripts/carousel.js"></script>
     <script src="scripts/api.js"></script>
     <script src="scripts/login.js"></script>
+    <script src="scripts/user.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
   </head>
@@ -35,11 +37,11 @@
         <i id="iconLogin" class="fa-regular fa-circle-user fa-xl" style="color: #ad67d6"></i>
       </div>
       <div id="profileDiv" class="d-flex flex-column mt-4 d-none" style="background-color: #1f1f1f; border-radius: 5px; border: 1px solid #ad67d6">
-        <div class="p-3 pb-0 d-flex justify-content-between align-items-center">
+        <div id="dUser" class="p-3 pb-0 d-flex justify-content-between align-items-center">
           Profile
           <i class="fa-solid fa-user ms-3"></i>
         </div>
-        <div class="p-3 d-flex justify-content-between align-items-center">
+        <div id="dExit" class="p-3 d-flex justify-content-between align-items-center">
           Log out
           <i class="fa-solid fa-arrow-right-from-bracket ms-3"></i>
         </div>
@@ -112,7 +114,7 @@
             <label>Apellido</label>
           </div>
           <div class="user-box">
-            <input type="text" id="datepicker" name="textFnac" required />
+            <input type="text" id="textFnac" class="datepicker" name="textFnac" required />
             <label>Fecha de nacimiento</label>
           </div>
           <div class="user-box">
@@ -142,21 +144,36 @@
         <div class="nav w-100 d-flex justify-content-around">
           <h2>Perfil</h2>
         </div>
-        <form>
-          <div class="user-box">
-            <input type="text" id="textUser" name="textUser" required />
+        <form id="fDatos">
+          <div class="user-value">
+            <label>Nombre</label>
+            <input type="text" id="mostrarTextNombre" name="mostrarTextNombre" required />
+          </div>
+          <div class="user-value">
+            <label>Apellido</label>
+            <input type="text" id="mostrarTextApellido" name="mostrarTextApellido" required />
+          </div>
+          <div class="user-value">
+            <label>Fecha de nacimiento</label>
+            <input type="text" id="mostrarTextFnac" class="datepicker" name="mostrarTextFnac" required />
+          </div>
+          <div class="user-value">
+            <label>Email</label>
+            <input type="email" id="mostrarTextEmail" name="mostrarTextEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+          </div>
+          <div class="user-value">
             <label>Usuario</label>
+            <input type="text" id="mostrarTextUsuario" name="mostrarTextUsuario" size="15" pattern="([A-Za-z]{1,})" maxlength="20" autofocus required />
           </div>
-          <div class="user-box">
-            <input type="password" id="textPassword" name="textPassword" required />
+          <div class="user-value">
             <label>Contraseña</label>
+            <input type="password" id="mostrarTextContrasena" name="mostrarTextContrasena" required />
           </div>
-          <a href="#" id="btnLogin">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Entrar
+          <a href="#" id="btnCancelar">
+            Cancelar
+          </a>
+          <a href="#" id="btnGuardar">
+            Guardar
           </a>
         </form>
       </div>

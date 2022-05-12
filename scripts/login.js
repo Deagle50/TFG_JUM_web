@@ -1,25 +1,15 @@
 function cargarLogin() {
-
-    $("#iconLogin").on("click", () =>  {
-    // if() {
-        if ($("#sLoginRegistro").is(":visible")) {
-            $('#sLoginRegistro').addClass('d-none');
-        }
-        else {
-            $('#sLoginRegistro').removeClass('d-none');
-            $('#fLogin').removeClass('d-none');
-        }
-    // } 
-    // else {
-        if ($("#profileDiv").is(":visible")) {
-            $('#profileDiv').addClass('d-none');
-        }
-        else {
-            $('#profileDiv').removeClass('d-none');
-        }
-    // }
-    });
-
+    // Se cierra el div login/registro y deja todo listo para futuro inicio como login
+    if ($("#sLoginRegistro").is(":visible")) {
+        $('#sLoginRegistro').addClass('d-none');
+        $('#fRegistrarse').addClass('d-none');
+        $("#aRegistrarse").removeClass('active').addClass('inactive');
+        $("#aLogin").removeClass('inactive').addClass('active');  
+    }
+    else {
+        $('#sLoginRegistro').removeClass('d-none');
+        $('#fLogin').removeClass('d-none');
+    }
     $("#aLogin").on("click", () =>  {
         if ($("#fRegistrarse").is(":visible")) {
             $('#fRegistrarse').addClass('d-none');
@@ -53,24 +43,9 @@ function cargarLogin() {
         var contrasena = $("#textContrasena").val();
         var nombre = $("#textNombre").val();
         var apellido= $("#textApellido").val();
-        var fnac= $("#datepicker").val();
+        var fnac= $("#textFnac").val();
         var email = $("#textEmail").val();
-
-        var fnac= $("#datepicker").val();
-         if (validar(usu) && validar(contrasena) && validar(nombre) && validar(apellido) && validar(fnac) && validar(email)) {
-             var usuario = {
-                usuario: usu,
-                contrasena: contrasena,
-                nombre: nombre,
-                apellido: apellido,
-                fnac: fnac,
-                email: email
-            };
-            // postRegistro(usuario);
-        }
-        else {
-            alert('Hay que rellenar todos los campos');
-        }       
+        guardarDatos(usu,contrasena,nombre,apellido, fnac,email);         
     });
 }
 function validar(campo) {
@@ -78,4 +53,20 @@ function validar(campo) {
         return false;
     }
     return true;
+}
+function guardarDatos(usu,contrasena,nombre,apellido, fnac,email){
+    if (validar(usu) && validar(contrasena) && validar(nombre) && validar(apellido) && validar(fnac) && validar(email)) {
+        var usuario = {
+           usuario: usu,
+           contrasena: contrasena,
+           nombre: nombre,
+           apellido: apellido,
+           fnac: fnac,
+           email: email
+       };
+       // postRegistro(usuario);
+   }
+   else {
+       alert('Hay que rellenar todos los campos');
+   } 
 }
