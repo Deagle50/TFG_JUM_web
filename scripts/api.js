@@ -1,26 +1,62 @@
+var getApiAuth = {
+  method: "GET",
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "",
+    "access-token": token,
+  },
+};
+
+var getApi = {
+  method: "GET",
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "",
+  },
+};
+
+var deleteApiAuth = {
+  method: "GET",
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "",
+    "access-token": token,
+  },
+};
+
 /**
  * Login
  * @param {*} usuario
  * @param {*} contrasena
  */
-function login(usuario = "Deagle50", contrasena = "Deagle50") {
-  (async () => {
-    const rawResponse = await fetch(url + "login", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "",
-      },
-      body: JSON.stringify({
-        usuario: usuario,
-        contrasena: contrasena,
-      }),
-    });
-    const content = await rawResponse.json();
+async function login(usuario = "Deagle50", contrasena = "Deagle50") {
+  const rawResponse = await fetch(url + "login", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "",
+    },
+    body: JSON.stringify({
+      usuario: usuario,
+      contrasena: contrasena,
+    }),
+  });
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  console.log(content);
+  return content;
+}
+
+async function getUsuario(usuario = "Deagle50") {
+  const rawResponse = await fetch(url + "usuarios/" + usuario, getApiAuth);
+  const content = await rawResponse.json();
+
+  console.log(content);
+  return content;
 }
 
 /**
@@ -29,7 +65,7 @@ function login(usuario = "Deagle50", contrasena = "Deagle50") {
  * @param {*} usuario
  * @param {*} artistaId
  */
-function postRegistro(
+async function postRegistro(
   usuario = {
     usuario: "Deagle52",
     contrasena: "Deagle50",
@@ -39,43 +75,34 @@ function postRegistro(
     email: "asdlkaj@ajsdl.com",
   }
 ) {
-  (async () => {
-    const rawResponse = await fetch(url + "registro", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "",
-      },
-      body: JSON.stringify({
-        usuario: usuario.usuario,
-        contrasena: usuario.contrasena,
-        nombre: usuario.nombre,
-        apellido: usuario.apellido,
-        fnac: usuario.fnac,
-        email: usuario.email,
-      }),
-    });
-    const content = await rawResponse.json();
+  const rawResponse = await fetch(url + "registro", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "",
+    },
+    body: JSON.stringify({
+      usuario: usuario.usuario,
+      contrasena: usuario.contrasena,
+      nombre: usuario.nombre,
+      apellido: usuario.apellido,
+      fnac: usuario.fnac,
+      email: usuario.email,
+    }),
+  });
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  console.log(content);
+  return content;
 }
 
-function getToken(usuario = "Deagle50") {
-  (async () => {
-    const rawResponse = await fetch(url + "tokens/" + usuario, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "",
-      },
-    });
-    const content = await rawResponse.json();
+async function getToken(usuario = "Deagle50") {
+  const rawResponse = await fetch(url + "tokens/" + usuario, getApi);
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  console.log(content);
+  return content;
 }
 
 /**
@@ -84,63 +111,57 @@ function getToken(usuario = "Deagle50") {
  * @param {*} usuario
  * @param {*} token
  */
-function postToken(
+async function postToken(
   usuario = "Deagle50",
   token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjUyMjY2Mzg1LCJleHAiOjE2NTIzNTMwNDV9.FLIE5uH3XjvYaucpCRMId44gUxzjPIT-q0LI7o6D0sA"
 ) {
-  (async () => {
-    const rawResponse = await fetch(url + "tokens", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "access-token": token,
-        "Access-Control-Allow-Origin": "",
-      },
-      body: JSON.stringify({ usuario: usuario, token: token }),
-    });
-    const content = await rawResponse.json();
+  const rawResponse = await fetch(url + "tokens", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "access-token": token,
+      "Access-Control-Allow-Origin": "",
+    },
+    body: JSON.stringify({ usuario: usuario, token: token }),
+  });
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  return content;
 }
 
-function deleteToken(usuario = "Deagle50") {
-  (async () => {
-    const rawResponse = await fetch(url + "tokens/" + usuario, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "access-token": token,
-        "Access-Control-Allow-Origin": "",
-      },
-    });
-    const content = await rawResponse;
-
-    console.log(content);
-  })();
+async function deleteToken(usuario = "Deagle50") {
+  const rawResponse = await fetch(url + "tokens/" + usuario, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "",
+      "access-token": token,
+    },
+  });
+  const content = await rawResponse;
+  return content;
 }
 
 /**
  * Obtener las compras del usuario
  * @param {*} usuario
  */
-function getCompras(usuario = "Deagle50") {
-  (async () => {
-    const rawResponse = await fetch(url + "compras/" + usuario, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "",
-        "access-token": token,
-      },
-    });
-    const content = await rawResponse.json();
+async function getCompras(usuario = "Deagle50") {
+  const rawResponse = await fetch(url + "compras/" + usuario, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "",
+      "access-token": token,
+    },
+  });
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  console.log(content);
+  return content;
 }
 
 /**
@@ -149,7 +170,7 @@ function getCompras(usuario = "Deagle50") {
  * @param {*} usuario
  * @param {*} artistaId
  */
-function postCompra(
+async function postCompra(
   compra = {
     compraId: "asdadasdas",
     usuario: "Deagle50",
@@ -159,129 +180,111 @@ function postCompra(
     precio: 34.5,
   }
 ) {
-  (async () => {
-    const rawResponse = await fetch(url + "compras", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "access-token": token,
-        "Access-Control-Allow-Origin": "",
-      },
-      body: JSON.stringify({
-        compraId: compra.compraId,
-        usuario: compra.usuario,
-        conciertoId: compra.conciertoId,
-        fecha: compra.fecha,
-        cantidad: compra.cantidad,
-        precio: compra.precio,
-      }),
-    });
-    const content = await rawResponse.json();
+  const rawResponse = await fetch(url + "compras", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "access-token": token,
+      "Access-Control-Allow-Origin": "",
+    },
+    body: JSON.stringify({
+      compraId: compra.compraId,
+      usuario: compra.usuario,
+      conciertoId: compra.conciertoId,
+      fecha: compra.fecha,
+      cantidad: compra.cantidad,
+      precio: compra.precio,
+    }),
+  });
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  console.log(content);
+  return content;
 }
 
-function getArtistas() {
-  (async () => {
-    const rawResponse = await fetch(url + "artistas/", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "",
-      },
-    });
-    const content = await rawResponse.json();
+async function getArtistas() {
+  const rawResponse = await fetch(url + "artistas/", getApiAuth);
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  return content;
 }
 
-function getArtista(artistaId = "UC1fab2nJ6Gk6G1drkzagxYg") {
-  (async () => {
-    const rawResponse = await fetch(url + "artistas/" + artistaId, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "",
-      },
-    });
-    const content = await rawResponse.json();
+async function getArtista(artistaId = "UC1fab2nJ6Gk6G1drkzagxYg") {
+  const rawResponse = await fetch(url + "artistas/" + artistaId, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "",
+    },
+  });
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  return content;
 }
 
-function getConciertos() {
-  (async () => {
-    const rawResponse = await fetch(url + "conciertos/", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "",
-      },
-    });
-    const content = await rawResponse.json();
+async function getConciertos() {
+  const rawResponse = await fetch(url + "conciertos/", {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "",
+    },
+  });
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  console.log(content);
+  return content;
 }
 
-function getConcierto(conciertoId = "062BCE60-3E15-48A1-8B97-5700C70BE69A") {
-  (async () => {
-    const rawResponse = await fetch(url + "conciertos/" + conciertoId, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "",
-      },
-    });
-    const content = await rawResponse.json();
+async function getConcierto(conciertoId = "062BCE60-3E15-48A1-8B97-5700C70BE69A") {
+  const rawResponse = await fetch(url + "conciertos/" + conciertoId, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "",
+    },
+  });
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  return content;
 }
 
-function getConciertosArtista(artistaId = "UC1fab2nJ6Gk6G1drkzagxYg") {
-  (async () => {
-    const rawResponse = await fetch(url + "conciertosArtista/" + artistaId, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "",
-      },
-    });
-    const content = await rawResponse.json();
+async function getConciertosArtista(artistaId = "UC1fab2nJ6Gk6G1drkzagxYg") {
+  const rawResponse = await fetch(url + "conciertosArtista/" + artistaId, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "",
+    },
+  });
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  return content;
 }
 
 /**
  * Obtener las preferencias del usuario
  * @param {*} usuario
  */
-function getPreferencias(usuario = "Deagle50") {
-  (async () => {
-    const rawResponse = await fetch(url + "preferencias/" + usuario, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "",
-        "access-token": token,
-      },
-    });
-    const content = await rawResponse.json();
+async function getPreferencias(usuario = "Deagle50") {
+  const rawResponse = await fetch(url + "preferencias/" + usuario, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "",
+      "access-token": token,
+    },
+  });
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  console.log(content);
+  return content;
 }
 
 /**
@@ -290,22 +293,21 @@ function getPreferencias(usuario = "Deagle50") {
  * @param {*} usuario
  * @param {*} artistaId
  */
-function postPreferencia(usuario = "Deagle50", artistaId = "UC4JNeITH4P7G51C1hJoG6vQ") {
-  (async () => {
-    const rawResponse = await fetch(url + "preferencias", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "access-token": token,
-        "Access-Control-Allow-Origin": "",
-      },
-      body: JSON.stringify({ usuario: usuario, artistaId: artistaId }),
-    });
-    const content = await rawResponse.json();
+async function postPreferencia(usuario = "Deagle50", artistaId = "UC4JNeITH4P7G51C1hJoG6vQ") {
+  const rawResponse = await fetch(url + "preferencias", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "access-token": token,
+      "Access-Control-Allow-Origin": "",
+    },
+    body: JSON.stringify({ usuario: usuario, artistaId: artistaId }),
+  });
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  console.log(content);
+  return content;
 }
 
 /**
@@ -314,22 +316,21 @@ function postPreferencia(usuario = "Deagle50", artistaId = "UC4JNeITH4P7G51C1hJo
  * @param {*} usuario
  * @param {*} artistaId
  */
-function deletePreferencia(usuario = "Deagle50", artistaId = "UC4JNeITH4P7G51C1hJoG6vQ") {
-  (async () => {
-    const rawResponse = await fetch(url + "preferencias", {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "access-token": token,
-        "Access-Control-Allow-Origin": "",
-      },
-      body: JSON.stringify({ usuario: usuario, artistaId: artistaId }),
-    });
-    const content = await rawResponse;
+async function deletePreferencia(usuario = "Deagle50", artistaId = "UC4JNeITH4P7G51C1hJoG6vQ") {
+  const rawResponse = await fetch(url + "preferencias", {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "access-token": token,
+      "Access-Control-Allow-Origin": "",
+    },
+    body: JSON.stringify({ usuario: usuario, artistaId: artistaId }),
+  });
+  const content = await rawResponse;
 
-    console.log(content);
-  })();
+  console.log(content);
+  return content;
 }
 
 /**
@@ -337,68 +338,78 @@ function deletePreferencia(usuario = "Deagle50", artistaId = "UC4JNeITH4P7G51C1h
  *
  * @param {*} usuario
  */
-function deletePreferencias(usuario = "Deagle50") {
-  (async () => {
-    const rawResponse = await fetch(url + "preferencias/" + usuario, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "access-token": token,
-        "Access-Control-Allow-Origin": "",
-      },
-      //   body: JSON.stringify({ usuario: usuario, artistaId: artistaId }),
-    });
-    const content = await rawResponse;
+async function deletePreferencias(usuario = "Deagle50") {
+  const rawResponse = await fetch(url + "preferencias/" + usuario, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "access-token": token,
+      "Access-Control-Allow-Origin": "",
+    },
+    //   body: JSON.stringify({ usuario: usuario, artistaId: artistaId }),
+  });
+  const content = await rawResponse;
 
-    console.log(content);
-  })();
+  console.log(content);
+  return content;
 }
 
-function getTeloneros() {
-  (async () => {
-    const rawResponse = await fetch(url + "teloneros/", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "",
-      },
-    });
-    const content = await rawResponse.json();
+async function getSala(id = "doka_donostia") {
+  const rawResponse = await fetch(url + "salas/" + id, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "",
+    },
+  });
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  return content;
 }
 
-function getConciertosTelonero(artistaId = "UCu6ct4LWh-sMXxQpreWDY_g") {
-  (async () => {
-    const rawResponse = await fetch(url + "teloneros/" + artistaId, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "",
-      },
-    });
-    const content = await rawResponse.json();
+async function getTeloneros() {
+  const rawResponse = await fetch(url + "teloneros/", {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "",
+    },
+  });
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  console.log(content);
+  return content;
 }
 
-function getTelonerosconcierto(conciertoId = "062BCE60-3E15-48A1-8B97-5700C70BE69A") {
-  (async () => {
-    const rawResponse = await fetch(url + "telonerosConcierto/" + conciertoId, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "",
-      },
-    });
-    const content = await rawResponse.json();
+async function getConciertosTelonero(artistaId = "UCu6ct4LWh-sMXxQpreWDY_g") {
+  const rawResponse = await fetch(url + "teloneros/" + artistaId, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "",
+    },
+  });
+  const content = await rawResponse.json();
 
-    console.log(content);
-  })();
+  console.log(content);
+  return content;
+}
+
+async function getTelonerosconcierto(conciertoId = "062BCE60-3E15-48A1-8B97-5700C70BE69A") {
+  const rawResponse = await fetch(url + "telonerosConcierto/" + conciertoId, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "",
+    },
+  });
+  const content = await rawResponse.json();
+
+  console.log(content);
+  return content;
 }

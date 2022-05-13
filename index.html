@@ -23,29 +23,39 @@
     <link rel="stylesheet" href="styles/login.sass" />
     <link rel="stylesheet" href="styles/perfil.sass" />
     <script src="scripts/vars.js"></script>
-    <script src="scripts/main.js"></script>
     <script src="scripts/carousel.js"></script>
     <script src="scripts/api.js"></script>
     <script src="scripts/login.js"></script>
     <script src="scripts/user.js"></script>
+    <script src="scripts/main.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
   </head>
   <body>
-    <div id="loginButton" class="p-3" role="button" style="position: fixed; top: 10; right: 10; padding: 5px; border-radius: 25px; z-index: 1">
-      <div class="d-flex justify-content-end" style="background-color: #1f1f1f">
-        <i id="iconLogin" class="fa-regular fa-circle-user fa-xl" style="color: #ad67d6"></i>
-      </div>
-      <div id="profileDiv" class="d-flex flex-column mt-4 d-none" style="background-color: #1f1f1f; border-radius: 5px; border: 1px solid #ad67d6">
-        <div id="dUser" class="p-3 pb-0 d-flex justify-content-between align-items-center">
-          Profile
-          <i class="fa-solid fa-user ms-3"></i>
+    <div>
+      <div id="top-buttons" class="d-flex align-items-center pl-3">
+        <div id="loginButton" class="p-3" role="button">
+          <div
+            id="iconLogin"
+            class="d-flex justify-content-end align-items-center p-3"
+            style="background-color: #1f1f1f; border-radius: 25px; border: 2px solid #ad67d6"
+          >
+            <div id="nombre-usuario" style="margin: 4px"></div>
+            <i class="fa-regular fa-circle-user fa-xl" style="color: #ad67d6"></i>
+          </div>
+          <div id="profileDiv" class="d-flex flex-column mt-4 d-none" style="background-color: #1f1f1f; border-radius: 5px; border: 1px solid #ad67d6">
+            <div id="dUser" class="p-3 pb-0 d-flex justify-content-between align-items-center">
+              Perfil
+              <i class="fa-solid fa-user ms-3"></i>
+            </div>
+            <div id="dExit" class="p-3 d-flex justify-content-between align-items-center">
+              Cerrar sesión
+              <i class="fa-solid fa-arrow-right-from-bracket ms-3"></i>
+            </div>
+          </div>
         </div>
-        <div id="dExit" class="p-3 d-flex justify-content-between align-items-center">
-          Log out
-          <i class="fa-solid fa-arrow-right-from-bracket ms-3"></i>
-        </div>
       </div>
+      <section id="top-menu"></section>
     </div>
     <section>
       <div class="container-fluid mt-5">
@@ -77,105 +87,6 @@
         <div>
           <div class="images" id="galeria"></div>
         </div>
-      </div>
-    </section>
-    <section id="sLoginRegistro" class="d-none">
-      <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
-        <div class="nav w-100 d-flex justify-content-around">
-          <ul class="links">
-            <li><a id="aLogin" class="btn active">Sign in</a></li>
-            <li><a id="aRegistrarse" class="btn inactive">Sign up </a></li>
-          </ul>
-        </div>
-        <form class="d-none" id="fLogin">
-          <div class="user-box">
-            <input type="text" id="textUser" name="textUser" required />
-            <label>Usuario</label>
-          </div>
-          <div class="user-box">
-            <input type="password" id="textPassword" name="textPassword" required />
-            <label>Contraseña</label>
-          </div>
-          <a href="#" id="btnLogin">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Entrar
-          </a>
-        </form>
-        <form class="d-none" id="fRegistrarse">
-          <div class="user-box">
-            <input type="text" id="textNombre" name="textNombre" required />
-            <label>Nombre</label>
-          </div>
-          <div class="user-box">
-            <input type="text" id="textApellido" name="textApellido" required />
-            <label>Apellido</label>
-          </div>
-          <div class="user-box">
-            <input type="text" id="textFnac" class="datepicker" name="textFnac" required />
-            <label>Fecha de nacimiento</label>
-          </div>
-          <div class="user-box">
-            <input type="email" id="textEmail" name="textEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
-            <label>Email</label>
-          </div>
-          <div class="user-box">
-            <input type="text" id="textUsuario" name="textUsuario" size="15" pattern="([A-Za-z]{1,})" maxlength="20" autofocus required />
-            <label>Usuario</label>
-          </div>
-          <div class="user-box">
-            <input type="password" id="textContrasena" name="textContrasena" required />
-            <label>Contraseña</label>
-          </div>
-          <a href="#" id="btnRegistrarse">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Registrarse
-          </a>
-        </form>
-      </div>
-    </section>
-    <section id="sPerfil" class="d-none">
-      <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
-        <div class="nav w-100 d-flex justify-content-around">
-          <h2>Perfil</h2>
-        </div>
-        <form id="fDatos">
-          <div class="user-value">
-            <label>Nombre</label>
-            <input type="text" id="mostrarTextNombre" name="mostrarTextNombre" required />
-          </div>
-          <div class="user-value">
-            <label>Apellido</label>
-            <input type="text" id="mostrarTextApellido" name="mostrarTextApellido" required />
-          </div>
-          <div class="user-value">
-            <label>Fecha de nacimiento</label>
-            <input type="text" id="mostrarTextFnac" class="datepicker" name="mostrarTextFnac" required />
-          </div>
-          <div class="user-value">
-            <label>Email</label>
-            <input type="email" id="mostrarTextEmail" name="mostrarTextEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
-          </div>
-          <div class="user-value">
-            <label>Usuario</label>
-            <input type="text" id="mostrarTextUsuario" name="mostrarTextUsuario" size="15" pattern="([A-Za-z]{1,})" maxlength="20" autofocus required />
-          </div>
-          <div class="user-value">
-            <label>Contraseña</label>
-            <input type="password" id="mostrarTextContrasena" name="mostrarTextContrasena" required />
-          </div>
-          <a href="#" id="btnCancelar">
-            Cancelar
-          </a>
-          <a href="#" id="btnGuardar">
-            Guardar
-          </a>
-        </form>
       </div>
     </section>
   </body>

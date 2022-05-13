@@ -48,7 +48,8 @@ function cargarCarousel(artistas) {
   });
 
   $(".img-carousel").on("click", (event) => {
-    console.log($(event.target).attr("url"));
+    console.log("CLICK");
+    localStorage.setItem("artistaSeleccionado", $(event.target).attr("url"));
   });
 }
 
@@ -65,13 +66,7 @@ function cargarGaleria(artistas) {
       </a>`
     );
   });
-  settings.url = url + "preferencias/" + usuario;
-  $.ajax(settings).then((preferencias) => {
-    preferencias.forEach((element) => {
-      $(`#heart${element.artistaId}`).removeClass("fa-regular");
-      $(`#heart${element.artistaId}`).addClass("fa-solid");
-    });
-  });
+  if (logueado) cargarPreferencias();
 
   $(".fa-heart").on("click", (event) => {
     event.preventDefault();
@@ -119,6 +114,20 @@ function cargarFiltroGaleria() {
     cargarGaleria(artistas);
   });
 }
+
+function cargarPreferencias() {
+  getPreferencias(usuario).then((preferencias) => {
+    preferencias.forEach((element) => {
+      $(`#heart${element.artistaId}`).removeClass("fa-regular");
+      $(`#heart${element.artistaId}`).addClass("fa-solid");
+    });
+  });
+}
+
+function borrarPreferencias() {
+  $(".fa-solid").addClass("fa-regular").removeClass("fa-solid");
+}
+
 // Filtrar por botones de genero
 function filtrarArtistas(genero) {
   if (genero == "all") return todosArtistas;

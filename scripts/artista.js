@@ -2,28 +2,26 @@ $(document).on("ready", () => {
   cargarArtista();
 });
 
-function cargarArtista() {
+async function cargarArtista() {
   artistaSeleccionado = localStorage.getItem("artistaSeleccionado");
-  console.log("ID: " + artistaSeleccionado);
   settings.url = url + "artistas/" + artistaSeleccionado;
-  $.ajax(settings).done(function (response) {
-    $(".bg-image").css(
-      "background-image",
-      `linear-gradient(transparent, #000 70%), url(${url}images/${artistaSeleccionado}.jpg)`
-    );
+
+  getArtista(artistaSeleccionado).then((response) => {
+    $(".bg-image").css("background-image", `linear-gradient(transparent, #000 70%), url(${url}images/${artistaSeleccionado}.jpg)`);
 
     $("#artistaTitulo").append(
       `<div id="${response.id}" class="item">
         <h1>${response.nombre}</h1>
-        <p>${response.descripcion || "description placeholder"}</p>
+        <p>${response.descripcion || ""}</p>
       </div>`
     );
     $("#artista").text("Próximos conciertos de " + response.nombre);
   });
 
   settings.url = url + "conciertosArtista/" + artistaSeleccionado;
-  $.ajax(settings)
-    .done(function (conciertos) {
+
+  getConciertosArtista(artistaSeleccionado)
+    .then((conciertos) => {
       $("#count").text("Cantidad de conciertos " + conciertos.length);
 
       conciertos.sort(function (a, b) {
@@ -32,8 +30,7 @@ function cargarArtista() {
         return new Date(b.fecha) - new Date(a.fecha);
       });
       conciertos.forEach((concierto) => {
-        settings.url = url + "salas/" + concierto.salaId;
-        $.ajax(settings).done(function (sala) {
+        getSala(concierto.salaId).then((sala) => {
           mostrarConciertos(concierto, sala);
         });
       });
@@ -43,7 +40,7 @@ function cargarArtista() {
 
       // Si no hay conciertos
     })
-    .fail(function (conciertos) {
+    .catch(() => {
       $("#conciertos").append(`<h3> No hay conciertos disponibles </h3>`);
     });
 }
@@ -161,4 +158,3 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
   //   $(`#map${datosConcierto.id}`).toggle();
   // });
 }
-

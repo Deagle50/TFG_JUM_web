@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html> -->
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -22,13 +22,43 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="styles/style.sass" />
-    <link rel="stylesheet" href="styles/carousel.sass" />
+    <link rel="stylesheet" href="styles/perfil.sass" />
     <link rel="stylesheet" href="styles/artista.sass" />
+    <link rel="stylesheet" href="styles/login.sass" />
     <script src="scripts/vars.js"></script>
     <script src="scripts/api.js"></script>
+    <script src="scripts/login.js"></script>
     <script src="scripts/artista.js"></script>
+    <script src="scripts/user.js"></script>
+    <script src="scripts/main.js"></script>
   </head>
   <body>
+    <i style="color: #ad67d6; position: absolute; top: 20; left: 20; z-index: 1" class="fa-regular fa-heart fa-2x"></i>
+    <div>
+      <div id="top-buttons" class="d-flex align-items-center pl-3">
+        <div id="loginButton" class="p-3" role="button">
+          <div
+            id="iconLogin"
+            class="d-flex justify-content-end align-items-center p-3"
+            style="background-color: #1f1f1f; border-radius: 25px; border: 2px solid #ad67d6"
+          >
+            <div id="nombre-usuario" style="margin: 4px"></div>
+            <i class="fa-regular fa-circle-user fa-xl" style="color: #ad67d6"></i>
+          </div>
+          <div id="profileDiv" class="d-flex flex-column mt-4 d-none" style="background-color: #1f1f1f; border-radius: 5px; border: 1px solid #ad67d6">
+            <div id="dUser" class="p-3 pb-0 d-flex justify-content-between align-items-center">
+              Perfil
+              <i class="fa-solid fa-user ms-3"></i>
+            </div>
+            <div id="dExit" class="p-3 d-flex justify-content-between align-items-center">
+              Cerrar sesión
+              <i class="fa-solid fa-arrow-right-from-bracket ms-3"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section id="top-menu"></section>
+    </div>
     <div class="bg-image"></div>
     <section>
       <div id="artistaTitulo"></div>

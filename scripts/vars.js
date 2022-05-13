@@ -2,10 +2,12 @@ var url = "http://148.3.87.123:6745/";
 var url_interna = "http://192.168.0.200:6745/";
 var url_local = "http://localhost:6745/";
 url = url_local;
-
+let token;
 // let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjUyMjc5NDEyLCJleHAiOjE2NTIzNjYwNzJ9._Pr9ONAJ5i93bopwJkn8zfPAsvoUm2Wks8HWpptRyek";
 
-let usuario = "Deagle50";
+var logueado = false;
+
+let usuario = localStorage.getItem("usuario") || null;
 
 let settings = {
   url: url,

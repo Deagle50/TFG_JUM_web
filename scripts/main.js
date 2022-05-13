@@ -1,29 +1,17 @@
 $(document).on("ready", () => {
-    settings.url = url + "artistas";
-  $.ajax(settings).done(function (response) {
-    todosArtistas = response;
-    cargarCarouselYGaleria(response);
-  
-  });
-  $(function() {
-    $( ".datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true
+  cargarMenuCompleto();
+
+  if (usuario)
+    getToken(usuario).then((resp) => {
+      token = resp.token;
+      despuesDeLogin();
     });
-  });
 
-  $("#iconLogin").on("click", () =>  {
+  obtenerArtistas();
 
-        //Si la sesion esta sin iniciar
-    // if () {
-      cargarLogin();
-
-    // } 
-    //Si esta iniciada se muestra el menu del usuario
-    // else { 
-      cargarMenu();
-    //}
- 
+  $("#iconLogin").on("click", () => {
+    if (logueado) cargarMenu();
+    else cargarLogin();
   });
 
   // https://code.tutsplus.com/es/tutorials/easy-form-validation-with-jquery--cms-33096
@@ -36,7 +24,7 @@ $(document).on("ready", () => {
   //     textApellido: {
   //       required: true,
   //       minlength: 3
-  //     },        
+  //     },
   //     textUsuario: {
   //       required: true,
   //       minlength: 3
@@ -61,8 +49,9 @@ $(document).on("ready", () => {
   //     }
   //   }
   // });
-  
-  
-  
-  
 });
+
+async function obtenerArtistas() {
+  todosArtistas = await getArtistas();
+  if (!window.location.href.includes("artista")) cargarCarouselYGaleria(todosArtistas);
+}
