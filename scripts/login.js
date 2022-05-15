@@ -159,8 +159,9 @@ function cargarMenuCompleto() {
               <input type="text" id="mostrarTextUsuario" name="mostrarTextUsuario" size="15" pattern="([A-Za-z]{1,})" maxlength="20" autofocus required />
             </div>
             <div class="user-value">
-              <label>Contraseña</label>
-              <input type="password" id="mostrarTextContrasena" name="mostrarTextContrasena" required />
+              <label>Preferencias</label>
+              <input type="textarea" id="mostrarTextPreferencias" name="mostrarTextPreferencias" readonly/>
+              <button type="button" id="btnEliminar"> Eliminar preferencias </button>
             </div>
             <a href="#" id="btnCancelar"> Cancelar </a>
             <a href="#" id="btnGuardar"> Guardar </a>
