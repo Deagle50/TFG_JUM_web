@@ -30,9 +30,28 @@ async function cargarArtista() {
       //   return new Date(b.fecha) - new Date(a.fecha);
       // });
       conciertos.forEach((concierto) => {
-        getTelonerosconcierto(concierto.id).then((teloneros)=> {       }).catch(() => {teloneros="No hay teloneros"});
         getSala(concierto.salaId).then((sala) => {
           mostrarConciertos(concierto, sala);
+          getTelonerosConcierto(concierto.id).then((teloneros)=>{
+            if(teloneros.length>0){
+              $(`#teloneros${concierto.id}`).append(`<p>Teloneros:</p>`)
+              teloneros.forEach(telonero => {
+                getArtista(telonero.artistaId).then((artista)=>{
+                  $(`#teloneros${concierto.id}`).append(`
+                  <div id="telonero${artista.id}" class="teloneros" style="padding:5px; margin-left:15px" role="button"> 
+                  <img src="${url}images/${artista.id}.jpg" style="height:40px; border-radius:5px" alt="Telonero ${artista.nombre}">
+                  <span>${artista.nombre}. Tiempo: ${telonero.fecha} mins</span>
+                  </div>
+                  `);
+                  $(`#telonero${artista.id}`).attr("url", artista.id);
+                  $(`#telonero${artista.id}`).on("click", (event)=>{
+                    localStorage.setItem("artistaSeleccionado", $(event.currentTarget).attr("url"));
+                    window.location = "artista.html"
+                  })
+                })
+              });
+            }
+          })          
         });
       });
       let fecha = conciertos[0].fecha || null;
@@ -122,34 +141,40 @@ const countdown = (dateTo, element) => {
   }, 1000);
 };
 
-function mostrarConciertos(datosConcierto, datosUbicacion, datosTeloneros) {
+function mostrarConciertos(datosConcierto, datosUbicacion) {
   $("#conciertos").append(
-    `<div id="d${datosConcierto.id}"  class="event_container">
-      <div class="event_info">
-        <div class="event_title">
-          <h4>${datosUbicacion.nombre}, ${datosUbicacion.municipio}</h4>
-        </div>
-        <div class="event_desc">
-        <ul>
-        <li>${datosUbicacion.direccion}<li>
-        <li>Desde ${datosConcierto.precio_min}€</li>
-        <input type="number" min="0" max="8"></input>
-        <li>Hasta ${datosConcierto.precio_max}€</li>
-        <input type="number" min="0" max="8"></input>
-        </ul>
-        </div>
-        <div class="event_footer">
-          <div class="event_date">
-            <p>${datosConcierto.fecha}</</p>
-          </div>
-          <div class="event_more">
-              
-          </div>
-        </div>
-      </div>
-      <div id="map${datosConcierto.id}" class="map"></div>
-  </div>
     `
+    <div class="d-flex flex-column col-md-6" style="border: solid 1px #ad67d6; margin-bottom:30px; border-radius:25px;padding:0px; background-color:#151515;">
+      <div id="d${datosConcierto.id}"  class="event_container" style="border:none">
+        <div class="event_info">
+          <div class="event_title">
+            <h4>${datosUbicacion.nombre}, ${datosUbicacion.municipio}</h4>
+          </div>
+          <div class="event_desc">
+          <ul>
+          <li>${datosUbicacion.direccion}<li>
+          <li>Desde ${datosConcierto.precio_min}€ <input type="number" min="0" max="8" value="0"></input></li>
+          <li>Hasta ${datosConcierto.precio_max}€  <input type="number" min="0" max="8" value="0"></input></li>
+          <button id="comprar${datosConcierto.id}" type="button" class="btn _more" style="color:#ad67d6;">
+          Comprar
+          </button>
+          </ul>
+          </div>
+          <div class="event_footer">
+            <div class="event_date">
+              <p>${datosConcierto.fecha}</</p>
+            </div>
+            <div class="event_more">
+                
+            </div>
+          </div>
+        </div>
+        <div id="map${datosConcierto.id}" class="map"></div>
+        </div>
+        <div class="div-teloneros" id="teloneros${datosConcierto.id}"></div>
+    </div>
+    `
+
     /*
     <button id="${datosConcierto.id}" type="button" class="btn _more">
                 Mapa

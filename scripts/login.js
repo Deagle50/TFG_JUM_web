@@ -172,10 +172,20 @@ function cargarMenuCompleto() {
             <h2>Mis entradas</h2>
           </div>
          <div>
-
          </div>
         </div>
       </section>
+
+      <section id="sCarrito" class="d-none">
+        <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
+          <div class="nav w-100 d-flex justify-content-around">
+            <h2>Mi carrito</h2>
+          </div>
+          <a href="#" id="btnCancelar"> Cancelar </a>
+          <a href="#" id="btnGuardar"> Guardar </a>
+        </div>
+      </section>
+
     `);
 
   $("#aLogin").on("click", () => {

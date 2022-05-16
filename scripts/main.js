@@ -16,6 +16,13 @@ $(document).on("ready", () => {
     cargarLogin();
   });
 
+  $("#iconCarrito").on("click", () => {
+    if (logueado) {
+      $("#carritoButton").removeClass("d-none");
+      carrito();
+    };
+  });
+
   // https://code.tutsplus.com/es/tutorials/easy-form-validation-with-jquery--cms-33096
   // $("#fRegistrarse").validate({
   //   rules: {

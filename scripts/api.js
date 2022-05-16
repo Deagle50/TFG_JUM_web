@@ -399,7 +399,7 @@ async function getConciertosTelonero(artistaId = "UCu6ct4LWh-sMXxQpreWDY_g") {
   return content;
 }
 
-async function getTelonerosconcierto(conciertoId = "062BCE60-3E15-48A1-8B97-5700C70BE69A") {
+async function getTelonerosConcierto(conciertoId = "062BCE60-3E15-48A1-8B97-5700C70BE69A") {
   const rawResponse = await fetch(url + "telonerosConcierto/" + conciertoId, {
     method: "GET",
     headers: {
@@ -409,7 +409,5 @@ async function getTelonerosconcierto(conciertoId = "062BCE60-3E15-48A1-8B97-5700
     },
   });
   const content = await rawResponse.json();
-
-  console.log(content);
   return content;
 }

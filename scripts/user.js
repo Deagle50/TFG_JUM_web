@@ -8,6 +8,12 @@ function cargarMenu() {
   $("#dExit").on("click", () => {
     logout();
   });
+  $("#dEntradas").on("click", (event) => {
+    event.preventDefault();
+    $(".login-box").removeClass("d-none");
+    $("#sEntradas").removeClass("d-none");
+    $("#profileDiv").addClass("d-none");
+  });
   $("#dUser").on("click", (event) => {
     event.preventDefault();
     $(".login-box").removeClass("d-none");
@@ -47,5 +53,14 @@ function cargarMenu() {
     $("#btnCancelar").on("click", () => {
       $("#sPerfil").addClass("d-none");
     });
+  });
+}
+
+function carrito(){
+  $("#carritoButton").on("click", (event) => {
+    event.preventDefault();
+    $(".login-box").removeClass("d-none");
+    $("#sCarrito").removeClass("d-none");
+    $("#profileDiv").addClass("d-none");
   });
 }
