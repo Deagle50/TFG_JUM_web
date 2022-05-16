@@ -1,6 +1,11 @@
 $(document).on("ready", () => {
   cargarMenuCompleto();
 
+  if (logueado) {
+    $("#carritoButton").removeClass("d-none");
+    carrito();
+  }
+
   if (usuario)
     getToken(usuario).then((resp) => {
       token = resp.token;
@@ -15,11 +20,6 @@ $(document).on("ready", () => {
     else 
     cargarLogin();
   });
-
-  if (logueado) {
-    $("#iconCarrito").removeClass("d-none");
-    carrito();
-  }
 
   // https://code.tutsplus.com/es/tutorials/easy-form-validation-with-jquery--cms-33096
   // $("#fRegistrarse").validate({

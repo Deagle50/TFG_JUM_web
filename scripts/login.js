@@ -52,6 +52,7 @@ function logout() {
   $("#nombre-usuario").text("Inicia sesión");
   if (!window.location.href.includes("artista")) borrarPreferencias();
   $("#profileDiv").addClass("d-none");
+  $("#carritoButton").addClass("d-none");
 }
 
 function despuesDeLogin() {
