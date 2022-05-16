@@ -24,12 +24,13 @@ async function cargarArtista() {
     .then((conciertos) => {
       $("#count").text("Cantidad de conciertos " + conciertos.length);
 
-      conciertos.sort(function (a, b) {
-        // Turn your strings into dates, and then subtract them
-        // to get a value that is either negative, positive, or zero.
-        return new Date(b.fecha) - new Date(a.fecha);
-      });
+      // conciertos.sort(function (a, b) {
+      //   // Turn your strings into dates, and then subtract them
+      //   // to get a value that is either negative, positive, or zero.
+      //   return new Date(b.fecha) - new Date(a.fecha);
+      // });
       conciertos.forEach((concierto) => {
+        getTelonerosconcierto(concierto.id).then((teloneros)=> {       }).catch(() => {teloneros="No hay teloneros"});
         getSala(concierto.salaId).then((sala) => {
           mostrarConciertos(concierto, sala);
         });
@@ -121,7 +122,7 @@ const countdown = (dateTo, element) => {
   }, 1000);
 };
 
-function mostrarConciertos(datosConcierto, datosUbicacion) {
+function mostrarConciertos(datosConcierto, datosUbicacion, datosTeloneros) {
   $("#conciertos").append(
     `<div id="d${datosConcierto.id}"  class="event_container">
       <div class="event_info">
@@ -132,6 +133,9 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
         <ul>
         <li>${datosUbicacion.direccion}<li>
         <li>Desde ${datosConcierto.precio_min}€</li>
+        <input type="number" min="0" max="8"></input>
+        <li>Hasta ${datosConcierto.precio_max}€</li>
+        <input type="number" min="0" max="8"></input>
         </ul>
         </div>
         <div class="event_footer">
