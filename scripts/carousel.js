@@ -117,10 +117,11 @@ function cargarFiltroGaleria() {
 
 function cargarPreferencias() {
   getPreferencias(usuario).then((preferencias) => {
-    preferencias.forEach((element) => {
-      $(`#heart${element.artistaId}`).removeClass("fa-regular");
-      $(`#heart${element.artistaId}`).addClass("fa-solid");
-    });
+    if (preferencias.length > 0)
+      preferencias.forEach((element) => {
+        $(`#heart${element.artistaId}`).removeClass("fa-regular");
+        $(`#heart${element.artistaId}`).addClass("fa-solid");
+      });
   });
 }
 
