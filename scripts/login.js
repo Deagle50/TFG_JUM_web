@@ -61,7 +61,7 @@ function despuesDeLogin() {
   postToken(usuario, token);
   localStorage.setItem("usuario", usuario);
   if (!window.location.href.includes("artista")) cargarPreferencias();
-  $(".login-box").hide();
+  $(".login-box").addClass("d-none");
 }
 
 function cargarMenuCompleto() {
@@ -147,25 +147,33 @@ function cargarMenuCompleto() {
               <input type="text" id="mostrarTextApellido" name="mostrarTextApellido" required />
             </div>
             <div class="user-value">
-              <label>Fecha de nacimiento</label>
-              <input type="text" id="mostrarTextFnac" class="datepicker" name="mostrarTextFnac" required />
-            </div>
-            <div class="user-value">
               <label>Email</label>
               <input type="email" id="mostrarTextEmail" name="mostrarTextEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
             </div>
             <div class="user-value">
-              <label>Usuario</label>
-              <input type="text" id="mostrarTextUsuario" name="mostrarTextUsuario" size="15" pattern="([A-Za-z]{1,})" maxlength="20" autofocus required />
+              <label>Fecha de nacimiento</label>
+              <input type="text" id="mostrarTextFnac" class="datepicker" readonly name="mostrarTextFnac" required />
             </div>
             <div class="user-value">
-              <label>Preferencias</label>
-              <input type="textarea" id="mostrarTextPreferencias" name="mostrarTextPreferencias" readonly/>
+              <label>Usuario</label>
+              <input type="text" id="mostrarTextUsuario" name="mostrarTextUsuario" readonly size="15" pattern="([A-Za-z]{1,})" maxlength="20" autofocus required />
+            </div>
+            <div class="user-value">
               <button type="button" id="btnEliminar"> Eliminar preferencias </button>
             </div>
             <a href="#" id="btnCancelar"> Cancelar </a>
             <a href="#" id="btnGuardar"> Guardar </a>
           </form>
+        </div>
+      </section>
+      <section id="sEntradas" class="d-none">
+        <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
+          <div class="nav w-100 d-flex justify-content-around">
+            <h2>Mis entradas</h2>
+          </div>
+         <div>
+
+         </div>
         </div>
       </section>
     `);

@@ -56,7 +56,7 @@ async function getUsuario(usuario = "Deagle50") {
   const content = await rawResponse.json();
 
   console.log(content);
-  return content;
+  return content[0];
 }
 
 /**
