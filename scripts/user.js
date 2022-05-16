@@ -10,7 +10,6 @@ function cargarMenu() {
   });
   $("#dUser").on("click", (event) => {
     event.preventDefault();
-    console.log("HERE");
     $(".login-box").removeClass("d-none");
     $("#sPerfil").removeClass("d-none");
     $("#profileDiv").addClass("d-none");
