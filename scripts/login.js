@@ -1,5 +1,4 @@
 function cargarLogin() {
-  console.log("click");
   // Se cierra el div login/registro y deja todo listo para futuro inicio como login
   if ($("#sLoginRegistro").is(":visible")) {
     $("#sLoginRegistro").addClass("d-none");
@@ -179,10 +178,11 @@ function cargarMenuCompleto() {
       <section id="sCarrito" class="d-none">
         <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
           <div class="nav w-100 d-flex justify-content-around">
-            <h2>Mi carrito</h2>
-          </div>
-          <a href="#" id="btnCancelar"> Cancelar </a>
-          <a href="#" id="btnGuardar"> Guardar </a>
+            <h2>Mi carrito</h2>   
+            </div>
+          <a href="#" id="btnCerrar" class="btnCarrito"> Cerrar </a>
+          <a href="#" id="btnVaciar" class="btnCarrito"> Vaciar </a>
+          <a href="#" id="btnComprar" class="btnCarrito"> Comprar</a>
         </div>
       </section>
 

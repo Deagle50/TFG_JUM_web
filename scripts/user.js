@@ -57,10 +57,21 @@ function cargarMenu() {
 }
 
 function carrito(){
-  $("#carritoButton").on("click", (event) => {
+  $("#iconCarrito").on("click", (event) => {
     event.preventDefault();
     $(".login-box").removeClass("d-none");
     $("#sCarrito").removeClass("d-none");
     $("#profileDiv").addClass("d-none");
+
+    $("#btnComprar").on("click", () => {
+      alert("Y ahora mi dragoncito pandora");
+    });
+
+    $("#btnCerrar").on("click", () => {
+      $("#sCarrito").addClass("d-none");
+    });
+    $("#btnVaciar").on("click", () => {
+      alert("Dragoncito dragoncito!!No me seas rancio");
+    });
   });
 }
