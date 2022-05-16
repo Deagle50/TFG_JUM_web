@@ -10,8 +10,10 @@ $(document).on("ready", () => {
   obtenerArtistas();
 
   $("#iconLogin").on("click", () => {
-    if (logueado) cargarMenu();
-    else cargarLogin();
+    if (logueado) 
+    cargarMenu();
+    else 
+    cargarLogin();
   });
 
   // https://code.tutsplus.com/es/tutorials/easy-form-validation-with-jquery--cms-33096

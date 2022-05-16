@@ -8,7 +8,6 @@ function cargarMenu() {
     logout();
   });
   $("#dUser").on("click", () => {
-    console.log("HERE");
     $("#sPerfil").removeClass("d-none");
     $("#profileDiv").addClass("d-none");
 
