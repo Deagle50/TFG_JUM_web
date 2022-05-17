@@ -46,7 +46,7 @@ async function login(usuario = "Deagle50", contrasena = "Deagle50") {
     }),
   });
   const content = await rawResponse.json();
-
+  
   console.log(content);
   return content;
 }

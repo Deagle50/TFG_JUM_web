@@ -1,11 +1,6 @@
 $(document).on("ready", () => {
   cargarMenuCompleto();
 
-  if (logueado) {
-    $("#carritoButton").removeClass("d-none");
-    carrito();
-  }
-
   if (usuario)
     getToken(usuario).then((resp) => {
       token = resp.token;

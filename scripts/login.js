@@ -10,6 +10,7 @@ function cargarLogin() {
     $("#fLogin").removeClass("d-none");
   }
 }
+//Validador de si los campos se han rellenado
 function validar(campo) {
   if (campo == "") {
     return false;
@@ -36,10 +37,11 @@ function guardarDatos(usu, contrasena, nombre, apellido, fnac, email, esRegistro
 
 function loguearUsuario(user, pass) {
   login(user, pass).then((resp) => {
-    usuario = user;
-    token = resp.token;
-    $("#nombre-usuario").text(usuario);
-    despuesDeLogin();
+      usuario = user;
+      token = resp.token;
+      // Colocamos en el icono de usuario el nombre de usuario
+      $("#nombre-usuario").text(usuario);
+      despuesDeLogin();
   });
 }
 
@@ -49,15 +51,20 @@ function logout() {
   deleteToken(usuario);
   usuario = "";
   token = "";
+  // Cambiamos el texto del boton login
   $("#nombre-usuario").text("Inicia sesión");
   if (!window.location.href.includes("artista")) borrarPreferencias();
   $("#profileDiv").addClass("d-none");
+  // Escondemos el carrito
   $("#carritoButton").addClass("d-none");
 }
 
 function despuesDeLogin() {
   getApiAuth.headers["access-token"] = token;
   logueado = true;
+  // Visualizamos carrito
+  $("#carritoButton").removeClass("d-none");
+  carrito();
   postToken(usuario, token);
   localStorage.setItem("usuario", usuario);
   if (!window.location.href.includes("artista")) cargarPreferencias();
