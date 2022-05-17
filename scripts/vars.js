@@ -1,8 +1,8 @@
 var url = "http://148.3.87.123:6745/";
 var url_interna = "http://192.168.0.200:6745/";
 var url_local = "http://localhost:6745/";
-var cole="http://10.10.17.164:6745/"
-// url = url_local;
+var cole = "http://10.10.17.164:6745/";
+url = url_local;
 // url = cole;
 let token;
 // let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjUyMjc5NDEyLCJleHAiOjE2NTIzNjYwNzJ9._Pr9ONAJ5i93bopwJkn8zfPAsvoUm2Wks8HWpptRyek";

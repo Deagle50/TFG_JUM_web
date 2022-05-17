@@ -48,7 +48,6 @@ function cargarCarousel(artistas) {
   });
 
   $(".img-carousel").on("click", (event) => {
-    console.log("CLICK");
     localStorage.setItem("artistaSeleccionado", $(event.target).attr("url"));
   });
 }

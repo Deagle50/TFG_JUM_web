@@ -16,42 +16,67 @@ async function cargarArtista() {
       </div>`
     );
     $("#artista").text("Próximos conciertos de " + response.nombre);
+
+    getPreferencias(usuario).then((preferencias) => {
+      console.log(preferencias);
+      let result = preferencias.filter((obj) => {
+        return obj.artistaId == artistaSeleccionado;
+      });
+      if (result) {
+        $(".fa-heart").removeClass("fa-regular");
+        $(".fa-heart").addClass("fa-solid");
+      }
+    });
+    $(".fa-heart").on("click", (event) => {
+      event.preventDefault();
+      // Añadir preferencia
+      if ($(event.target).hasClass("fa-regular")) {
+        $(event.target).removeClass("fa-regular");
+        $(event.target).addClass("fa-solid");
+
+        postPreferencia(usuario, artistaSeleccionado);
+      } else {
+        // Quitar preferencia
+        $(event.target).addClass("fa-regular");
+        $(event.target).removeClass("fa-solid");
+        deletePreferencia(usuario, artistaSeleccionado);
+      }
+    });
   });
 
   settings.url = url + "conciertosArtista/" + artistaSeleccionado;
 
   getConciertosArtista(artistaSeleccionado)
     .then((conciertos) => {
-      $("#count").text("Cantidad de conciertos " + conciertos.length);
+      const ms_minuto = 60000;
 
-      // conciertos.sort(function (a, b) {
-      //   // Turn your strings into dates, and then subtract them
-      //   // to get a value that is either negative, positive, or zero.
-      //   return new Date(b.fecha) - new Date(a.fecha);
-      // });
+      $("#count").text(conciertos.length + " conciertos encontrados.");
       conciertos.forEach((concierto) => {
         getSala(concierto.salaId).then((sala) => {
           mostrarConciertos(concierto, sala);
-          getTelonerosConcierto(concierto.id).then((teloneros)=>{
-            if(teloneros.length>0){
-              $(`#teloneros${concierto.id}`).append(`<p>Teloneros:</p>`)
-              teloneros.forEach(telonero => {
-                getArtista(telonero.artistaId).then((artista)=>{
+          getTelonerosConcierto(concierto.id).then((teloneros) => {
+            if (teloneros.length > 0) {
+              teloneros.forEach((telonero) => {
+                getArtista(telonero.artistaId).then((artista) => {
+                  fecha = new Date(new Date(concierto.fecha) - new Date(telonero.fecha) * ms_minuto).toLocaleTimeString("es-ES").slice(0, -3);
                   $(`#teloneros${concierto.id}`).append(`
-                  <div id="telonero${artista.id}" class="teloneros" style="padding:5px; margin-left:15px" role="button"> 
+                  <div id="telonero${artista.id}" class="teloneros d-flex align-items-center" style="padding:5px; margin-left:15px" role="button"> 
                   <img src="${url}images/${artista.id}.jpg" style="height:40px; border-radius:5px" alt="Telonero ${artista.nombre}">
-                  <span>${artista.nombre}. Tiempo: ${telonero.fecha} mins</span>
+                  <div class="d-flex justify-content-between w-100 px-4">
+                  <span>${artista.nombre}</span>
+                  <span>${fecha}</span>
+                  </div>
                   </div>
                   `);
                   $(`#telonero${artista.id}`).attr("url", artista.id);
-                  $(`#telonero${artista.id}`).on("click", (event)=>{
+                  $(`#telonero${artista.id}`).on("click", (event) => {
                     localStorage.setItem("artistaSeleccionado", $(event.currentTarget).attr("url"));
-                    window.location = "artista.html"
-                  })
-                })
+                    window.location = "artista.html";
+                  });
+                });
               });
             }
-          })          
+          });
         });
       });
       let fecha = conciertos[0].fecha || null;
@@ -142,27 +167,46 @@ const countdown = (dateTo, element) => {
 };
 
 function mostrarConciertos(datosConcierto, datosUbicacion) {
+  var options = { weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" };
+
   $("#conciertos").append(
     `
-    <div class="d-flex flex-column col-md-6" style="border: solid 1px #ad67d6; margin-bottom:30px; border-radius:25px;padding:0px; background-color:#151515;">
+    <div class="d-flex flex-column col-lg-6 col-md-8 col-sm-12 col-xs-12" style="border: solid 1px #ad67d6; margin-bottom:30px; border-radius:25px;padding:0px; background-color:#151515;">
       <div id="d${datosConcierto.id}"  class="event_container" style="border:none">
         <div class="event_info">
           <div class="event_title">
             <h4>${datosUbicacion.nombre}, ${datosUbicacion.municipio}</h4>
           </div>
-          <div class="event_desc">
-          <ul>
-          <li>${datosUbicacion.direccion}<li>
-          <li>Desde ${datosConcierto.precio_min}€ <input type="number" min="0" max="8" value="0"></input></li>
-          <li>Hasta ${datosConcierto.precio_max}€  <input type="number" min="0" max="8" value="0"></input></li>
-          <button id="comprar${datosConcierto.id}" type="button" class="btn _more" style="color:#ad67d6;">
-          Comprar
-          </button>
-          </ul>
+          <div class="event_desc mt-2" style="width:100%">
+            <ul>
+            <li>${datosUbicacion.direccion}<li>
+            <li>
+            <div class="d-flex align-items-center justify-content-between my-1">
+              <div style="flex:1.5" class="d-flex align-items-center justify-content-between">
+                <label for="desde-${datosConcierto.id}">Desde ${datosConcierto.precio_min}€ </label>
+                <input id="desde-${datosConcierto.id}" url="${datosConcierto.id}" class="spinner"/>
+              </div>
+              <div style="flex:1" class="d-flex justify-content-center align-items-center">
+                <i style="color:#ad67d6;" class="fa-solid fa-cart-plus"></i>
+              </div>
+            </div>
+            </li>
+            <li>
+            <div class="d-flex align-items-center justify-content-between my-1">
+              <div style="flex:1.5" class="d-flex align-items-center justify-content-between">
+              <label for="hasta-${datosConcierto.id}">Hasta ${datosConcierto.precio_min}€ </label>
+                <input id="hasta-${datosConcierto.id}" url="${datosConcierto.id}" class="spinner"/>
+              </div>
+              <div style="flex:1" class="d-flex justify-content-center align-items-center">
+                <i style="color:#ad67d6;" class="fa-solid fa-cart-plus"></i>
+              </div>
+            </div>
+            </li>
+            </ul>
           </div>
           <div class="event_footer">
             <div class="event_date">
-              <p>${datosConcierto.fecha}</</p>
+              <p>${capitalizeFirstLetter(new Date(datosConcierto.fecha).toLocaleDateString("es-ES", options))}</</p>
             </div>
             <div class="event_more">
                 
@@ -174,16 +218,33 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
         <div class="div-teloneros" id="teloneros${datosConcierto.id}"></div>
     </div>
     `
-
-    /*
-    <button id="${datosConcierto.id}" type="button" class="btn _more">
-                Mapa
-              </button>
-    */
   );
+  spinners = $(".spinner");
+  $(".spinner").each(function () {
+    $(this).spinner({ min: 0, max: 10, step: 1 });
+    $(this).val(0);
+  });
+  $(".ui-spinner").addClass("input-dark");
+  // $(".ui-spinner-button").css("color", "white");
+  // $(".ui-spinner-button").css("background-color", "#151515");
   crearMapa(datosConcierto, datosUbicacion);
+  var MIN = 0;
+  var MAX = 10;
+  $(".spinner").on("keyup", function (e) {
+    var v = parseInt($(this).val());
+    if (isNaN(v)) {
+      return $(this).val(MIN);
+    }
+    if ($(this).val() < MIN) {
+      $(this).val(MIN);
+    } else if ($(this).val() > MAX) {
+      $(this).val(MAX);
+    } else {
+      $(this).val(v);
+    }
+  });
+}
 
-  // $(`#${datosConcierto.id}`).click(() => {
-  //   $(`#map${datosConcierto.id}`).toggle();
-  // });
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }

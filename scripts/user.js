@@ -13,6 +13,7 @@ function cargarMenu() {
     $(".login-box").removeClass("d-none");
     $("#sEntradas").removeClass("d-none");
     $("#profileDiv").addClass("d-none");
+    CargarCompras();
   });
   $("#dUser").on("click", (event) => {
     event.preventDefault();
@@ -56,7 +57,7 @@ function cargarMenu() {
   });
 }
 
-function carrito(){
+function carrito() {
   $("#iconCarrito").on("click", (event) => {
     event.preventDefault();
     $(".login-box").removeClass("d-none");
@@ -74,4 +75,57 @@ function carrito(){
       alert("Dragoncito dragoncito!!No me seas rancio");
     });
   });
+}
+
+function CargarCompras() {
+  var options = { weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" };
+
+  getCompras(usuario).then((resp) => {
+    console.log(resp);
+    resp.sort(compare);
+    if (resp.length > 0) {
+      previousId = "";
+      resp.forEach((compra) => {
+        console.log(compra.conciertoId);
+        getConcierto(compra.conciertoId).then((concierto) => {
+          getArtista(concierto.artistaId).then((artista) => {
+            console.log(concierto);
+            if (compra.compraId == previousId) {
+              $(`#compra${compra.compraId}`).append(`
+              <div class="p-3">
+              ${compra.cantidad} entradas para ${artista.nombre}, compradas el ${capitalizeFirstLetter(
+                new Date(compra.fecha).toLocaleDateString("es-ES", options)
+              )} por ${compra.precio * compra.cantidad} €, cada una a ${compra.precio} €.                  
+            </div>
+            `);
+            } else {
+              $("#entradas").append(`
+              <div id="compra${compra.compraId}">
+                Identificador: ${compra.compraId}
+                <div class="p-3">
+                  ${compra.cantidad} entradas para ${artista.nombre}, compradas el ${capitalizeFirstLetter(
+                new Date(compra.fecha).toLocaleDateString("es-ES", options)
+              )} por ${compra.precio * compra.cantidad} €, cada una a ${compra.precio} €.                  
+                </div>
+              </div>
+            `);
+            }
+            previousId = compra.compraId;
+          });
+        });
+      });
+    } else {
+      $("#entradas").html(`<h3>No has realizado compras</h3>`);
+    }
+  });
+}
+
+function compare(a, b) {
+  if (a.compraId < b.compraId) {
+    return -1;
+  }
+  if (a.last_nom > b.last_nom) {
+    return 1;
+  }
+  return 0;
 }

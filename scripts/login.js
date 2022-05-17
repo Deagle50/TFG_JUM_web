@@ -90,10 +90,6 @@ function cargarMenuCompleto() {
               <label>Contraseña</label>
             </div>
             <a href="#" id="btnLogin">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
               Entrar
             </a>
           </form>
@@ -169,8 +165,9 @@ function cargarMenuCompleto() {
       <section id="sEntradas" class="d-none">
         <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
           <div class="nav w-100 d-flex justify-content-around">
-            <h2>Mis entradas</h2>
+            <h2>Mis compras</h2>
           </div>
+          <div id="entradas"></div>
          <div>
          </div>
         </div>
