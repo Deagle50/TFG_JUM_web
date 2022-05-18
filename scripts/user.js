@@ -10,16 +10,12 @@ function cargarMenu() {
   });
   $("#dEntradas").on("click", (event) => {
     event.preventDefault();
-    $(".login-box").removeClass("d-none");
-    $("#sEntradas").removeClass("d-none");
-    $("#profileDiv").addClass("d-none");
+    mostrarMenu("#sEntradas");
     CargarCompras();
   });
   $("#dUser").on("click", (event) => {
     event.preventDefault();
-    $(".login-box").removeClass("d-none");
-    $("#sPerfil").removeClass("d-none");
-    $("#profileDiv").addClass("d-none");
+    mostrarMenu("#sPerfil");
     //OBTENER DATOS
     getUsuario(usuario).then((el) => {
       console.log(el);
@@ -60,20 +56,40 @@ function cargarMenu() {
 function carrito() {
   $("#iconCarrito").on("click", (event) => {
     event.preventDefault();
-    $(".login-box").removeClass("d-none");
-    $("#sCarrito").removeClass("d-none");
-    $("#profileDiv").addClass("d-none");
+    mostrarMenu("#sCarrito");
+    CargarCarrito();
 
     $("#btnComprar").on("click", () => {
-      alert("Y ahora mi dragoncito pandora");
+      event.preventDefault();
+      // HACER COMPRA
+      MostrarToast("Compra realizada", "green");
+      localStorage.removeItem("carrito");
+      OcultarMenu();
     });
 
-    $("#btnCerrar").on("click", () => {
-      $("#sCarrito").addClass("d-none");
+    $("#btnCerrar").on("click", (event) => {
+      event.preventDefault();
+      OcultarMenu();
     });
-    $("#btnVaciar").on("click", () => {
-      alert("Dragoncito dragoncito!!No me seas rancio");
+    $("#btnVaciar").on("click", (event) => {
+      event.preventDefault();
+      localStorage.removeItem("carrito");
+      MostrarToast("El carrito se ha vaciado", "gray");
+      OcultarMenu();
     });
+  });
+}
+
+function CargarCarrito() {
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  carrito.forEach((element) => {
+    $("#carrito-items").append(`
+    <div>
+      <span>${element.conciertoId}</span>
+      <span>${element.precio}</span>
+      <span>${element.cantidad}</span>
+    </div>
+    `);
   });
 }
 
@@ -128,4 +144,22 @@ function compare(a, b) {
     return 1;
   }
   return 0;
+}
+
+function mostrarMenu(menu) {
+  $("#sEntradas").addClass("d-none");
+  $("#sLoginRegistro").addClass("d-none");
+  $("#sPerfil").addClass("d-none");
+  $("#sCarrito").addClass("d-none");
+
+  $(".login-box").removeClass("d-none");
+  $(menu).removeClass("d-none");
+}
+
+function OcultarMenu() {
+  $("#sEntradas").addClass("d-none");
+  $("#sLoginRegistro").addClass("d-none");
+  $("#sPerfil").addClass("d-none");
+  $("#sCarrito").addClass("d-none");
+  $(".login-box").addClass("d-none");
 }

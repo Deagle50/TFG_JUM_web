@@ -2,18 +2,22 @@ $(document).on("ready", () => {
   cargarMenuCompleto();
 
   if (usuario)
-    getToken(usuario).then((resp) => {
-      token = resp.token;
-      despuesDeLogin();
-    });
-
-  obtenerArtistas();
+    getToken(usuario)
+      .then((resp) => {
+        token = resp.token;
+        despuesDeLogin();
+        obtenerArtistas();
+      })
+      .catch(() => {
+        obtenerArtistas();
+      });
+  else {
+    obtenerArtistas();
+  }
 
   $("#iconLogin").on("click", () => {
-    if (logueado) 
-    cargarMenu();
-    else 
-    cargarLogin();
+    if (logueado) cargarMenu();
+    else cargarLogin();
   });
 
   // https://code.tutsplus.com/es/tutorials/easy-form-validation-with-jquery--cms-33096
@@ -54,6 +58,10 @@ $(document).on("ready", () => {
 });
 
 async function obtenerArtistas() {
-  todosArtistas = await getArtistas();
-  if (!window.location.href.includes("artista")) cargarCarouselYGaleria(todosArtistas);
+  if (!window.location.href.includes("artista")) {
+    todosArtistas = await getArtistas();
+    cargarCarouselYGaleria(todosArtistas);
+  } else {
+    cargarArtista();
+  }
 }

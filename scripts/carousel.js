@@ -65,7 +65,7 @@ function cargarGaleria(artistas) {
       </a>`
     );
   });
-  if (logueado) cargarPreferencias();
+  cargarPreferencias();
 
   $(".fa-heart").on("click", (event) => {
     event.preventDefault();
@@ -115,13 +115,14 @@ function cargarFiltroGaleria() {
 }
 
 function cargarPreferencias() {
-  getPreferencias(usuario).then((preferencias) => {
-    if (preferencias.length > 0)
-      preferencias.forEach((element) => {
-        $(`#heart${element.artistaId}`).removeClass("fa-regular");
-        $(`#heart${element.artistaId}`).addClass("fa-solid");
-      });
-  });
+  if (logueado)
+    getPreferencias(usuario).then((preferencias) => {
+      if (preferencias.length > 0)
+        preferencias.forEach((element) => {
+          $(`#heart${element.artistaId}`).removeClass("fa-regular");
+          $(`#heart${element.artistaId}`).addClass("fa-solid");
+        });
+    });
 }
 
 function borrarPreferencias() {

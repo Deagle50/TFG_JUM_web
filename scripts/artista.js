@@ -1,32 +1,36 @@
-$(document).on("ready", () => {
-  cargarArtista();
-});
-
 async function cargarArtista() {
   artistaSeleccionado = localStorage.getItem("artistaSeleccionado");
   settings.url = url + "artistas/" + artistaSeleccionado;
 
   getArtista(artistaSeleccionado).then((response) => {
+    document.title = response.nombre;
     $(".bg-image").css("background-image", `linear-gradient(transparent, #000 70%), url(${url}images/${artistaSeleccionado}.jpg)`);
+
+    let descripcion = response.descripcion || "";
+    let descMaxLength = 1000;
+    if (descripcion.length > descMaxLength) {
+      let desc2 = descripcion.slice(descMaxLength);
+      descripcion = descripcion.slice(0, descMaxLength + desc2.indexOf(".") + 1);
+    }
 
     $("#artistaTitulo").append(
       `<div id="${response.id}" class="item">
         <h1>${response.nombre}</h1>
-        <p>${response.descripcion || ""}</p>
+        <p>${descripcion}</p>
       </div>`
     );
     $("#artista").text("Próximos conciertos de " + response.nombre);
-
-    getPreferencias(usuario).then((preferencias) => {
-      console.log(preferencias);
-      let result = preferencias.filter((obj) => {
-        return obj.artistaId == artistaSeleccionado;
+    if (logueado)
+      getPreferencias(usuario).then((preferencias) => {
+        console.log(preferencias);
+        let result = preferencias.filter((obj) => {
+          return obj.artistaId == artistaSeleccionado;
+        });
+        if (result) {
+          $(".fa-heart").removeClass("fa-regular");
+          $(".fa-heart").addClass("fa-solid");
+        }
       });
-      if (result) {
-        $(".fa-heart").removeClass("fa-regular");
-        $(".fa-heart").addClass("fa-solid");
-      }
-    });
     $(".fa-heart").on("click", (event) => {
       event.preventDefault();
       // Añadir preferencia
@@ -50,10 +54,17 @@ async function cargarArtista() {
     .then((conciertos) => {
       const ms_minuto = 60000;
 
+      conciertos.sort(function (a, b) {
+        // Turn your strings into dates, and then subtract them
+        // to get a value that is either negative, positive, or zero.
+        return new Date(b.fecha) - new Date(a.fecha);
+      });
+
       $("#count").text(conciertos.length + " conciertos encontrados.");
       conciertos.forEach((concierto) => {
         getSala(concierto.salaId).then((sala) => {
           mostrarConciertos(concierto, sala);
+
           getTelonerosConcierto(concierto.id).then((teloneros) => {
             if (teloneros.length > 0) {
               teloneros.forEach((telonero) => {
@@ -82,7 +93,12 @@ async function cargarArtista() {
       let fecha = conciertos[0].fecha || null;
       document.getElementById("contador").innerHTML = fecha;
       countdown(fecha, "contador");
-
+      setTimeout(() => {
+        $(".fa-cart-plus").on("click", (event) => {
+          event.preventDefault();
+          AnadirACarrito(event);
+        });
+      }, 200);
       // Si no hay conciertos
     })
     .catch(() => {
@@ -184,21 +200,25 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
             <div class="d-flex align-items-center justify-content-between my-1">
               <div style="flex:1.5" class="d-flex align-items-center justify-content-between">
                 <label for="desde-${datosConcierto.id}">Desde ${datosConcierto.precio_min}€ </label>
-                <input id="desde-${datosConcierto.id}" url="${datosConcierto.id}" class="spinner"/>
+                <input id="desde-${datosConcierto.id}" class="spinner"/>
               </div>
               <div style="flex:1" class="d-flex justify-content-center align-items-center">
-                <i style="color:#ad67d6;" class="fa-solid fa-cart-plus"></i>
+              <i role="button" style="color:#ad67d6;" precio="${datosConcierto.precio_min}" concierto="${
+      datosConcierto.id
+    }" class="fa-solid fa-cart-plus desde"></i>
               </div>
             </div>
             </li>
             <li>
             <div class="d-flex align-items-center justify-content-between my-1">
               <div style="flex:1.5" class="d-flex align-items-center justify-content-between">
-              <label for="hasta-${datosConcierto.id}">Hasta ${datosConcierto.precio_min}€ </label>
+              <label for="hasta-${datosConcierto.id}">Hasta ${datosConcierto.precio_max}€ </label>
                 <input id="hasta-${datosConcierto.id}" url="${datosConcierto.id}" class="spinner"/>
               </div>
               <div style="flex:1" class="d-flex justify-content-center align-items-center">
-                <i style="color:#ad67d6;" class="fa-solid fa-cart-plus"></i>
+                <i role="button" style="color:#ad67d6;" precio="${datosConcierto.precio_max}"concierto="${
+      datosConcierto.id
+    }" class="fa-solid fa-cart-plus hasta"></i>
               </div>
             </div>
             </li>
@@ -247,4 +267,29 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function AnadirACarrito(event) {
+  let concierto = $(event.currentTarget).attr("concierto");
+  $(event.currentTarget).hasClass("desde") ? (desde_hasta = "desde") : (desde_hasta = "hasta");
+  let cantidad = $(`#${desde_hasta}-${concierto}`).val();
+  if (cantidad > 0) {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    let precio = $(event.target).attr("precio");
+    carrito.push({ conciertoId: concierto, cantidad: cantidad, precio: precio });
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    console.log("AÑADIDO AL CARRITO: " + concierto + " " + cantidad + " " + precio);
+    MostrarToast("Entrada añadida al carrito");
+  }
+}
+
+function MostrarToast(string = "Holiwis desde el tostiwis", color = "#ad67d6") {
+  $("body").append(`
+    <div id="toast" class="d-flex justify-content-center">
+      <div style="position:fixed; bottom:10%; margin:auto; background-color:${color}; border-radius:25px; padding:10px">${string}</div>
+    </div>
+  `);
+  setTimeout(() => {
+    $("#toast").remove();
+  }, 2000);
 }

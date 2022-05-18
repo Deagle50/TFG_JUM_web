@@ -37,11 +37,11 @@ function guardarDatos(usu, contrasena, nombre, apellido, fnac, email, esRegistro
 
 function loguearUsuario(user, pass) {
   login(user, pass).then((resp) => {
-      usuario = user;
-      token = resp.token;
-      // Colocamos en el icono de usuario el nombre de usuario
-      $("#nombre-usuario").text(usuario);
-      despuesDeLogin();
+    usuario = user;
+    token = resp.token;
+    // Colocamos en el icono de usuario el nombre de usuario
+    $("#nombre-usuario").text(usuario);
+    despuesDeLogin();
   });
 }
 
@@ -57,6 +57,12 @@ function logout() {
   $("#profileDiv").addClass("d-none");
   // Escondemos el carrito
   $("#carritoButton").addClass("d-none");
+
+  // BORRAR CARRITO
+  localStorage.removeItem("carrito");
+
+  location.reload();
+  return false;
 }
 
 function despuesDeLogin() {
@@ -80,7 +86,7 @@ function cargarMenuCompleto() {
 
   $("#top-menu").html(`
     <section id="sLoginRegistro" class="d-none">
-        <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
+    <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
           <div class="nav w-100 d-flex justify-content-around">
             <ul class="links">
               <li><a id="aLogin" class="btn active">Iniciar sesión</a></li>
@@ -184,7 +190,10 @@ function cargarMenuCompleto() {
         <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
           <div class="nav w-100 d-flex justify-content-around">
             <h2>Mi carrito</h2>   
-            </div>
+          </div>
+          <div id="carrito-items">
+
+          </div>
           <a href="#" id="btnCerrar" class="btnCarrito"> Cerrar </a>
           <a href="#" id="btnVaciar" class="btnCarrito"> Vaciar </a>
           <a href="#" id="btnComprar" class="btnCarrito"> Comprar</a>
@@ -229,9 +238,9 @@ function cargarMenuCompleto() {
     var email = $("#textEmail").val();
     guardarDatos(usu, contrasena, nombre, apellido, fnac, email, false);
   });
-
-  //   $(".datepicker").datepicker({
-  //     changeMonth: true,
-  //     changeYear: true,
-  //   });
+  console.log("DATEPICKER");
+  $(".datepicker").datepicker({
+    changeMonth: true,
+    changeYear: true,
+  });
 }
