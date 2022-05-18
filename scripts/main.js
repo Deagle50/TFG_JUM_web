@@ -1,4 +1,5 @@
 $(document).on("ready", () => {
+  // Llamada a la funcion para cargar los menus ocultos de interaccion
   cargarMenuCompleto();
 
   if (usuario)
@@ -14,7 +15,7 @@ $(document).on("ready", () => {
   else {
     obtenerArtistas();
   }
-
+  // Muestra un menu al clickar en la opcion del menu en funcion de si hay usuario logueado o no
   $("#iconLogin").on("click", () => {
     if (logueado) cargarMenu();
     else cargarLogin();
@@ -57,6 +58,7 @@ $(document).on("ready", () => {
   // });
 });
 
+// Carga de datos en funcion de la pantalla en la que se esta (principal todos los artistas, secundaria el artista elegido)
 async function obtenerArtistas() {
   if (!window.location.href.includes("artista")) {
     todosArtistas = await getArtistas();

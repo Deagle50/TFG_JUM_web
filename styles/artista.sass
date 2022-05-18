@@ -12,6 +12,13 @@ html, body
         height: 100%
         width: 100% 
 
+#iCorazonGrande
+    color: $color-primary
+    position: absolute
+    top: 20
+    left: 20
+    z-index: 1   
+
 #artistaTitulo
     width: 100%
     display: flex
@@ -34,6 +41,9 @@ html, body
 #conciertos
     margin-top: 50%
     margin-bottom: 100px
+    display: flex 
+    flex-direction: column 
+    align-items: center
 
     // Contador concierto
     #contador
@@ -64,77 +74,102 @@ html, body
             background-color: $bg-secondary
         
         .countdown-container .concept 
-            font-size: 28px
+            font-size: 20px
             text-align: center
             color: $font-primary
+    #count
+        margin-bottom: 5%
 
-    .event_container 
-        color: $font-primary
+    .card
         border: solid 1px $color-primary
-        border-radius: 25px
-        display: flex 
-        width: 100%  
-        // height: 250px
-        background: $bg-secondary
-        max-width: 750px 
-        
-        // margin: 20px 0 
+        margin-bottom:30px 
+        border-radius:25px
+        padding:0px 
+        background-color:#151515
 
-
-        .event_info 
-            padding: 10px 20px 
-            width: 100% 
-
-            .event_title 
-                display: flex 
+        .event_container 
+            color: $font-primary
+            border: none
+            border-radius: 25px
+            display: flex 
+            width: 100%  
+            
+            background: $bg-secondary
+            max-width: 750px 
+            
+            .event_info 
+                padding: 10px 20px 
                 width: 100% 
-                height: 20%
-                align-items: center
 
-                h4 
-                    font-size: 26px
-
-            .event_desc 
-                display: flex 
-                width: 100% 
-                height: 60%
-                color: $font-secondary
-
-                ul 
-                    font-size: 16px 
-                    font-weight: 500                     
-                    list-style: none
-
-            .event_footer 
-                display: flex 
-                height: 20%
-                width: 100% 
-                align-items: center 
-                justify-content: space-between 
-
-                .event_date 
-                    p 
-                        font-weight: 600 
-                        color: $font-secondary
-
-                .event_more 
+                .event_title 
                     display: flex 
-                    width: auto 
-                    align-items: center 
+                    width: 100% 
+                    height: 20%
+                    align-items: center
 
-                    button 
-                        display: flex 
-                        align-items: center 
-                        padding: 0 15px 
-                        color: black
-                        background: $color-primary
+                    h4 
+                        font-size: 26px
+
+                .event_desc 
+                    display: flex 
+                    width: 100% 
+                    height: 60%
+                    color: $font-secondary
+
+                    ul 
                         font-size: 16px 
-                        border-radius: 25px
-    .map
-        width: 70%
-        border-radius: 25px
-        z-index: 0
-        margin: 10px
+                        font-weight: 500                     
+                        list-style: none
+
+                        .formulario
+                            display: flex
+                            align-items: center
+                            justify-content: space-between 
+
+                            .precio
+                                display: flex
+                                align-items: center
+                                justify-content: space-between
+
+                            .carro
+                                display: flex
+                                justify-content: center
+                                align-items: center
+
+                                i
+                                    margin-left: 5px
+                                    color: $color-primary
+
+                .event_footer 
+                    display: flex 
+                    height: 20%
+                    width: 100% 
+                    align-items: center 
+                    justify-content: space-between 
+
+                    .event_date 
+                        p 
+                            font-weight: 600 
+                            color: $font-secondary
+
+        .map
+            width: 70%
+            border-radius: 25px
+            z-index: 0
+            margin: 10px
+
+        .teloneros
+            display: flex 
+            align-items: center
+            padding: 5px
+            margin-left: 15px
+
+            img 
+                height: 40px
+                border-radius: 5px
+
+
+
 
 
         

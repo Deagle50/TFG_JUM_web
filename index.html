@@ -32,40 +32,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
   </head>
   <body>
-    <div style="position: relative">
-      <div id="top-buttons" class="d-flex align-items-center pl-3">
+    <div id="opcionesUsuario">
+      <div id="top-buttons">
         <div id="loginButton" class="m-3" role="button">
           <div
             id="iconLogin"
-            class="d-flex justify-content-end align-items-center p-3"
-            style="background-color: #1f1f1f; border-radius: 25px; border: 2px solid #ad67d6"
-          >
-            <div id="nombre-usuario" style="margin: 4px; margin-left:12px; margin-right:15px"></div>
-            <i class="fa-regular fa-circle-user fa-xl" style="color: #ad67d6; margin-right:10px"></i>
+            class="icons p-3">
+            <div id="nombre-usuario"></div>
+            <i class="fa-regular fa-circle-user fa-xl"></i>
           </div>
-          <div id="profileDiv" class="d-flex flex-column mt-4 d-none" style="background-color: #1f1f1f; border-radius: 5px; border: 1px solid #ad67d6">
-            <div id="dUser" class="p-3 pb-0 d-flex justify-content-between align-items-center">
+          <div id="profileDiv" class="mt-4 d-none">
+            <div id="dUser" class="p-3 pb-0 items">
               Perfil
               <i class="fa-solid fa-user ms-3"></i>
             </div>
-            <div id="dEntradas" class="p-3 pb-0 d-flex justify-content-between align-items-center">
+            <div id="dEntradas" class="p-3 pb-0 items">
               Mis entradas
               <i class="fa-solid fa-ticket ms-3"></i>
             </div>
-            <div id="dExit" class="p-3 d-flex justify-content-between align-items-center">
+            <div id="dExit" class="p-3 items">
               Cerrar sesión
               <i class="fa-solid fa-arrow-right-from-bracket ms-3"></i>
             </div>
           </div>
         </div>
-        <div id="carritoButton" role="button" class="p-3 d-none">
-          <div
-            id="iconCarrito"
-            class="d-flex justify-content-end align-items-center p-3"
-            style="background-color: #1f1f1f; border-radius: 25px; border: 2px solid #ad67d6"
-          >
-            <i class="fa-solid fa-cart-shopping" style="color: #ad67d6"></i>
-          </div>
+      </div>
+      <div id="carritoButton" role="button" class="d-none">
+        <div
+          id="iconCarrito"
+          class="p-3">
+          <i class="fa-solid fa-cart-shopping"></i>
         </div>
       </div>
       <section id="top-menu"></section>

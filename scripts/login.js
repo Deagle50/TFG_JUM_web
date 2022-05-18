@@ -17,7 +17,9 @@ function validar(campo) {
   }
   return true;
 }
+// Guardar los datos
 function guardarDatos(usu, contrasena, nombre, apellido, fnac, email, esRegistro) {
+  // Si todos los datos a introducir son validos se realiza el post
   if (validar(usu) && validar(contrasena) && validar(nombre) && validar(apellido) && validar(fnac) && validar(email)) {
     var usuario = {
       usuario: usu,
@@ -34,7 +36,7 @@ function guardarDatos(usu, contrasena, nombre, apellido, fnac, email, esRegistro
     alert("Hay que rellenar todos los campos");
   }
 }
-
+// Se loguea el usuario, pasandole el usuario y contrasena
 function loguearUsuario(user, pass) {
   login(user, pass).then((resp) => {
     usuario = user;
@@ -44,10 +46,12 @@ function loguearUsuario(user, pass) {
     despuesDeLogin();
   });
 }
-
+// Funcion para cerrar la conexion del usuario logueado
 function logout() {
   logueado = false;
+  // Se borra el usuario del localStorage
   localStorage.removeItem("usuario");
+  // Se envia el usuario para eliminar el token
   deleteToken(usuario);
   usuario = "";
   token = "";
@@ -64,7 +68,7 @@ function logout() {
   location.reload();
   return false;
 }
-
+// Se inicializa el usuario y sus opciones
 function despuesDeLogin() {
   getApiAuth.headers["access-token"] = token;
   logueado = true;
@@ -77,13 +81,15 @@ function despuesDeLogin() {
   $(".login-box").addClass("d-none");
 }
 
+// Se cargan todas las opciones del menu para interactuar del usuario
 function cargarMenuCompleto() {
+  // Visualizar el mensaje en el boton de usuario en funcion de estar logueado o no
   if (usuario) {
     $("#nombre-usuario").text(usuario);
   } else {
     $("#nombre-usuario").text("Inicia sesión");
   }
-
+// Opciones ocultas de interaccion
   $("#top-menu").html(`
     <section id="sLoginRegistro" class="d-none">
     <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
@@ -199,9 +205,9 @@ function cargarMenuCompleto() {
           <a href="#" id="btnComprar" class="btnCarrito"> Comprar</a>
         </div>
       </section>
-
     `);
 
+  // Click al darle al titulo de Login (visualiza el login)
   $("#aLogin").on("click", () => {
     if ($("#fRegistrarse").is(":visible")) {
       $("#fRegistrarse").addClass("d-none");
@@ -211,6 +217,7 @@ function cargarMenuCompleto() {
     $("#fLogin").removeClass("d-none");
   });
 
+  // Click al darle al titulo de Registrarse (visualiza el formulario registrarse)
   $("#aRegistrarse").on("click", () => {
     if ($("#fLogin").is(":visible")) {
       $("#fLogin").addClass("d-none");
@@ -220,6 +227,7 @@ function cargarMenuCompleto() {
     $("#fRegistrarse").removeClass("d-none");
   });
 
+  // Al clickar en el boton del formulario Login se realiza el logueo
   $("#btnLogin").on("click", () => {
     var user = $("#textUser").val();
     var password = $("#textPassword").val();
@@ -229,6 +237,8 @@ function cargarMenuCompleto() {
       alert("Hay que rellenar todos los campos");
     }
   });
+
+  // Al clickar en el boton del formulario Registrarse se realiza el registro del nuevo usuario
   $("#btnRegistrarse").on("click", () => {
     var usu = $("#textUsuario").val();
     var contrasena = $("#textContrasena").val();
@@ -238,7 +248,8 @@ function cargarMenuCompleto() {
     var email = $("#textEmail").val();
     guardarDatos(usu, contrasena, nombre, apellido, fnac, email, false);
   });
-  console.log("DATEPICKER");
+
+  // Calendario 
   $(".datepicker").datepicker({
     changeMonth: true,
     changeYear: true,

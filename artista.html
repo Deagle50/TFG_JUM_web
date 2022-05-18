@@ -35,41 +35,37 @@
     <script src="scripts/main.js"></script>
   </head>
   <body>
-    <i style="color: #ad67d6; position: absolute; top: 20; left: 20; z-index: 1" role="button" class="fa-regular fa-heart fa-2x"></i>
-    <div style="position: relative">
-      <div id="top-buttons" class="d-flex align-items-center pl-3">
-        <div id="loginButton" class="p-3" role="button">
+    <i id="iCorazonGrande" role="button" class="fa-regular fa-heart fa-2x"></i>
+    <div id="opcionesUsuario">
+      <div id="top-buttons">
+        <div id="loginButton" class="m-3" role="button">
           <div
             id="iconLogin"
-            class="d-flex justify-content-end align-items-center p-3"
-            style="background-color: #1f1f1f; border-radius: 25px; border: 2px solid #ad67d6"
-          >
-            <div id="nombre-usuario" style="margin: 4px"></div>
-            <i class="fa-regular fa-circle-user fa-xl" style="color: #ad67d6"></i>
+            class="icons p-3">
+            <div id="nombre-usuario"></div>
+            <i class="fa-regular fa-circle-user fa-xl"></i>
           </div>
-          <div id="profileDiv" class="d-flex flex-column mt-4 d-none" style="background-color: #1f1f1f; border-radius: 5px; border: 1px solid #ad67d6">
-            <div id="dUser" class="p-3 pb-0 d-flex justify-content-between align-items-center">
+          <div id="profileDiv" class="mt-4 d-none">
+            <div id="dUser" class="p-3 pb-0 items">
               Perfil
               <i class="fa-solid fa-user ms-3"></i>
             </div>
-            <div id="dEntradas" class="p-3 pb-0 d-flex justify-content-between align-items-center">
+            <div id="dEntradas" class="p-3 pb-0 items">
               Mis entradas
               <i class="fa-solid fa-ticket ms-3"></i>
             </div>
-            <div id="dExit" class="p-3 d-flex justify-content-between align-items-center">
+            <div id="dExit" class="p-3 items">
               Cerrar sesión
               <i class="fa-solid fa-arrow-right-from-bracket ms-3"></i>
             </div>
           </div>
         </div>
-        <div id="carritoButton" role="button" class="d-none">
-          <div
-            id="iconCarrito"
-            class="d-flex justify-content-end align-items-center p-3"
-            style="background-color: #1f1f1f; border-radius: 25px; border: 2px solid #ad67d6"
-          >
-            <i class="fa-solid fa-cart-shopping" style="color: #ad67d6"></i>
-          </div>
+      </div>
+      <div id="carritoButton" role="button" class="d-none">
+        <div
+          id="iconCarrito"
+          class="p-3">
+          <i class="fa-solid fa-cart-shopping"></i>
         </div>
       </div>
       <section id="top-menu"></section>
@@ -79,7 +75,7 @@
       <div id="artistaTitulo"></div>
     </section>
     <section>
-      <div class="container d-flex flex-column align-items-center" id="conciertos">
+      <div class="container" id="conciertos">
         <div id="contador"></div>
         <h2 id="artista" class="mt-5"></h2>
         <h3 id="count"></h3>
