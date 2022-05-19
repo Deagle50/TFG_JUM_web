@@ -199,7 +199,6 @@ function cargarMenuCompleto() {
           <div id="carrito-items">
 
           </div>
-          <a href="#" id="btnCerrar" class="btnCarrito"> Cerrar </a>
           <a href="#" id="btnVaciar" class="btnCarrito"> Vaciar </a>
           <a href="#" id="btnComprar" class="btnCarrito"> Comprar</a>
         </div>

@@ -67,11 +67,6 @@ function carrito() {
         OcultarMenu();
       } else MostrarToast("El carrito está vacío", "red");
     });
-
-    $("#btnCerrar").on("click", (event) => {
-      event.preventDefault();
-      OcultarMenu();
-    });
     $("#btnVaciar").on("click", (event) => {
       event.preventDefault();
       localStorage.removeItem("carrito");
