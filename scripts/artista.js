@@ -4,6 +4,7 @@ async function cargarArtista() {
 
   getArtista(artistaSeleccionado).then((response) => {
     document.title = response.nombre;
+
     $(".bg-image").css("background-image", `linear-gradient(transparent, #000 70%), url(${url}images/${artistaSeleccionado}.jpg)`);
 
     let descripcion = response.descripcion || "";
@@ -19,32 +20,35 @@ async function cargarArtista() {
         <p>${descripcion}</p>
       </div>`
     );
+    cargarVideoArtista(response.nombre);
     $("#artista").text("Próximos conciertos de " + response.nombre);
     if (logueado)
       getPreferencias(usuario).then((preferencias) => {
-        console.log(preferencias);
-        let result = preferencias.filter((obj) => {
-          return obj.artistaId == artistaSeleccionado;
-        });
-        if (result) {
-          $(".fa-heart").removeClass("fa-regular");
-          $(".fa-heart").addClass("fa-solid");
+        if (preferencias.length > 0) {
+          preferencias.forEach((element) => {
+            if (element.artistaId == artistaSeleccionado) {
+              $(".fa-heart").removeClass("fa-regular");
+              $(".fa-heart").addClass("fa-solid");
+            }
+          });
         }
       });
     $(".fa-heart").on("click", (event) => {
       event.preventDefault();
-      // Añadir preferencia
-      if ($(event.target).hasClass("fa-regular")) {
-        $(event.target).removeClass("fa-regular");
-        $(event.target).addClass("fa-solid");
+      if (logueado)
+        if ($(event.target).hasClass("fa-regular")) {
+          // Añadir preferencia
+          $(event.target).removeClass("fa-regular");
+          $(event.target).addClass("fa-solid");
 
-        postPreferencia(usuario, artistaSeleccionado);
-      } else {
-        // Quitar preferencia
-        $(event.target).addClass("fa-regular");
-        $(event.target).removeClass("fa-solid");
-        deletePreferencia(usuario, artistaSeleccionado);
-      }
+          postPreferencia(usuario, artistaSeleccionado);
+        } else {
+          // Quitar preferencia
+          $(event.target).addClass("fa-regular");
+          $(event.target).removeClass("fa-solid");
+          deletePreferencia(usuario, artistaSeleccionado);
+        }
+      else MostrarToast("Tienes que loguearte para poder guardar favoritos");
     });
   });
 
@@ -177,7 +181,6 @@ const countdown = (dateTo, element) => {
 
     if (currenTime.time <= 1) {
       clearInterval(timerUpdate);
-      alert("Fin de la cuenta " + element);
     }
   }, 1000);
 };
@@ -203,14 +206,12 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
                     <input id="desde-${datosConcierto.id}" class="spinner"/>
                   </div>
                   <div class="carro">
-                  <i role="button" precio="${datosConcierto.precio_min}" concierto="${
-          datosConcierto.id
-        }" class="fa-solid fa-cart-plus desde"></i>
+                  <i role="button" precio="${datosConcierto.precio_min}" concierto="${datosConcierto.id}" class="fa-solid fa-cart-plus desde"></i>
                   </div>
                 </div>
               </li>
               <li>
-                <div class="formulario my-1">
+                <div class="formulario my-1" id="form-hasta-${datosConcierto.id}">
                   <div class="precio">
                     <label for="hasta-${datosConcierto.id}">Hasta ${datosConcierto.precio_max}€ </label>
                     <input id="hasta-${datosConcierto.id}" url="${datosConcierto.id}" class="spinner"/>
@@ -234,6 +235,11 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
     </div>
     `
   );
+
+  if (datosConcierto.precio_min == 0) {
+    $(`#form-hasta-${datosConcierto.id}`).hide();
+  }
+
   spinners = $(".spinner");
   $(".spinner").each(function () {
     $(this).spinner({ min: 0, max: 10, step: 1 });
@@ -265,26 +271,21 @@ function capitalizeFirstLetter(string) {
 }
 
 function AnadirACarrito(event) {
-  let concierto = $(event.currentTarget).attr("concierto");
-  $(event.currentTarget).hasClass("desde") ? (desde_hasta = "desde") : (desde_hasta = "hasta");
-  let cantidad = $(`#${desde_hasta}-${concierto}`).val();
-  if (cantidad > 0) {
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    let precio = $(event.target).attr("precio");
-    carrito.push({ conciertoId: concierto, cantidad: cantidad, precio: precio });
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-    console.log("AÑADIDO AL CARRITO: " + concierto + " " + cantidad + " " + precio);
-    MostrarToast("Entrada añadida al carrito");
+  if (logueado) {
+    let concierto = $(event.currentTarget).attr("concierto");
+    $(event.currentTarget).hasClass("desde") ? (desde_hasta = "desde") : (desde_hasta = "hasta");
+    let cantidad = $(`#${desde_hasta}-${concierto}`).val();
+    if (cantidad > 0) {
+      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      let precio = $(event.target).attr("precio");
+      carrito.push({ conciertoId: concierto, cantidad: cantidad, precio: precio });
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+      console.log("AÑADIDO AL CARRITO: " + concierto + " " + cantidad + " " + precio);
+      MostrarToast("Entrada añadida al carrito");
+    } else {
+      MostrarToast("El número de entradas tiene que ser mayor a 0", "red");
+    }
+  } else {
+    MostrarToast("Tienes que loguearte para guardar items en el carrito", "red");
   }
-}
-
-function MostrarToast(string = "Holiwis desde el tostiwis", color = "#ad67d6") {
-  $("body").append(`
-    <div id="toast" class="d-flex justify-content-center">
-      <div style="position:fixed; bottom:10%; margin:auto; background-color:${color}; border-radius:25px; padding:10px">${string}</div>
-    </div>
-  `);
-  setTimeout(() => {
-    $("#toast").remove();
-  }, 2000);
 }

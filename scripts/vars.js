@@ -1,9 +1,18 @@
-var url = "http://148.3.87.123:6745/";
-var url_interna = "http://192.168.0.200:6745/";
-var url_local = "http://localhost:6745/";
-var cole = "http://10.10.17.164:6745/";
-// url = url_local;
+const puerto = 6745;
+const puerto_yt = 6746;
+var url = "http://148.3.87.123:" + puerto + "/";
+var url_interna = "http://192.168.0.200:" + puerto + "/";
+var url_local = "http://localhost:" + puerto + "/";
+var cole = "http://10.10.17.164:" + puerto + "/";
+url = url_local;
 // url = cole;
+
+var url_yt = "http://148.3.87.123:" + puerto_yt + "/";
+var url_interna_yt = "http://192.168.0.200:" + puerto_yt + "/";
+var url_local_yt = "http://localhost:" + puerto_yt + "/";
+var cole_yt = "http://10.10.17.164:" + puerto_yt + "/";
+url_yt = url_local_yt;
+
 let token;
 // let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjUyMjc5NDEyLCJleHAiOjE2NTIzNjYwNzJ9._Pr9ONAJ5i93bopwJkn8zfPAsvoUm2Wks8HWpptRyek";
 

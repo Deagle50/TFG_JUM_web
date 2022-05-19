@@ -1,12 +1,11 @@
 function cargarLogin() {
   // Se cierra el div login/registro y deja todo listo para futuro inicio como login
   if ($("#sLoginRegistro").is(":visible")) {
-    $("#sLoginRegistro").addClass("d-none");
-    $("#fRegistrarse").addClass("d-none");
+    mostrarMenu("#sLoginRegistro");
     $("#aRegistrarse").removeClass("active").addClass("inactive");
     $("#aLogin").removeClass("inactive").addClass("active");
   } else {
-    $("#sLoginRegistro").removeClass("d-none");
+    mostrarMenu("#sLoginRegistro");
     $("#fLogin").removeClass("d-none");
   }
 }
@@ -33,7 +32,7 @@ function guardarDatos(usu, contrasena, nombre, apellido, fnac, email, esRegistro
       if (esRegistro) loguearUsuario(usu, contrasena);
     });
   } else {
-    alert("Hay que rellenar todos los campos");
+    MostrarToast("Rellena todos los campos", "red");
   }
 }
 // Se loguea el usuario, pasandole el usuario y contrasena
@@ -78,7 +77,7 @@ function despuesDeLogin() {
   postToken(usuario, token);
   localStorage.setItem("usuario", usuario);
   if (!window.location.href.includes("artista")) cargarPreferencias();
-  $(".login-box").addClass("d-none");
+  OcultarMenu();
 }
 
 // Se cargan todas las opciones del menu para interactuar del usuario
@@ -89,10 +88,10 @@ function cargarMenuCompleto() {
   } else {
     $("#nombre-usuario").text("Inicia sesión");
   }
-// Opciones ocultas de interaccion
+  // Opciones ocultas de interaccion
   $("#top-menu").html(`
-    <section id="sLoginRegistro" class="d-none">
-    <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
+      <section id="sLoginRegistro" class="d-none">
+        <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
           <div class="nav w-100 d-flex justify-content-around">
             <ul class="links">
               <li><a id="aLogin" class="btn active">Iniciar sesión</a></li>
@@ -204,9 +203,14 @@ function cargarMenuCompleto() {
           <a href="#" id="btnVaciar" class="btnCarrito"> Vaciar </a>
           <a href="#" id="btnComprar" class="btnCarrito"> Comprar</a>
         </div>
-      </section>
+      </section>      
     `);
 
+  $("body").append(`<div id="blur" role="button" class="d-none" ></div>`);
+  $("#blur").on("click", (event) => {
+    event.preventDefault();
+    OcultarMenu();
+  });
   // Click al darle al titulo de Login (visualiza el login)
   $("#aLogin").on("click", () => {
     if ($("#fRegistrarse").is(":visible")) {
@@ -234,7 +238,7 @@ function cargarMenuCompleto() {
     if (validar(user) && validar(password)) {
       loguearUsuario(user, password);
     } else {
-      alert("Hay que rellenar todos los campos");
+      MostrarToast("Rellena todos los campos");
     }
   });
 
@@ -249,7 +253,7 @@ function cargarMenuCompleto() {
     guardarDatos(usu, contrasena, nombre, apellido, fnac, email, false);
   });
 
-  // Calendario 
+  // Calendario
   $(".datepicker").datepicker({
     changeMonth: true,
     changeYear: true,

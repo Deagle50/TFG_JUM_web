@@ -19,10 +19,15 @@ function cargarCarouselYGaleria(artistas) {
 }
 
 function cargarCarousel(artistas) {
+  $(".carousel-inner").html("");
   artistas.forEach((element) => {
     $(".carousel-inner").append(
-      `<div id="${element.id}" class="item">
-          <div class="col-xs-4"><img id="carousel-${element.id}" src="${url}images/${element.id}.jpg" class="img-responsive img-carousel" url="${element.id}" title="${element.nombre}" alt="${element.nombre}"/></div>
+      `<div id="${element.id || element.artistaId}" class="item">
+          <div class="col-xs-4"><img id="carousel-${element.id || element.artistaId}" src="${url}images/${
+        element.id || element.artistaId
+      }.jpg" class="img-responsive img-carousel" url="${element.id || element.artistaId}" title="${element.id || element.artistaId}" alt="${
+        element.id || element.artistaId
+      }"/></div>
         </div>`
     );
   });
@@ -69,18 +74,20 @@ function cargarGaleria(artistas) {
 
   $(".fa-heart").on("click", (event) => {
     event.preventDefault();
-    // Añadir preferencia
-    if ($(event.target).hasClass("fa-regular")) {
-      $(event.target).removeClass("fa-regular");
-      $(event.target).addClass("fa-solid");
+    if (logueado)
+      if ($(event.target).hasClass("fa-regular")) {
+        // Añadir preferencia
+        $(event.target).removeClass("fa-regular");
+        $(event.target).addClass("fa-solid");
 
-      postPreferencia(usuario, $(event.target).attr("artista"));
-    } else {
-      // Quitar preferencia
-      $(event.target).addClass("fa-regular");
-      $(event.target).removeClass("fa-solid");
-      deletePreferencia(usuario, $(event.target).attr("artista"));
-    }
+        postPreferencia(usuario, $(event.target).attr("artista"));
+      } else {
+        // Quitar preferencia
+        $(event.target).addClass("fa-regular");
+        $(event.target).removeClass("fa-solid");
+        deletePreferencia(usuario, $(event.target).attr("artista"));
+      }
+    else MostrarToast("Tienes que loguearte para poder guardar favoritos");
   });
 
   $(".img-galeria").on("click", (event) => {
@@ -117,11 +124,13 @@ function cargarFiltroGaleria() {
 function cargarPreferencias() {
   if (logueado)
     getPreferencias(usuario).then((preferencias) => {
-      if (preferencias.length > 0)
-        preferencias.forEach((element) => {
-          $(`#heart${element.artistaId}`).removeClass("fa-regular");
-          $(`#heart${element.artistaId}`).addClass("fa-solid");
-        });
+      $(".fa-heart").removeClass("fa-solid");
+      $(".fa-heart").addClass("fa-regular");
+      if (preferencias.length > 0) cargarCarousel(preferencias);
+      preferencias.forEach((element) => {
+        $(`#heart${element.artistaId}`).removeClass("fa-regular");
+        $(`#heart${element.artistaId}`).addClass("fa-solid");
+      });
     });
 }
 

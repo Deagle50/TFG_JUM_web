@@ -18,21 +18,21 @@ function cargarMenu() {
     mostrarMenu("#sPerfil");
     //OBTENER DATOS
     getUsuario(usuario).then((el) => {
-      console.log(el);
       $("#mostrarTextUsuario").val(el.usuario);
       pwd = el.contrasena;
       $("#mostrarTextNombre").val(el.nombre);
       $("#mostrarTextApellido").val(el.apellido);
       $("#mostrarTextEmail").val(el.email);
       $("#mostrarTextFnac").val(el.fnac);
-      console.log("CAMBIADOS");
     });
     //var datos = getDatos(usuario);
 
     //
 
     $("#btnEliminar").on("click", () => {
-      deletePreferencias(usuario);
+      deletePreferencias(usuario).then(() => {
+        cargarPreferencias();
+      });
     });
 
     $("#btnGuardar").on("click", () => {
@@ -45,10 +45,9 @@ function cargarMenu() {
       //La contraseña no se podrá modificar asique no se visualizará
 
       guardarDatos(usu, pwd, nombre, apellido, fnac, email);
-      $("#sPerfil").addClass("d-none");
     });
     $("#btnCancelar").on("click", () => {
-      $("#sPerfil").addClass("d-none");
+      OcultarMenu();
     });
   });
 }
@@ -62,9 +61,11 @@ function carrito() {
     $("#btnComprar").on("click", () => {
       event.preventDefault();
       // HACER COMPRA
-      MostrarToast("Compra realizada", "green");
-      localStorage.removeItem("carrito");
-      OcultarMenu();
+      if (JSON.parse(localStorage.getItem("carrito")) && JSON.parse(localStorage.getItem("carrito")).length() > 0) {
+        MostrarToast("Compra realizada", "green");
+        localStorage.removeItem("carrito");
+        OcultarMenu();
+      } else MostrarToast("El carrito está vacío", "red");
     });
 
     $("#btnCerrar").on("click", (event) => {
@@ -82,15 +83,18 @@ function carrito() {
 
 function CargarCarrito() {
   let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-  carrito.forEach((element) => {
-    $("#carrito-items").append(`
-    <div>
-      <span>${element.conciertoId}</span>
-      <span>${element.precio}</span>
-      <span>${element.cantidad}</span>
-    </div>
-    `);
-  });
+  $("#carrito-items").html("");
+  if (carrito.length > 0)
+    carrito.forEach((element) => {
+      $("#carrito-items").append(`
+      <div>
+        <span>${element.conciertoId}</span>
+        <span>${element.precio}</span>
+        <span>${element.cantidad}</span>
+      </div>
+      `);
+    });
+  else $("#carrito-items").html(`<h3 style="text-align: center">No hay ningún item en el carrito</h3>`);
 }
 
 function CargarCompras() {
@@ -105,7 +109,6 @@ function CargarCompras() {
         console.log(compra.conciertoId);
         getConcierto(compra.conciertoId).then((concierto) => {
           getArtista(concierto.artistaId).then((artista) => {
-            console.log(concierto);
             if (compra.compraId == previousId) {
               $(`#compra${compra.compraId}`).append(`
               <div class="p-3">
@@ -147,11 +150,16 @@ function compare(a, b) {
 }
 
 function mostrarMenu(menu) {
+  if (!$(menu).hasClass("d-none")) {
+    OcultarMenu();
+    return;
+  }
   $("#sEntradas").addClass("d-none");
   $("#sLoginRegistro").addClass("d-none");
   $("#sPerfil").addClass("d-none");
   $("#sCarrito").addClass("d-none");
 
+  $("#blur").removeClass("d-none");
   $(".login-box").removeClass("d-none");
   $(menu).removeClass("d-none");
 }
@@ -161,5 +169,6 @@ function OcultarMenu() {
   $("#sLoginRegistro").addClass("d-none");
   $("#sPerfil").addClass("d-none");
   $("#sCarrito").addClass("d-none");
+  $("#blur").addClass("d-none");
   $(".login-box").addClass("d-none");
 }

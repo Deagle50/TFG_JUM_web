@@ -409,3 +409,17 @@ async function getTelonerosConcierto(conciertoId = "062BCE60-3E15-48A1-8B97-5700
   const content = await rawResponse.json();
   return content;
 }
+
+async function getVideoArtista(nombreArtista = "ACDC") {
+  const rawResponse = await fetch(url_yt + "buscar/" + nombreArtista, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "",
+    },
+  });
+  const content = await rawResponse.json();
+  console.log(content);
+  return content;
+}
