@@ -64,10 +64,11 @@ function carrito() {
     CargarCarrito();
 
     // Comprar el contenido del carrito
-    $("#btnComprar").on("click", () => {
+    $("#btnComprar").on("click", (event) => {
       event.preventDefault();
       // HACER COMPRA
-      if (JSON.parse(localStorage.getItem("carrito")) && JSON.parse(localStorage.getItem("carrito")).length() > 0) {
+      if (JSON.parse(localStorage.getItem("carrito")) && JSON.parse(localStorage.getItem("carrito")).length > 0) {
+
         MostrarToast("Compra realizada", "green");
         localStorage.removeItem("carrito");
         OcultarMenu();
@@ -86,19 +87,30 @@ function carrito() {
 function CargarCarrito() {
   let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
   $("#carrito-items").html("");
-  if (carrito.length > 0)
+  if (carrito.length > 0) {
+    var totalPagar = 0;
     carrito.forEach((element) => {
+      totalPagar = totalPagar + (element.cantidad * element.precio);
       $("#carrito-items").append(`
-      <div class="cartasCarrito" style="border solid grey 1px">
-        <span>Referencia: ${element.conciertoId}</span>
-        <span>Artista:  </span>
-        <span>Municipio: ${element.municipio} </span>
-        <span>Fecha: ${element.fecha} </span>
-        <span>Precio/entrada: ${element.precio}€</span>
-        <span>Cantidad entradas: ${element.cantidad}</span>
+      <div class="cartasCarrito">
+      <ul>
+        <li>Referencia: ${element.conciertoId}</li>
+        <li>Artista:  ${element.nombre} </li>
+        <li>Municipio: ${element.municipio} </li>
+        <li>Fecha: ${element.fecha} </li>
+        <li>Precio/entrada: ${element.precio}€</li>
+        <li>Cantidad entradas: ${element.cantidad}</li>
+        <li>Precio final: ${element.cantidad * element.precio}€</li>
+      </ul>
       </div>
       `);
     });
+    $("#carrito-items").append(`
+      <div class="cartasCarrito">
+      <span>Carrito total ${totalPagar.toFixed(2)}€</span>      
+      </div>      
+      `);
+  }
   else $("#carrito-items").html(`<h3 style="text-align: center">No hay ningún item en el carrito</h3>`);
 }
 
@@ -165,6 +177,10 @@ function mostrarMenu(menu) {
   $("#sLoginRegistro").addClass("d-none");
   $("#sPerfil").addClass("d-none");
   $("#sCarrito").addClass("d-none");
+  // Tenemos en cuenta que si esta sin loguearse, debe aparecer de primeras siempre el login
+  $("#fRegistrarse").addClass("d-none");
+  $("#aRegistrarse").removeClass("active").addClass("inactive");
+  $("#aLogin").removeClass("inactive").addClass("active");
 
   $("#blur").removeClass("d-none");
   $(".login-box").removeClass("d-none");

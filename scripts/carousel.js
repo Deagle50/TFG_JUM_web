@@ -1,3 +1,4 @@
+// Traduccion generos para filtro
 const generosPrincipales = [
   { key: "all", value: "Todos" },
   { key: "rock", value: "Rock" },
@@ -11,13 +12,13 @@ const generosPrincipales = [
 ];
 
 var todosArtistas;
-
+// Se carga la pantalla principal con el carousel, filtro y galeria
 function cargarCarouselYGaleria(artistas) {
   cargarCarousel(artistas);
   cargarFiltroGaleria();
   cargarGaleria(artistas);
 }
-
+// Creamos carousel
 function cargarCarousel(artistas) {
   $(".carousel-inner").html("");
   artistas.forEach((element) => {
@@ -56,7 +57,7 @@ function cargarCarousel(artistas) {
     localStorage.setItem("artistaSeleccionado", $(event.target).attr("url"));
   });
 }
-
+// Se crea la galeria de artistas
 function cargarGaleria(artistas) {
   $("#galeria").empty();
   artistas.forEach((element) => {
@@ -72,6 +73,7 @@ function cargarGaleria(artistas) {
   });
   cargarPreferencias();
 
+  // Control click icono corazon
   $(".fa-heart").on("click", (event) => {
     event.preventDefault();
     if (logueado)
@@ -89,12 +91,12 @@ function cargarGaleria(artistas) {
       }
     else MostrarToast("Tienes que loguearte para poder guardar favoritos");
   });
-
+  // Click redireccion sobre una imagen de artista de la galeria
   $(".img-galeria").on("click", (event) => {
     localStorage.setItem("artistaSeleccionado", $(event.target).attr("url"));
   });
 }
-
+// Se crean los botones filtros de galeria
 function cargarFiltroGaleria() {
   generosPrincipales.forEach((element) => {
     $(".filtros").append(`<button type="button" class="control" data-filter="${element.key}">${element.value}</button>`);
@@ -113,14 +115,14 @@ function cargarFiltroGaleria() {
     let artistas = buscarArtista(texto);
     cargarGaleria(artistas);
   });
-
+  // Filtro change
   $("#txtSearch").on("change", () => {
     var texto = $("#txtSearch").val();
     let artistas = buscarArtista(texto);
     cargarGaleria(artistas);
   });
 }
-
+// Se cargan las preferencias del usuario en funcion de lo guardado
 function cargarPreferencias() {
   if (logueado)
     getPreferencias(usuario).then((preferencias) => {
@@ -133,7 +135,7 @@ function cargarPreferencias() {
       });
     });
 }
-
+// Se eliminan las preferencias
 function borrarPreferencias() {
   $(".fa-solid").addClass("fa-regular").removeClass("fa-solid");
 }
