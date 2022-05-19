@@ -1,3 +1,4 @@
+// Autentificacion api
 var getApiAuth = {
   method: "GET",
   headers: {
@@ -8,6 +9,7 @@ var getApiAuth = {
   },
 };
 
+// Api
 var getApi = {
   method: "GET",
   headers: {
@@ -17,6 +19,7 @@ var getApi = {
   },
 };
 
+// Eliminacion autentificacion
 var deleteApiAuth = {
   method: "GET",
   headers: {
@@ -28,7 +31,7 @@ var deleteApiAuth = {
 };
 
 /**
- * Login
+ * Login conexion
  * @param {*} usuario
  * @param {*} contrasena
  */
@@ -50,7 +53,7 @@ async function login(usuario = "Deagle50", contrasena = "Deagle50") {
   console.log(content);
   return content;
 }
-
+// obtencion de usuario
 async function getUsuario(usuario = "Deagle50") {
   const rawResponse = await fetch(url + "usuarios/" + usuario, getApiAuth);
   const content = await rawResponse.json();
@@ -60,7 +63,7 @@ async function getUsuario(usuario = "Deagle50") {
 }
 
 /**
- * Subir preferencia
+ * Registrarse/modificar datos
  *
  * @param {*} usuario
  * @param {*} artistaId
@@ -97,6 +100,7 @@ async function postRegistro(
   return content;
 }
 
+// Obtener token
 async function getToken(usuario = "Deagle50") {
   const rawResponse = await fetch(url + "tokens/" + usuario, getApi);
   const content = await rawResponse.json();
@@ -130,6 +134,7 @@ async function postToken(
   return content;
 }
 
+// Eliminar token
 async function deleteToken(usuario = "Deagle50") {
   const rawResponse = await fetch(url + "tokens/" + usuario, {
     method: "GET",
@@ -203,6 +208,7 @@ async function postCompra(
   return content;
 }
 
+// Obtener todos los artistas
 async function getArtistas() {
   const rawResponse = await fetch(url + "artistas/", getApiAuth);
   const content = await rawResponse.json();
@@ -210,6 +216,7 @@ async function getArtistas() {
   return content;
 }
 
+// Obtener un artista determinado
 async function getArtista(artistaId = "UC1fab2nJ6Gk6G1drkzagxYg") {
   const rawResponse = await fetch(url + "artistas/" + artistaId, {
     method: "GET",
@@ -224,6 +231,7 @@ async function getArtista(artistaId = "UC1fab2nJ6Gk6G1drkzagxYg") {
   return content;
 }
 
+// Obtener conciertos
 async function getConciertos() {
   const rawResponse = await fetch(url + "conciertos/", {
     method: "GET",
@@ -239,6 +247,7 @@ async function getConciertos() {
   return content;
 }
 
+// Obtener concierto determinado
 async function getConcierto(conciertoId = "062BCE60-3E15-48A1-8B97-5700C70BE69A") {
   const rawResponse = await fetch(url + "conciertos/" + conciertoId, {
     method: "GET",
@@ -253,6 +262,7 @@ async function getConcierto(conciertoId = "062BCE60-3E15-48A1-8B97-5700C70BE69A"
   return content;
 }
 
+// Obtener conciertos de un artista determinado
 async function getConciertosArtista(artistaId = "UC1fab2nJ6Gk6G1drkzagxYg") {
   const rawResponse = await fetch(url + "conciertosArtista/" + artistaId, {
     method: "GET",
@@ -353,6 +363,7 @@ async function deletePreferencias(usuario = "Deagle50") {
   return content;
 }
 
+// Obtener sala determinada
 async function getSala(id = "doka_donostia") {
   const rawResponse = await fetch(url + "salas/" + id, {
     method: "GET",
@@ -367,6 +378,7 @@ async function getSala(id = "doka_donostia") {
   return content;
 }
 
+// Obtener teloneros
 async function getTeloneros() {
   const rawResponse = await fetch(url + "teloneros/", {
     method: "GET",
@@ -381,7 +393,7 @@ async function getTeloneros() {
   console.log(content);
   return content;
 }
-
+// Obtener conciertos de un telonero determinado
 async function getConciertosTelonero(artistaId = "UCu6ct4LWh-sMXxQpreWDY_g") {
   const rawResponse = await fetch(url + "teloneros/" + artistaId, {
     method: "GET",
@@ -396,7 +408,7 @@ async function getConciertosTelonero(artistaId = "UCu6ct4LWh-sMXxQpreWDY_g") {
   console.log(content);
   return content;
 }
-
+// Obtener teloneros de un concierto determinado
 async function getTelonerosConcierto(conciertoId = "062BCE60-3E15-48A1-8B97-5700C70BE69A") {
   const rawResponse = await fetch(url + "telonerosConcierto/" + conciertoId, {
     method: "GET",
@@ -409,7 +421,7 @@ async function getTelonerosConcierto(conciertoId = "062BCE60-3E15-48A1-8B97-5700
   const content = await rawResponse.json();
   return content;
 }
-
+// Obtener video de un artista determinado
 async function getVideoArtista(nombreArtista = "ACDC") {
   const rawResponse = await fetch(url_yt + "buscar/" + nombreArtista, {
     method: "GET",

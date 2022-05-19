@@ -1,10 +1,12 @@
+// Puertos segun la apli (web/yout)
 const puerto = 6745;
 const puerto_yt = 6746;
+// Direccion de ip en función de la conexión
 var url = "http://148.3.87.123:" + puerto + "/";
 var url_interna = "http://192.168.0.200:" + puerto + "/";
 var url_local = "http://localhost:" + puerto + "/";
 var cole = "http://10.10.17.164:" + puerto + "/";
-url = url_local;
+//url = url_local;
 // url = cole;
 
 var url_yt = "http://148.3.87.123:" + puerto_yt + "/";
@@ -19,7 +21,7 @@ let token;
 var logueado = false;
 
 let usuario = localStorage.getItem("usuario") || null;
-
+// Conexion base api
 let settings = {
   url: url,
   method: "GET",

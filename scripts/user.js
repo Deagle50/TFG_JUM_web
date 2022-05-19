@@ -1,18 +1,22 @@
 var pwd = "";
 function cargarMenu() {
+  // Control de visualizar perfil
   if ($("#profileDiv").is(":visible")) {
     $("#profileDiv").addClass("d-none");
   } else {
     $("#profileDiv").removeClass("d-none");
   }
+  // Cerrar sesión
   $("#dExit").on("click", () => {
     logout();
   });
+  // Apartado entradas del usuario
   $("#dEntradas").on("click", (event) => {
     event.preventDefault();
     mostrarMenu("#sEntradas");
     CargarCompras();
   });
+  // Datos usuario
   $("#dUser").on("click", (event) => {
     event.preventDefault();
     mostrarMenu("#sPerfil");
@@ -28,13 +32,13 @@ function cargarMenu() {
     //var datos = getDatos(usuario);
 
     //
-
+    // Boton eliminar preferencias
     $("#btnEliminar").on("click", () => {
       deletePreferencias(usuario).then(() => {
         cargarPreferencias();
       });
     });
-
+    // Guardar datos tras la modificación
     $("#btnGuardar").on("click", () => {
       var usu = $("#mostrarTextUsuario").val();
       var nombre = $("#mostrarTextNombre").val();
@@ -42,22 +46,24 @@ function cargarMenu() {
       var fnac = $("#mostrarTextFnac").val();
       var email = $("#mostrarTextEmail").val();
 
-      //La contraseña no se podrá modificar asique no se visualizará
-
+      //La contraseña no se podrá modificar asique no se visualizará (se guarda al cargar los datos para pasarla)
       guardarDatos(usu, pwd, nombre, apellido, fnac, email);
     });
+    // Se cierra la pantalla
     $("#btnCancelar").on("click", () => {
       OcultarMenu();
     });
   });
 }
 
+// Visualizar las entradas que tenemos en el carrito
 function carrito() {
   $("#iconCarrito").on("click", (event) => {
     event.preventDefault();
     mostrarMenu("#sCarrito");
     CargarCarrito();
 
+    // Comprar el contenido del carrito
     $("#btnComprar").on("click", () => {
       event.preventDefault();
       // HACER COMPRA
@@ -67,6 +73,7 @@ function carrito() {
         OcultarMenu();
       } else MostrarToast("El carrito está vacío", "red");
     });
+    // Vaciar el carrito
     $("#btnVaciar").on("click", (event) => {
       event.preventDefault();
       localStorage.removeItem("carrito");
@@ -75,7 +82,7 @@ function carrito() {
     });
   });
 }
-
+// Visualizamos lo que esta en el carrito (guardado en local Storage)
 function CargarCarrito() {
   let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
   $("#carrito-items").html("");
@@ -92,6 +99,7 @@ function CargarCarrito() {
   else $("#carrito-items").html(`<h3 style="text-align: center">No hay ningún item en el carrito</h3>`);
 }
 
+// Visualizar las compras que ha realizado el usuario
 function CargarCompras() {
   var options = { weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" };
 
@@ -144,6 +152,7 @@ function compare(a, b) {
   return 0;
 }
 
+// Visualizar menu
 function mostrarMenu(menu) {
   if (!$(menu).hasClass("d-none")) {
     OcultarMenu();
@@ -158,7 +167,7 @@ function mostrarMenu(menu) {
   $(".login-box").removeClass("d-none");
   $(menu).removeClass("d-none");
 }
-
+// Ocultar menu
 function OcultarMenu() {
   $("#sEntradas").addClass("d-none");
   $("#sLoginRegistro").addClass("d-none");
