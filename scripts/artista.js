@@ -206,7 +206,7 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
                     <input id="desde-${datosConcierto.id}" class="spinner"/>
                   </div>
                   <div class="carro">
-                  <i role="button" precio="${datosConcierto.precio_min}" concierto="${datosConcierto.id}" class="fa-solid fa-cart-plus desde"></i>
+                  <i role="button" fecha="${datosConcierto.fecha}" municipio="${datosUbicacion.municipio}" precio="${datosConcierto.precio_min}" concierto="${datosConcierto.id}" class="fa-solid fa-cart-plus desde"></i>
                   </div>
                 </div>
               </li>
@@ -217,7 +217,7 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
                     <input id="hasta-${datosConcierto.id}" url="${datosConcierto.id}" class="spinner"/>
                   </div>
                   <div class="carro">
-                    <i role="button" precio="${datosConcierto.precio_max}" concierto="${datosConcierto.id}" class="fa-solid fa-cart-plus hasta"></i>
+                    <i role="button" fecha="${datosConcierto.fecha}" municipio="${datosUbicacion.municipio}" precio="${datosConcierto.precio_max}" concierto="${datosConcierto.id}" class="fa-solid fa-cart-plus hasta"></i>
                   </div>
                 </div>
               </li>
@@ -278,9 +278,12 @@ function AnadirACarrito(event) {
     if (cantidad > 0) {
       let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
       let precio = $(event.target).attr("precio");
-      carrito.push({ conciertoId: concierto, cantidad: cantidad, precio: precio });
+      let fecha = $(event.target).attr("fecha");
+      let municipio = $(event.target).attr("municipio");
+      console.log( fecha + municipio);
+      carrito.push({ conciertoId: concierto, municipio:municipio, fecha:fecha, cantidad: cantidad, precio: precio });
       localStorage.setItem("carrito", JSON.stringify(carrito));
-      console.log("AÑADIDO AL CARRITO: " + concierto + " " + cantidad + " " + precio);
+      console.log("AÑADIDO AL CARRITO: " + concierto +  " "+ cantidad + " " + precio);
       MostrarToast("Entrada añadida al carrito");
     } else {
       MostrarToast("El número de entradas tiene que ser mayor a 0", "red");

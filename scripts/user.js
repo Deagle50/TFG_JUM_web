@@ -89,10 +89,13 @@ function CargarCarrito() {
   if (carrito.length > 0)
     carrito.forEach((element) => {
       $("#carrito-items").append(`
-      <div>
-        <span>${element.conciertoId}</span>
-        <span>${element.precio}</span>
-        <span>${element.cantidad}</span>
+      <div class="cartasCarrito" style="border solid grey 1px">
+        <span>Referencia: ${element.conciertoId}</span>
+        <span>Artista:  </span>
+        <span>Municipio: ${element.municipio} </span>
+        <span>Fecha: ${element.fecha} </span>
+        <span>Precio/entrada: ${element.precio}€</span>
+        <span>Cantidad entradas: ${element.cantidad}</span>
       </div>
       `);
     });
