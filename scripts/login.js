@@ -31,10 +31,13 @@ function guardarDatos(usu, contrasena, nombre, apellido, fnac, email, esRegistro
 
     if (esRegistro) {
       postRegistro(usuario).then(() => {
-        loguearUsuario(usu, contrasena);
+
+        alert("logear" + usu + " " + usuario + " " + contrasena); 
+        loguearUsuario(usuario, contrasena);
       });
     } else {
       postUsuario(usuario).then(() => {
+        alert("modifi" + usu + " " + usuario + " " + contrasena); 
         $("#nombre-usuario").text(usuario.nombre);
         despuesDeLogin();
       });
