@@ -1,19 +1,19 @@
-var artistaNombre="";
+var artistaNombre = "";
 
-async function cargarArtista() {
+async function mostrarArtista() {
   // Cogemos el artista del localStorage
   artistaSeleccionado = localStorage.getItem("artistaSeleccionado");
   settings.url = url + "artistas/" + artistaSeleccionado;
 
   // Obtenemos datos del artista
   getArtista(artistaSeleccionado).then((response) => {
-    artistaNombre = response.nombre;;
+    artistaNombre = response.nombre;
     document.title = response.nombre;
     // Cargamos imagen del grupo background
     $(".bg-image").css("background-image", `linear-gradient(transparent, #000 70%), url(${url}images/${artistaSeleccionado}.jpg)`);
-    
+
     // Control de existencia de descripcion
-    let descripcion = response.descripcion || "";
+    let descripcion = response.descripcion.replace("?", "") || "";
     let descMaxLength = 1000;
     if (descripcion.length > descMaxLength) {
       let desc2 = descripcion.slice(descMaxLength);
@@ -28,7 +28,7 @@ async function cargarArtista() {
       </div>`
     );
     // Se carga el video del grupo
-    cargarVideoArtista(response.nombre);
+    mostrarVideoArtista(response.nombre);
 
     $("#artista").text("Próximos conciertos de " + response.nombre);
 
@@ -71,16 +71,16 @@ async function cargarArtista() {
     .then((conciertos) => {
       const ms_minuto = 60000;
 
-      conciertos.sort(function (a, b) {
+      let conciertos_ordenados = conciertos.sort(function (a, b) {
         // Turn your strings into dates, and then subtract them
         // to get a value that is either negative, positive, or zero.
-        return new Date(b.fecha) - new Date(a.fecha);
+        return new Date(a.fecha) - new Date(b.fecha);
       });
       // Mostramos la cantidad de conciertos que tiene el artista
-      $("#count").text(conciertos.length + " conciertos encontrados.");
+      $("#count").text(conciertos_ordenados.length + " conciertos encontrados.");
 
       // Obtenemos datos concierto y la sala
-      conciertos.forEach((concierto) => {
+      conciertos_ordenados.forEach((concierto) => {
         getSala(concierto.salaId).then((sala) => {
           // Se envian los datos del concierto y sala para mostrar en carta
           mostrarConciertos(concierto, sala);
@@ -207,7 +207,6 @@ const countdown = (dateTo, element) => {
 
 // Creamos y mostramos las cartas de los conciertos del artista con los datos
 function mostrarConciertos(datosConcierto, datosUbicacion) {
-
   var options = { weekday: "long", year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" };
 
   $("#conciertos").append(
@@ -227,7 +226,9 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
                     <input id="desde-${datosConcierto.id}" class="spinner"/>
                   </div>
                   <div class="carro">
-                  <i role="button" nombre="${artistaNombre}" fecha="${datosConcierto.fecha}" municipio="${datosUbicacion.municipio}" precio="${datosConcierto.precio_min}" concierto="${datosConcierto.id}" class="fa-solid fa-cart-plus desde"></i>
+                  <i role="button" nombre="${artistaNombre}" fecha="${datosConcierto.fecha}" municipio="${datosUbicacion.municipio}" precio="${
+      datosConcierto.precio_min
+    }" concierto="${datosConcierto.id}" class="fa-solid fa-cart-plus desde"></i>
                   </div>
                 </div>
               </li>
@@ -238,7 +239,9 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
                     <input id="hasta-${datosConcierto.id}" url="${datosConcierto.id}" class="spinner"/>
                   </div>
                   <div class="carro">
-                    <i role="button" nombre="${artistaNombre}" fecha="${datosConcierto.fecha}" municipio="${datosUbicacion.municipio}" precio="${datosConcierto.precio_max}" concierto="${datosConcierto.id}" class="fa-solid fa-cart-plus hasta"></i>
+                    <i role="button" nombre="${artistaNombre}" fecha="${datosConcierto.fecha}" municipio="${datosUbicacion.municipio}" precio="${
+      datosConcierto.precio_max
+    }" concierto="${datosConcierto.id}" class="fa-solid fa-cart-plus hasta"></i>
                   </div>
                 </div>
               </li>
@@ -269,7 +272,6 @@ function mostrarConciertos(datosConcierto, datosUbicacion) {
   $(".ui-spinner").addClass("input-dark");
   // $(".ui-spinner-button").css("color", "white");
   // $(".ui-spinner-button").css("background-color", "#151515");
-
 
   // Se crea el mapa
   crearMapa(datosConcierto, datosUbicacion);
@@ -305,10 +307,26 @@ function AnadirACarrito(event) {
       let fecha = $(event.target).attr("fecha");
       let municipio = $(event.target).attr("municipio");
       let nombre = $(event.target).attr("nombre");
-      carrito.push({ conciertoId: concierto, nombre:nombre, municipio:municipio, fecha:fecha, cantidad: cantidad, precio: precio });
-      localStorage.setItem("carrito", JSON.stringify(carrito));
-      console.log("AÑADIDO AL CARRITO: " + concierto +  " "+ cantidad + " " + precio);
-      MostrarToast("Entrada añadida al carrito");
+      let enCarrito = false;
+      carrito.forEach((element, index) => {
+        if (element.conciertoId == concierto && element.precio == precio) {
+          item = element;
+          enCarrito = true;
+          nuevaCantidad = parseInt(element.cantidad) + parseInt(cantidad);
+          alert(nuevaCantidad);
+          if (nuevaCantidad <= 10) {
+            MostrarToast("Cantidad de entradas sumadas");
+            item.cantidad += cantidad;
+            carrito.splice(index, 1);
+            carrito.push(item);
+          } else MostrarToast("No puedes comprar más de diez entradas a la vez", "red");
+        }
+      });
+      if (!enCarrito) {
+        carrito.push({ conciertoId: concierto, nombre: nombre, municipio: municipio, fecha: fecha, cantidad: cantidad, precio: precio });
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        MostrarToast("Entrada añadida al carrito");
+      }
     } else {
       MostrarToast("El número de entradas tiene que ser mayor a 0", "red");
     }

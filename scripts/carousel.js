@@ -13,13 +13,13 @@ const generosPrincipales = [
 
 var todosArtistas;
 // Se carga la pantalla principal con el carousel, filtro y galeria
-function cargarCarouselYGaleria(artistas) {
-  cargarCarousel(artistas);
-  cargarFiltroGaleria();
-  cargarGaleria(artistas);
+function mostrarCarouselYGaleria(artistas) {
+  mostrarCarousel(artistas);
+  mostrarFiltroGaleria();
+  mostrarGaleria(artistas);
 }
 // Creamos carousel
-function cargarCarousel(artistas) {
+function mostrarCarousel(artistas) {
   $(".carousel-inner").html("");
   artistas.forEach((element) => {
     $(".carousel-inner").append(
@@ -58,7 +58,7 @@ function cargarCarousel(artistas) {
   });
 }
 // Se crea la galeria de artistas
-function cargarGaleria(artistas) {
+function mostrarGaleria(artistas) {
   $("#galeria").empty();
   artistas.forEach((element) => {
     $("#galeria").append(
@@ -71,7 +71,7 @@ function cargarGaleria(artistas) {
       </a>`
     );
   });
-  cargarPreferencias();
+  mostrarPreferencias();
 
   // Control click icono corazon
   $(".fa-heart").on("click", (event) => {
@@ -97,7 +97,7 @@ function cargarGaleria(artistas) {
   });
 }
 // Se crean los botones filtros de galeria
-function cargarFiltroGaleria() {
+function mostrarFiltroGaleria() {
   generosPrincipales.forEach((element) => {
     $(".filtros").append(`<button type="button" class="control" data-filter="${element.key}">${element.value}</button>`);
   });
@@ -107,28 +107,28 @@ function cargarFiltroGaleria() {
     $(".control").removeClass("control-active");
     $(event.target).addClass("control-active");
     let artistas = filtrarArtistas($(event.target).attr("data-filter"));
-    cargarGaleria(artistas);
+    mostrarGaleria(artistas);
   });
   // Filtro por boton search
   $("#btnSearch").on("click", () => {
     var texto = $("#txtSearch").val();
     let artistas = buscarArtista(texto);
-    cargarGaleria(artistas);
+    mostrarGaleria(artistas);
   });
   // Filtro change
   $("#txtSearch").on("change", () => {
     var texto = $("#txtSearch").val();
     let artistas = buscarArtista(texto);
-    cargarGaleria(artistas);
+    mostrarGaleria(artistas);
   });
 }
 // Se cargan las preferencias del usuario en funcion de lo guardado
-function cargarPreferencias() {
+function mostrarPreferencias() {
   if (logueado)
     getPreferencias(usuario).then((preferencias) => {
       $(".fa-heart").removeClass("fa-solid");
       $(".fa-heart").addClass("fa-regular");
-      if (preferencias.length > 0) cargarCarousel(preferencias);
+      if (preferencias.length > 0) mostrarCarousel(preferencias);
       preferencias.forEach((element) => {
         $(`#heart${element.artistaId}`).removeClass("fa-regular");
         $(`#heart${element.artistaId}`).addClass("fa-solid");

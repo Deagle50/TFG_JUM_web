@@ -1,6 +1,6 @@
 $(document).on("ready", () => {
-  // Llamada a la funcion para cargar los menus ocultos de interaccion
-  cargarMenuCompleto();
+  // Llamada a la funcion para mostrar los menus ocultos de interaccion
+  mostrarMenuCompleto();
 
   if (usuario)
     getToken(usuario)
@@ -17,8 +17,8 @@ $(document).on("ready", () => {
   }
   // Muestra un menu al clickar en la opcion del menu en funcion de si hay usuario logueado o no
   $("#iconLogin").on("click", () => {
-    if (logueado) cargarMenu();
-    else cargarLogin();
+    if (logueado) mostrarMenuDesplegable();
+    else mostrarLogin();
   });
 });
 
@@ -26,9 +26,9 @@ $(document).on("ready", () => {
 async function obtenerArtistas() {
   if (!window.location.href.includes("artista")) {
     todosArtistas = await getArtistas();
-    cargarCarouselYGaleria(todosArtistas);
+    mostrarCarouselYGaleria(todosArtistas);
   } else {
-    cargarArtista();
+    mostrarArtista();
   }
 }
 

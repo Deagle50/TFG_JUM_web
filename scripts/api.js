@@ -63,7 +63,7 @@ async function getUsuario(usuario = "Deagle50") {
 }
 
 /**
- * Registrarse/modificar datos
+ * Registrarse datos
  *
  * @param {*} usuario
  * @param {*} artistaId
@@ -84,6 +84,45 @@ async function postRegistro(
       Accept: "application/json",
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "",
+    },
+    body: JSON.stringify({
+      usuario: usuario.usuario,
+      contrasena: usuario.contrasena,
+      nombre: usuario.nombre,
+      apellido: usuario.apellido,
+      fnac: usuario.fnac,
+      email: usuario.email,
+    }),
+  });
+  const content = await rawResponse.json();
+
+  console.log(content);
+  return content;
+}
+
+/**
+ * Modificar datos
+ *
+ * @param {*} usuario
+ * @param {*} artistaId
+ */
+async function postUsuario(
+  usuario = {
+    usuario: "Deagle50",
+    contrasena: "Deagle50",
+    nombre: "Nombre",
+    apellido: "APellido",
+    fnac: "1999-05-01",
+    email: "asdlkaj@ajsdl.com",
+  }
+) {
+  const rawResponse = await fetch(url + "usuarios", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "",
+      "access-token": token,
     },
     body: JSON.stringify({
       usuario: usuario.usuario,
@@ -423,7 +462,9 @@ async function getTelonerosConcierto(conciertoId = "062BCE60-3E15-48A1-8B97-5700
 }
 // Obtener video de un artista determinado
 async function getVideoArtista(nombreArtista = "ACDC") {
-  const rawResponse = await fetch(url_yt + "buscar/" + nombreArtista, {
+  let query = nombreArtista.replace("/", "");
+  query = query.replace(" ", "");
+  const rawResponse = await fetch(url_yt + "buscar/" + query, {
     method: "GET",
     headers: {
       Accept: "application/json",

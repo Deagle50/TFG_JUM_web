@@ -1,4 +1,4 @@
-function cargarLogin() {
+function mostrarLogin() {
   // Se cierra el div login/registro y deja todo listo para futuro inicio como login
   if ($("#sLoginRegistro").is(":visible")) {
     mostrarMenu("#sLoginRegistro");
@@ -28,9 +28,17 @@ function guardarDatos(usu, contrasena, nombre, apellido, fnac, email, esRegistro
       fnac: fnac,
       email: email,
     };
-    postRegistro(usuario).then(() => {
-      if (esRegistro) loguearUsuario(usu, contrasena);
-    });
+
+    if (esRegistro) {
+      postRegistro(usuario).then(() => {
+        loguearUsuario(usu, contrasena);
+      });
+    } else {
+      postUsuario(usuario).then(() => {
+        $("#nombre-usuario").text(usuario.nombre);
+        despuesDeLogin();
+      });
+    }
   } else {
     MostrarToast("Rellena todos los campos", "red");
   }
@@ -76,12 +84,12 @@ function despuesDeLogin() {
   carrito();
   postToken(usuario, token);
   localStorage.setItem("usuario", usuario);
-  if (!window.location.href.includes("artista")) cargarPreferencias();
+  if (!window.location.href.includes("artista")) mostrarPreferencias();
   OcultarMenu();
 }
 
 // Se cargan todas las opciones del menu para interactuar del usuario
-function cargarMenuCompleto() {
+function mostrarMenuCompleto() {
   // Visualizar el mensaje en el boton de usuario en funcion de estar logueado o no
   if (usuario) {
     $("#nombre-usuario").text(usuario);
@@ -89,9 +97,8 @@ function cargarMenuCompleto() {
     $("#nombre-usuario").text("Inicia sesión");
   }
   // Opciones ocultas de interaccion
-  $("#top-menu").html(`
+  $("#topMenu").html(`
       <section id="sLoginRegistro" class="d-none">
-        <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
           <div class="nav w-100 d-flex justify-content-around">
             <ul class="links">
               <li><a id="aLogin" class="btn active">Iniciar sesión</a></li>
@@ -147,7 +154,6 @@ function cargarMenuCompleto() {
         </div>
       </section>
       <section id="sPerfil" class="d-none">
-        <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
           <div class="nav w-100 d-flex justify-content-around">
             <h2>Perfil</h2>
           </div>
@@ -181,27 +187,23 @@ function cargarMenuCompleto() {
         </div>
       </section>
       <section id="sEntradas" class="d-none">
-        <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
           <div class="nav w-100 d-flex justify-content-around">
             <h2>Mis compras</h2>
           </div>
           <div id="entradas"></div>
          <div>
          </div>
-        </div>
       </section>
 
       <section id="sCarrito" class="d-none">
-        <div class="login-box col-lg-4 col-md-6 col-sm-8 col-xs-12">
           <div class="nav w-100 d-flex justify-content-around">
             <h2>Mi carrito</h2>   
           </div>
-          <div id="carrito-items">
+          <div id="carritoItems">
 
           </div>
           <a href="#" id="btnVaciar" class="btnCarrito"> Vaciar </a>
-          <a href="#" id="btnComprar" class="btnCarrito"> Comprar</a>
-        </div>
+          <a href="#" id="btnComprar" class="btnCarrito"> Comprar</a>        
       </section>      
     `);
 
