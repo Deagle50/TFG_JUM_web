@@ -18,9 +18,8 @@ function validar(campo) {
 }
 // Guardar los datos
 function guardarDatos(usu, contrasena, nombre, apellido, fnac, email, esRegistro) {
-  // Si todos los datos a introducir son validos se realiza el post
 
-  console.log(esRegistro);
+  // Si todos los datos a introducir son validos se realiza el post
   if (validar(usu) && validar(contrasena) && validar(nombre) && validar(apellido) && validar(fnac) && validar(email)) {
     var usuario = {
       usuario: usu,
@@ -31,6 +30,7 @@ function guardarDatos(usu, contrasena, nombre, apellido, fnac, email, esRegistro
       email: email,
     };
 
+    // En función de si viene de registrarse o modificar perfil la accion
     if (esRegistro) {
       postRegistro(usuario).then(() => {
         MostrarToast("Registro correctamente realizado");
@@ -50,11 +50,13 @@ function guardarDatos(usu, contrasena, nombre, apellido, fnac, email, esRegistro
 // Se loguea el usuario, pasandole el usuario y contrasena
 function loguearUsuario(user, pass) {
   login(user, pass).then((resp) => {
+
     usuario = user;
     token = resp.token;
     // Colocamos en el icono de usuario el nombre de usuario
     $("#nombre-usuario").text(usuario);
     despuesDeLogin();
+      
   });
 }
 // Funcion para cerrar la conexion del usuario logueado

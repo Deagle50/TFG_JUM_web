@@ -26,7 +26,7 @@ function mostrarCarousel(artistas) {
       `<div id="${element.id || element.artistaId}" class="item">
           <div class="col-xs-4"><img id="carousel-${element.id || element.artistaId}" src="${url}images/${
         element.id || element.artistaId
-      }.jpg" class="img-responsive img-carousel" url="${element.id || element.artistaId}" title="${element.id || element.artistaId}" alt="${
+      }.jpg" class="img-responsive img-carousel" url="${element.id || element.artistaId}" title="${element.nombre || element.id || element.artistaId}" alt="${
         element.id || element.artistaId
       }"/></div>
         </div>`
@@ -34,7 +34,7 @@ function mostrarCarousel(artistas) {
   });
   // Intervalo del carrousel
   $(".multi-item-carousel").carousel({
-    interval: false,
+    interval: 2500,
   });
   // Movimiento del carrousel
   $(".multi-item-carousel .item").each(function () {
@@ -128,11 +128,15 @@ function mostrarPreferencias() {
     getPreferencias(usuario).then((preferencias) => {
       $(".fa-heart").removeClass("fa-solid");
       $(".fa-heart").addClass("fa-regular");
-      if (preferencias.length > 0) mostrarCarousel(preferencias);
-      preferencias.forEach((element) => {
-        $(`#heart${element.artistaId}`).removeClass("fa-regular");
-        $(`#heart${element.artistaId}`).addClass("fa-solid");
-      });
+
+      // Si el usuario tiene preferencias se visualizaran en el carousel
+      if (preferencias.length > 0) {
+         mostrarCarousel(preferencias);
+        preferencias.forEach((element) => {
+          $(`#heart${element.artistaId}`).removeClass("fa-regular");
+          $(`#heart${element.artistaId}`).addClass("fa-solid");
+        })
+      }
     });
 }
 // Se eliminan las preferencias
