@@ -50,13 +50,18 @@ function guardarDatos(usu, contrasena, nombre, apellido, fnac, email, esRegistro
 // Se loguea el usuario, pasandole el usuario y contrasena
 function loguearUsuario(user, pass) {
   login(user, pass).then((resp) => {
+    // Existe usuario
+    if (resp) {
 
-    usuario = user;
-    token = resp.token;
-    // Colocamos en el icono de usuario el nombre de usuario
-    $("#nombre-usuario").text(usuario);
-    despuesDeLogin();
-      
+      usuario = user;
+      token = resp.token;
+      // Colocamos en el icono de usuario el nombre de usuario
+      $("#nombre-usuario").text(usuario);
+      despuesDeLogin();
+    }
+    else {
+      MostrarToast("Usuario o contraseña incorrectos");
+    } 
   });
 }
 // Funcion para cerrar la conexion del usuario logueado

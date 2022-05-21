@@ -15,7 +15,7 @@ var url_yt = "http://137.101.237.98:" + puerto_yt + "/";
 var url_interna_yt = "http://192.168.0.200:" + puerto_yt + "/";
 var url_local_yt = "http://localhost:" + puerto_yt + "/";
 var cole_yt = "http://10.10.17.164:" + puerto_yt + "/";
-url_yt = url_local_yt;
+// url_yt = url_local_yt;
 
 let token;
 // let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGVjayI6dHJ1ZSwiaWF0IjoxNjUyMjc5NDEyLCJleHAiOjE2NTIzNjYwNzJ9._Pr9ONAJ5i93bopwJkn8zfPAsvoUm2Wks8HWpptRyek";

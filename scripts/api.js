@@ -35,23 +35,31 @@ var deleteApiAuth = {
  * @param {*} usuario
  * @param {*} contrasena
  */
-async function login(usuario = "Deagle50", contrasena = "Deagle50") {
-  const rawResponse = await fetch(url + "login", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "",
-    },
-    body: JSON.stringify({
-      usuario: usuario,
-      contrasena: contrasena,
-    }),
-  });
-  const content = await rawResponse.json();
-
-  console.log(content);
-  return content;
+async function login(usuario = "Deagle50", contrasena = "Deagle50") { 
+  try {
+    const rawResponse = await fetch(url + "login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "",
+      },
+      body: JSON.stringify({
+        usuario: usuario,
+        contrasena: contrasena,
+      }),
+    });
+    if (!rawResponse.ok) {
+      console.log(rawResponse);
+      throw new Error(`Error! status: ${rawResponse.status}`);
+    }
+    const content = await rawResponse.json();
+    console.log(content);
+    return content;
+  } 
+  catch (error) {
+    return false;
+  }
 }
 // obtencion de usuario
 async function getUsuario(usuario = "Deagle50") {
