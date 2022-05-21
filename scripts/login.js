@@ -33,7 +33,6 @@ function guardarDatos(usu, contrasena, nombre, apellido, fnac, email, esRegistro
 
     if (esRegistro) {
       postRegistro(usuario).then(() => {
-        alert("logear" + usu + " " + usuario + " " + contrasena); 
         MostrarToast("Registro correctamente realizado");
         loguearUsuario(usuario.usuario, contrasena);
       });
