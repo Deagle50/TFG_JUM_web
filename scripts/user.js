@@ -47,7 +47,7 @@ function mostrarMenuDesplegable() {
       var email = $("#mostrarTextEmail").val();
 
       //La contraseña no se podrá modificar asique no se visualizará (se guarda al mostrar los datos para pasarla)
-      guardarDatos(usu, pwd, nombre, apellido, fnac, email);
+      guardarDatos(usu, pwd, nombre, apellido, fnac, email, false);
     });
     // Se cierra la pantalla
     $("#btnCancelar").on("click", () => {

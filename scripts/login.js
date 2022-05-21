@@ -19,6 +19,8 @@ function validar(campo) {
 // Guardar los datos
 function guardarDatos(usu, contrasena, nombre, apellido, fnac, email, esRegistro) {
   // Si todos los datos a introducir son validos se realiza el post
+
+  console.log(esRegistro);
   if (validar(usu) && validar(contrasena) && validar(nombre) && validar(apellido) && validar(fnac) && validar(email)) {
     var usuario = {
       usuario: usu,
@@ -31,13 +33,13 @@ function guardarDatos(usu, contrasena, nombre, apellido, fnac, email, esRegistro
 
     if (esRegistro) {
       postRegistro(usuario).then(() => {
-
         alert("logear" + usu + " " + usuario + " " + contrasena); 
-        loguearUsuario(usuario, contrasena);
+        MostrarToast("Registro correctamente realizado");
+        loguearUsuario(usuario.usuario, contrasena);
       });
     } else {
       postUsuario(usuario).then(() => {
-        alert("modifi" + usu + " " + usuario + " " + contrasena); 
+        MostrarToast("Tus datos de usuario se han actualizado");
         $("#nombre-usuario").text(usuario.nombre);
         despuesDeLogin();
       });
@@ -254,7 +256,7 @@ function mostrarMenuCompleto() {
     var apellido = $("#textApellido").val();
     var fnac = $("#textFnac").val();
     var email = $("#textEmail").val();
-    guardarDatos(usu, contrasena, nombre, apellido, fnac, email, false);
+    guardarDatos(usu, contrasena, nombre, apellido, fnac, email, true);
   });
 
   // Calendario
