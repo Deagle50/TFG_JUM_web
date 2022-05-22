@@ -60,7 +60,9 @@ function loguearUsuario(user, pass) {
       despuesDeLogin();
     }
     else {
-      MostrarToast("Usuario o contraseña incorrectos");
+      MostrarToast("Usuario o contraseña incorrectos", "red");
+      document.getElementById("textUser").value = "";
+      document.getElementById("textPassword").value = "";
     } 
   });
 }

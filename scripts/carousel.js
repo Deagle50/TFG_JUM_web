@@ -47,7 +47,6 @@ function mostrarCarousel(artistas) {
 
     if (next.next().length > 0) {
       next.next().children(":first-child").clone().appendTo($(this));
-      //next.next().children(":first-child").clone().appendTo($(this));
     } else {
       $(this).siblings(":first").children(":first-child").clone().appendTo($(this));
     }
@@ -55,6 +54,7 @@ function mostrarCarousel(artistas) {
 
   $(".img-carousel").on("click", (event) => {
     localStorage.setItem("artistaSeleccionado", $(event.target).attr("url"));
+    window.location= "artista.html";
   });
 }
 // Se crea la galeria de artistas
@@ -63,7 +63,6 @@ function mostrarGaleria(artistas) {
   artistas.forEach((element) => {
     $("#galeria").append(
       `<a href="artista.html" style="position:relative">
-      
       <img src="${url}images/${element.id}.jpg" class="img-responsive img-galeria" id="galeria-${element.id}" url="${element.id}" title="${element.nombre}" alt="${element.nombre}"/>
       <div style="position:absolute;top:10px;right:10px;">
       <i id="heart${element.id}" artista="${element.id}" class="fa-regular fa-heart fa-xl"></i>
