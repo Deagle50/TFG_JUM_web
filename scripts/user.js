@@ -20,6 +20,8 @@ function mostrarMenuDesplegable() {
   $("#dUser").on("click", (event) => {
     event.preventDefault();
     mostrarMenu("#sPerfil");
+    var options = { year: "numeric", month: "2-digit", day: "2-digit"};
+
     //OBTENER DATOS
     getUsuario(usuario).then((el) => {
       $("#mostrarTextUsuario").val(el.usuario);
@@ -27,11 +29,8 @@ function mostrarMenuDesplegable() {
       $("#mostrarTextNombre").val(el.nombre);
       $("#mostrarTextApellido").val(el.apellido);
       $("#mostrarTextEmail").val(el.email);
-      $("#mostrarTextFnac").val(el.fnac);
+      $("#mostrarTextFnac").val(new Date(el.fnac).toLocaleDateString("es-ES",options));
     });
-    //var datos = getDatos(usuario);
-
-    //
     // Boton eliminar preferencias
     $("#btnEliminar").on("click", () => {
       deletePreferencias(usuario).then(() => {
